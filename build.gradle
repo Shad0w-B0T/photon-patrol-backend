@@ -1,6 +1,6 @@
 plugins {
-    id 'java-library'
-    alias(libs.plugins.lombok)
+  id 'java-library'
+  alias(libs.plugins.lombok)
 }
 
 group = 'de.hdm.stuttgart'
@@ -9,32 +9,32 @@ version = '1.0.0'
 /**
  * Configure for all sub projects.*/
 allprojects {
-    apply plugin: 'java-library'
-    apply plugin: libs.plugins.lombok.get().pluginId
+  apply plugin: 'java-library'
+  apply plugin: libs.plugins.lombok.get().pluginId
 
-    compileJava {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+  compileJava {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+  }
 
-    repositories {
-        mavenCentral()
-    }
+  repositories {
+    mavenCentral()
+  }
 
-    dependencies {
-        //Annotations
-        implementation libs.annotations
-        implementation libs.log4j
+  dependencies {
+    //Annotations
+    implementation libs.annotations
+    implementation libs.log4j
 
-        implementation libs.spring.doc
-        testImplementation libs.spring.doc
+    implementation libs.spring.doc
+    testImplementation libs.spring.doc
 
-        //Junit
-        testImplementation libs.junit.jupiter.api
-        testRuntimeOnly libs.junit.jupiter.engine
-    }
+    //Junit
+    testImplementation libs.junit.jupiter.api
+    testRuntimeOnly libs.junit.jupiter.engine
+  }
 
-    test {
-        useJUnitPlatform()
-    }
+  test {
+    useJUnitPlatform()
+  }
 }
