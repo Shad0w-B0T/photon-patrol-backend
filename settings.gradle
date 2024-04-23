@@ -1,2 +1,6 @@
 rootProject.name = 'photon-backend'
+include 'schema'
+include 'database'
+include 'logic'
+include 'application'
 

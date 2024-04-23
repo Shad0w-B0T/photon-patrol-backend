@@ -3,7 +3,7 @@ plugins {
   alias(libs.plugins.lombok)
 }
 
-group = 'de.hdm-stuttgart'
+group = 'de.hdm'
 version = '1.0.0'
 
 /**
