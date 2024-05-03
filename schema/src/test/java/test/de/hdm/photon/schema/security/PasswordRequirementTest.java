@@ -8,7 +8,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
+/**
+ * A test class for {@code PasswordRequirementFactory} and {@code ImmutablePasswordRequirement}.
+ */
 public final class PasswordRequirementTest {
+
+  /**
+   * Tests the positive scenarios of {@code PasswordRequirementFactory}.
+   */
   @Test
   @DisplayName("Testing Password Requirement Factory Positive")
   public void testPasswordRequirementFactoryPositive() {
@@ -27,9 +34,11 @@ public final class PasswordRequirementTest {
         PasswordRequirementFactory.convert(new ImmutablePasswordRequirement(1, 1, "")));
   }
 
+  /**
+   * Tests the negative scenarios of {@code PasswordRequirementFactory}.
+   */
   @Test
-  @DisplayName("Testing Password Requirement Factory Positive")
-  @SuppressWarnings(value="all")
+  @DisplayName("Testing Password Requirement Factory Negative")
   public void testPasswordRequirementFactoryNegative() {
     //Negative Tests
     Assertions.assertThrows(IndexOutOfBoundsException.class,
@@ -49,6 +58,9 @@ public final class PasswordRequirementTest {
         () -> PasswordRequirementFactory.convert(null));
   }
 
+  /**
+   * Tests the {@code ImmutablePasswordRequirement} implementation.
+   */
   @Test
   @DisplayName("Testing Password Requirement Interface")
   public void testPasswordRequirementInterface() {
