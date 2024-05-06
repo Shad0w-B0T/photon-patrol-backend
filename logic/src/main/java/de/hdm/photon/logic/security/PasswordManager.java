@@ -1,4 +1,13 @@
 package de.hdm.photon.logic.security;
 
-public final class PasswordManager extends AbstractPasswordManager{
+import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Value;
+
+
+public final class PasswordManager extends AbstractPasswordManager {
+
+  public PasswordManager(@Value("${app.security.hash}") @Nullable String hashName,
+                         @Value("${app.security.passwordStorage}") @Nullable String passwordStorage) {
+    super(hashName, passwordStorage);
+  }
 }
