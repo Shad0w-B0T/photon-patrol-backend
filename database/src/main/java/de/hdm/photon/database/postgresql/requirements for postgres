@@ -1,0 +1,15 @@
+HARDWARE
+  - ID                                                      INT               NOT NULL    AUTO-INCREMENT  PRIMARY KEY
+  - Key (ist dafür da um die Berechtigung zu überprüfen)    VARCHAR(255)      NOT NULL
+  - MAC-Adresse                                             VARCHAR(255)          NULL
+  - Hardware hinzugefügt                                    DATE                  NULL
+  - MAC-Adresse hinzugefügt                                 DATE                  NULL
+  - Key active or not                                       BOOLEAN           NOT NULL
+      (wenn false, dann dürfen keine Daten geschrieben werden)
+
+
+
+LOGGING
+  - ID                    INT               NOT NULL    AUTO-INCREMENT  PRIMARY KEY
+  - IP-Adresse            VARCHAR(255)      NOT NULL
+  - Zeitstempel           DATE              NOT NULL
