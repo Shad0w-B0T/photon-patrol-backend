@@ -13,7 +13,7 @@ public interface ILogging {
    * @return the id of the object.
    */
   @Schema(example = "1", description = "Unique identifier of an object.")
-  long id();
+  long id(); //TODO id da passt was nicht
 
   /**
    * @return the IP address.
