@@ -1,0 +1,24 @@
+plugins {
+  id 'java'
+}
+
+group = 'de.hdm'
+version = '1.0.0'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(":schema")
+  implementation project(":database")
+  implementation project(":queue-logic")
+
+  testImplementation project(":schema")
+  testImplementation project(":database")
+  testImplementation project(":queue-logic")
+}
+
+test {
+  useJUnitPlatform()
+}

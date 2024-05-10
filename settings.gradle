@@ -3,4 +3,6 @@ include 'schema'
 include 'database'
 include 'webserver-logic'
 include 'webserver-application'
+include 'queue-logic'
+include 'queue-application'
 
