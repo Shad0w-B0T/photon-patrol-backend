@@ -12,11 +12,11 @@ repositories {
 dependencies {
   implementation project(":schema")
   implementation project(":database")
-  implementation project(":logic")
+  implementation project(":webserver-logic")
 
   testImplementation project(":schema")
   testImplementation project(":database")
-  testImplementation project(":logic")
+  testImplementation project(":webserver-logic")
 }
 
 test {
