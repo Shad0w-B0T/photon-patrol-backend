@@ -14,6 +14,12 @@ dependencies {
   implementation project(":database")
   implementation project(":webserver-logic")
 
+  //Spring
+  implementation libs.spring.boot.starter.parent
+  implementation libs.spring.boot.starter.web
+  implementation libs.spring.boot.autoconfigure
+  implementation libs.spring.boot.starter.data.jpa
+
   testImplementation project(":schema")
   testImplementation project(":database")
   testImplementation project(":webserver-logic")
