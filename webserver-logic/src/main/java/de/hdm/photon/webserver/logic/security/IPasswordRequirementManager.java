@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.security;
+package de.hdm.photon.webserver.logic.security;
 
 import de.hdm.photon.schema.exception.PasswordRequirementMismatchException;
 import org.jetbrains.annotations.Nullable;

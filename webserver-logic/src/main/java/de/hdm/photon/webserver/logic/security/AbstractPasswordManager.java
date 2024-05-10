@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.security;
+package de.hdm.photon.webserver.logic.security;
 
 import de.hdm.photon.schema.exception.PasswordException;
 import jakarta.validation.constraints.NotNull;
@@ -6,7 +6,6 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.security.MessageDigest;

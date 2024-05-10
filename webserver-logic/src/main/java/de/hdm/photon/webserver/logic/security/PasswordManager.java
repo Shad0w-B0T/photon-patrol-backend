@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.security;
+package de.hdm.photon.webserver.logic.security;
 
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
