@@ -1,12 +1,12 @@
 plugins {
-    id 'java'
+  id 'java'
 }
 
 group = 'de.hdm'
 version = '1.0.0'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
@@ -18,5 +18,5 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
