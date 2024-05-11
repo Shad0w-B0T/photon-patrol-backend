@@ -23,7 +23,7 @@ public final class HardwareEntity implements IHardware {
   @Id
   @Column(nullable=false)
   @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private Long id;
+  private long id;
 
   @Column(nullable=false, name="key", length=512)
   private String key;
