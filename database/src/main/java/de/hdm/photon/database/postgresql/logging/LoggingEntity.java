@@ -29,12 +29,13 @@ public final class LoggingEntity implements ILogging {
   @Id
   @Column(nullable=false)
   @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private Long id;
+  private long id;
 
   @Column(nullable=false, name="ip_address", length=100)
   private String ipAddress;
 
   @Column(nullable=false, name="ip_timestamp")
   private Date timestampOfIp;
+
 
 }

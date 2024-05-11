@@ -13,7 +13,7 @@ public interface IHardware {
    * @return the id of the object.
    */
   @Schema(example = "1", description = "Unique identifier of an object.")
-  long id(); //TODO id da passt was nicht
+  long id();
 
   /**
    * @return the value of the key.
