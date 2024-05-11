@@ -1,6 +1,8 @@
 rootProject.name = 'photon-backend'
 include 'schema'
 include 'database'
-include 'logic'
-include 'application'
+include 'webserver-logic'
+include 'webserver-application'
+include 'queue-logic'
+include 'queue-application'
 
