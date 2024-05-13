@@ -1,7 +1,9 @@
 package de.hdm.photon.queue.logic.connection;
 
+import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import de.hdm.photon.queue.logic.config.IRabbitContext;
 import de.hdm.photon.schema.exception.connection.RabbitConnectionException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,6 +15,7 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
 
   private final @NotNull ConnectionFactory connectionFactory;
   private @Nullable Connection connection;
+  private @Nullable Channel channel;
 
   public AbstractRabbitConnection(@Nullable final String user,
                                   @Nullable final String password,
@@ -68,5 +71,15 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
       }
     }
     return this.connection;
+  }
+
+  @Override
+  public boolean context(@Nullable IRabbitContext rabbitContext) throws RabbitConnectionException {
+    //Null check
+    Objects.requireNonNull(rabbitContext);
+
+
+
+    return false;
   }
 }
