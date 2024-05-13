@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
@@ -37,5 +38,16 @@ public final class LoggingEntity implements ILogging {
   @Column(nullable=false, name="ip_timestamp")
   private Date timestampOfIp;
 
+  //Empty Constructor
+  public LoggingEntity() {
+  }
 
+  //Constructor
+  public LoggingEntity(final long id,
+                       final String ipAddress,
+                       final Date timestampOfIp) {
+    this.id = id;
+    this.ipAddress = ipAddress;
+    this.timestampOfIp = timestampOfIp;
+  }
 }

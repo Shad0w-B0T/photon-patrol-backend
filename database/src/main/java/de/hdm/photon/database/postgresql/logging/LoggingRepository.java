@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
+import java.util.Optional;
 
 
 public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
@@ -19,14 +20,22 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
   boolean existsById(long id);
 
   /**
-   * Query to check if the combination of the ip and timestamp exists.
+   * Query to get an entity via id.
    *
-   * @param ipAddress value of the ip address.
-   * @param timestamp the exact time when the ip was connected.
-   * @return true if the combination exists.
+   * @param id value of the id.
+   * @return an Optional if present. Null if no match.
    */
-  boolean existsByIpAddressAndTimestampOfIp(@NotNull String ipAddress,
-                                            @NotNull Date timestamp);
+  @NotNull
+  Optional<LoggingEntity> findById(long id);
+
+  /**
+   * Query to delete the entity via id.
+   *
+   * @param id value of the id.
+   * @return an int value of how many were deleted.
+   */
+  int deleteById(long id);
+
 
   /**
    * Query to check if the ip address exists.
@@ -36,5 +45,44 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
    */
   boolean existsByIpAddress(@NotNull String ipAddress);
 
+  /**
+   * Query to get an ip address.
+   *
+   * @param ipAddress value of the ip.
+   * @return an Optional if present. Null if no match.
+   */
+  @NotNull
+  Optional<LoggingEntity> findByIpAddress(@NotNull String ipAddress);
+
+  /**
+   * Query to delete the entity by ip.
+   *
+   * @param ipAddress value of the ip.
+   * @return an int value of how many were deleted.
+   */
+  int deleteByIpAddress(@NotNull String ipAddress);
+
+
+  /**
+   * Query to check if the combination of the ip and timestamp exists.
+   *
+   * @param ipAddress value of the ip address.
+   * @param timestamp the exact time when the ip was connected.
+   * @return true if the combination exists.
+   */
+  boolean existsByIpAddressAndTimestampOfIp(@NotNull String ipAddress,
+                                            @NotNull Date timestamp);
+
+
+  /**
+   * Query to get an ip with the time stamp.
+   *
+   * @param ipAddress value of the ip.
+   * @param timestamp time when the ip was
+   * @return an Optional if present. Null if no match.
+   */
+  @NotNull
+  Optional<LoggingEntity> findByIpAddressAndTimestampOfIp(@NotNull String ipAddress,
+                                                          @NotNull Date timestamp);
 
 }
