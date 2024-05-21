@@ -1,10 +1,8 @@
 package de.hdm.photon.queue.logic.connection;
 
 import com.rabbitmq.client.Connection;
-import de.hdm.photon.queue.logic.config.IRabbitContext;
 import de.hdm.photon.schema.exception.connection.RabbitConnectionException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -26,13 +24,7 @@ public interface IRabbitConnection {
   @NotNull
   Connection connection() throws RabbitConnectionException;
 
-  /**
-   * Establishes a context for a RabbitMQ connection using the provided Rabbit context.
-   *
-   * @param rabbitContext The RabbitMQ context to establish the connection with. Can be null.
-   * @return True if the context is successfully established, false otherwise.
-   * @throws RabbitConnectionException If there is an error establishing the RabbitMQ connection.
-   */
-  boolean context(@Nullable final IRabbitContext rabbitContext) throws RabbitConnectionException;
+  @NotNull IRabbitPublisher publisher() throws RabbitConnectionException;
 
+  @NotNull IRabbitSubscriber subscriber(final boolean ack) throws RabbitConnectionException;
 }

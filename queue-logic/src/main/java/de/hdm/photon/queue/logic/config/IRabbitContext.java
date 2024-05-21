@@ -16,12 +16,12 @@ public interface IRabbitContext {
   String exchangeName();
 
   /**
-   * Retrieves the name of the channel associated with this context.
+   * Retrieves the name of the queue associated with this context.
    *
-   * @return The name of the channel.
+   * @return The name of the queue.
    */
   @NotNull
-  String channelName();
+  String queueName();
 
   /**
    * Retrieves the key name associated with this context.
