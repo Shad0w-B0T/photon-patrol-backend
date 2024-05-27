@@ -40,32 +40,32 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
    */
   int deleteById(long id);
 
-  //------------------------------------------ Key -------------------------------------------------
+  //------------------------------------------ Token -------------------------------------------------
 
   /**
-   * Query to check if the key exists.
+   * Query to check if the token exists.
    *
-   * @param key value to verify permissions.
-   * @return true if the entity with the key exists.
+   * @param token value to verify permissions.
+   * @return true if the entity with the token exists.
    */
-  boolean existsByKey(@NotNull String key);
+  boolean existsByToken(@NotNull String token);
 
   /**
-   * Query to get an entity via key.
+   * Query to get an entity via token.
    *
-   * @param key value of the key
+   * @param token value of the token
    * @return an Optional if present. Null if no match.
    */
   @NotNull
-  Optional<HardwareEntity> findByKey(@NotNull String key);
+  Optional<HardwareEntity> findByToken(@NotNull String token);
 
   /**
-   * Query to delete the entity via the key.
+   * Query to delete the entity via the token.
    *
-   * @param key value of the key.
+   * @param token value of the key.
    * @return an int value of how many were deleted.
    */
-  int deleteByKey(@NotNull String key);
+  int deleteByToken(@NotNull String token);
 
   //------------------------------------------ MAC -------------------------------------------------
 
