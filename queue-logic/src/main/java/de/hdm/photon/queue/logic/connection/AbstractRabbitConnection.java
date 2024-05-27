@@ -106,6 +106,7 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
 
     final Connection connection = this.connection();
 
+    //Create channel if absent.
     if (this.channel == null) {
       try {
         this.channel = connection.createChannel();
