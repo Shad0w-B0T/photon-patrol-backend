@@ -26,7 +26,7 @@ public final class HardwareEntity implements IHardware {
   private long id;
 
   @Column(nullable=false, name="key", length=512)
-  private String key;
+  private String token;
 
   @Column(name="mac_address", length=100)
   @Setter
@@ -49,13 +49,13 @@ public final class HardwareEntity implements IHardware {
 
   //Constructor
   public HardwareEntity(final long id,
-                        final String key,
+                        final String token,
                         final String macAddress,
                         final Date hardwareAdded,
                         final Date macAdded,
                         final boolean keyIsActive) {
     this.id = id;
-    this.key = key;
+    this.token = token;
     this.macAddress = macAddress;
     this.hardwareAdded = hardwareAdded;
     this.macAdded = macAdded;

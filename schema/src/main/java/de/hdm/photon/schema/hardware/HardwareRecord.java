@@ -11,7 +11,7 @@ import java.util.Date;
  * This record creates a Hardware object which stores all relevant parameters for the hardware.
  *
  * @param id {@link IHardware#id()}
- * @param key {@link IHardware#key()}
+ * @param key {@link IHardware#token()}
  * @param macAddress {@link IHardware#macAddress()}
  * @param hardwareAdded {@link IHardware#hardwareAdded()}
  * @param macAdded {@link IHardware#macAdded()}
@@ -20,7 +20,7 @@ import java.util.Date;
 @Schema(name = "Hardware",
         description = "Object to store the parameters for the hardware.")
 public record HardwareRecord(long id,
-                             @NotNull String key,
+                             @NotNull String token,
                              @Nullable String macAddress,
                              @Nullable Date hardwareAdded,
                              @Nullable Date macAdded,

@@ -1,5 +1,6 @@
 package de.hdm.photon.schema.hardware;
 
+import de.hdm.photon.schema.entity.Identifiable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.Nullable;
@@ -7,25 +8,7 @@ import org.springframework.lang.Nullable;
 import java.util.Date;
 
 @Schema(implementation = HardwareRecord.class)
-public interface IHardware {
-
-  /**
-   * @return the id of the object.
-   */
-  @Schema(example = "1", description = "Unique identifier of an object.")
-  long id();
-
-  /**
-   * @return the value of the key.
-   */
-  @Schema(example = "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", description = "Key to verify if the permissions fit.")
-  @NotNull String key();
-
-  /**
-   * @return the value of the MAC-Address.
-   */
-  @Schema(example = "A1:B4:C5:C1:DD:3E", description = "The MAC address of the connected hardware.")
-  @Nullable String macAddress();
+public interface IHardware extends Identifiable, IHardwareAddress, IHardwareToken {
 
   /**
    * @return the time when the hardware was added.

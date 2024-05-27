@@ -50,7 +50,7 @@ public final class HardwareFactory {
     log.debug("The hardware interface {} was successfully converted to a record.", hardware);
     return HardwareFactory.createHardware(
         hardware.id(),
-        hardware.key(),
+        hardware.token(),
         hardware.macAddress(),
         hardware.hardwareAdded(),
         hardware.macAdded(),
