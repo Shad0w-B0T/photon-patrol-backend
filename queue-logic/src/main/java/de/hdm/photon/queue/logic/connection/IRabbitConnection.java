@@ -24,7 +24,20 @@ public interface IRabbitConnection {
   @NotNull
   Connection connection() throws RabbitConnectionException;
 
+  /**
+   * Provides an instance of {@link IRabbitPublisher}.
+   *
+   * @return an instance of {@link IRabbitPublisher}.
+   * @throws RabbitConnectionException if there is an error creating the publisher.
+   */
   @NotNull IRabbitPublisher publisher() throws RabbitConnectionException;
 
+  /**
+   * Provides an instance of {@link IRabbitSubscriber}.
+   *
+   * @param ack a boolean indicating whether message acknowledgments are enabled.
+   * @return an instance of {@link IRabbitSubscriber}.
+   * @throws RabbitConnectionException if there is an error creating the subscriber.
+   */
   @NotNull IRabbitSubscriber subscriber(final boolean ack) throws RabbitConnectionException;
 }
