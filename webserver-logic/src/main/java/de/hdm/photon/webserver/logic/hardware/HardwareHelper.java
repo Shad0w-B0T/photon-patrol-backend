@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 
 @Log4j2
@@ -26,7 +28,11 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
 
 
   @Override
-  public @NotNull HardwareEntity createHardware(@Nullable String token, @Nullable String macAddress, @Nullable Date hardwareAdded, @Nullable Date macAdded, boolean keyIsActive) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+  public @NotNull HardwareEntity createHardware(@Nullable String token,
+                                                @Nullable String macAddress,
+                                                @Nullable Date hardwareAdded,
+                                                @Nullable Date macAdded,
+                                                boolean keyIsActive) throws EntityNotPresentException, EntityAlreadyPresentException {
     this.validateContent(macAddress);
 
     log.info("Try to creating validated hardware");
@@ -48,7 +54,78 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
     return null;
   }
 
+  @Override
+  public @NotNull List<HardwareEntity> getHardwareList() {
+    return List.of();
+  }
+
+  @Override
+  public @NotNull HardwareEntity getMacAddress(String macAddress) throws EntityNotPresentException {
+    return null;
+  }
+
+  @Override
+  public @NotNull List<HardwareEntity> getHardwareAdded(Date hardwareAdded) throws EntityNotPresentException {
+    return List.of();
+  }
+
+  @Override
+  public @NotNull List<HardwareEntity> getMacAdded(Date macAdded) throws EntityNotPresentException {
+    return List.of();
+  }
+
+  @Override
+  public @NotNull List<HardwareEntity> getActiveToken(boolean tokenIsActive) throws EntityNotPresentException {
+    return List.of();
+  }
+
+  @Override
+  public @NotNull HardwareEntity updateHardware(long id,
+                                                @Nullable String token,
+                                                @Nullable String macAddress,
+                                                @Nullable Date hardwareAdded,
+                                                @Nullable Date macAdded,
+                                                boolean tokenIsActive) throws EntityNotPresentException {
+    return null;
+  }
+
+  @Override
+  public @NotNull HardwareEntity updateToken(long id,
+                                             @Nullable String token) throws EntityNotPresentException {
+    return null;
+  }
+
+  @Override
+  public @NotNull HardwareEntity updateMacAddress(long id,
+                                                  @Nullable String macAddress) throws EntityNotPresentException {
+    return null;
+  }
+
+  @Override
+  public @NotNull HardwareEntity updateHardwareAdded(long id,
+                                                     @Nullable Date hardwareAdded) throws EntityNotPresentException {
+    return null;
+  }
+
+  @Override
+  public @NotNull HardwareEntity updateMacAdded(long id,
+                                                @Nullable Date macAdded) throws EntityNotPresentException {
+    return null;
+  }
+
+  @Override
+  public @NotNull HardwareEntity updateTokenActive(long id,
+                                                   boolean tokenIsActive) throws EntityNotPresentException {
+    return null;
+  }
+
+  @Override
+  public boolean deleteHardware(long id) throws EntityNotPresentException {
+    return false;
+  }
+
   private void validateContent(@Nullable String macAddress) throws FormatMismatchException {
+    Objects.requireNonNull(macAddress);
     this.addressVerifier.validateAddress(macAddress, 17);
 
   }
