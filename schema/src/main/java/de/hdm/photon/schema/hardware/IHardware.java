@@ -2,7 +2,6 @@ package de.hdm.photon.schema.hardware;
 
 import de.hdm.photon.schema.entity.Identifiable;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.Nullable;
 
 import java.util.Date;
@@ -26,6 +25,6 @@ public interface IHardware extends Identifiable, IHardwareAddress, IHardwareToke
    * @return true if the key is currently being used.
    */
   @Schema(example = "true", description = "If the key is not used it should be false. Therefore it is equivalent to the lowest permission level.")
-  @Nullable boolean keyIsActive();
+  @Nullable boolean tokenIsActive();
 
 }
