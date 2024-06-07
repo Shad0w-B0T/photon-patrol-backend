@@ -1,0 +1,24 @@
+package de.hdm.photon.webserver.logic.hardware;
+
+import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
+import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
+import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Date;
+
+
+public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
+
+
+  @Override
+  public @NotNull HardwareEntity createHardware(@Nullable String token, @Nullable String macAddress, @Nullable Date hardwareAdded, @Nullable Date macAdded, boolean keyIsActive) throws EntityNotPresentException, EntityAlreadyPresentException {
+    return null;
+  }
+
+  @Override
+  public @NotNull HardwareEntity getHardware(long id) throws EntityAlreadyPresentException {
+    return null;
+  }
+}
