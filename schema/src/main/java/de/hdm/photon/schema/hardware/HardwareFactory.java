@@ -15,25 +15,25 @@ public final class HardwareFactory {
    * This method creates a new hardware object with the given parameters.
    *
    * @param id            unique id of the hardware object.
-   * @param key           value to verify permissions.
+   * @param token           value to verify permissions.
    * @param macAddress    value of the mac address.
    * @param hardwareAdded date when the hardware was added.
    * @param macAdded      date when the mac address first was added.
-   * @param keyIsActive   value whether the key is active or not.
+   * @param tokenIsActive   value whether the token is active or not.
    * @return new hardware interface.
    */
   public static @NotNull IHardware createHardware(final long id,
-                                                  @Nullable String key,
+                                                  @Nullable String token,
                                                   @Nullable String macAddress,
                                                   @Nullable Date hardwareAdded,
                                                   @Nullable Date macAdded,
-                                                  @Nullable boolean keyIsActive) {
-    Objects.requireNonNull(key);
+                                                  @Nullable boolean tokenIsActive) {
+    Objects.requireNonNull(token);
     Objects.requireNonNull(macAddress);
     Objects.requireNonNull(hardwareAdded);
     Objects.requireNonNull(macAdded);
 
-    final IHardware hardware = new HardwareRecord(id, key, macAddress, hardwareAdded, macAdded, keyIsActive);
+    final IHardware hardware = new HardwareRecord(id, token, macAddress, hardwareAdded, macAdded, tokenIsActive);
     log.debug("The hardware object with the id: {} was successfully created.", hardware.id());
     return hardware;
   }
@@ -54,7 +54,7 @@ public final class HardwareFactory {
         hardware.macAddress(),
         hardware.hardwareAdded(),
         hardware.macAdded(),
-        hardware.keyIsActive()
+        hardware.tokenIsActive()
     );
   }
 

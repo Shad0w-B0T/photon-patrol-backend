@@ -25,7 +25,7 @@ public final class HardwareEntity implements IHardware {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private long id;
 
-  @Column(nullable=false, name="key", length=512)
+  @Column(nullable=false, name="token", length=512)
   private String token;
 
   @Column(name="mac_address", length=100)
@@ -39,9 +39,9 @@ public final class HardwareEntity implements IHardware {
   @Setter
   private Date macAdded;
 
-  @Column(name="key_is_active")
+  @Column(name="token_is_active")
   @Setter
-  private boolean keyIsActive;
+  private boolean tokenIsActive;
 
   //Empty Constructor
   public HardwareEntity() {
@@ -53,12 +53,12 @@ public final class HardwareEntity implements IHardware {
                         final String macAddress,
                         final Date hardwareAdded,
                         final Date macAdded,
-                        final boolean keyIsActive) {
+                        final boolean tokenIsActive) {
     this.id = id;
     this.token = token;
     this.macAddress = macAddress;
     this.hardwareAdded = hardwareAdded;
     this.macAdded = macAdded;
-    this.keyIsActive = keyIsActive;
+    this.tokenIsActive = tokenIsActive;
   }
 }
