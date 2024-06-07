@@ -22,8 +22,8 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param macAdded      date when the mac address first was added.
    * @param tokenIsActive value whether the token is active or not.
    * @return a new hardware object (hardware interface or hardware entity).
-   * @throws EntityNotPresentException     see {@link EntityNotPresentException}
-   * @throws EntityAlreadyPresentException see {@link EntityAlreadyPresentException}
+   * @throws EntityNotPresentException     see {@link EntityNotPresentException}.
+   * @throws EntityAlreadyPresentException see {@link EntityAlreadyPresentException}.
    */
   @NotNull
   HARDWARE createHardware(@Nullable final String token,
