@@ -118,7 +118,10 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
     }
 
     try {
-      this.channel.exchangeDeclare(rabbitContext.exchangeName(), "fanout");
+      //Blacklist own runners of rabbit.
+      if(!rabbitContext.exchangeName().startsWith("amq")) {
+        this.channel.exchangeDeclare(rabbitContext.exchangeName(), "fanout");
+      }
       log.info("Found exchange={}.", rabbitContext.exchangeName());
     } catch (final IOException exception) {
       log.warn("Error while creating exchange for rabbit mq.");

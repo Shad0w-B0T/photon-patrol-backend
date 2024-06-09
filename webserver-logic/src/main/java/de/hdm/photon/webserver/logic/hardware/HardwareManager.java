@@ -29,7 +29,7 @@ public class HardwareManager implements IHardwareAccess<IHardware> {
                                            @Nullable String macAddress,
                                            @Nullable Date hardwareAdded,
                                            @Nullable Date macAdded,
-                                           boolean keyIsActive) throws EntityNotPresentException, EntityAlreadyPresentException {
+                                           boolean keyIsActive) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
     return HardwareFactory.convertToRecord(this.hardwareHelper.createHardware(token, macAddress, hardwareAdded, macAdded, keyIsActive));
   }
 
