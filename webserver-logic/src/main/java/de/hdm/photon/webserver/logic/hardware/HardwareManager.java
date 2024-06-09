@@ -72,37 +72,47 @@ public class HardwareManager implements IHardwareAccess<IHardware> {
 
   @Override
   @Transactional
-  public @NotNull IHardware updateHardware(long id, @Nullable String token, @Nullable String macAddress, @Nullable Date hardwareAdded, @Nullable Date macAdded, boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException {
+  public @NotNull IHardware updateHardware(long id,
+                                           @Nullable String token,
+                                           @Nullable String macAddress,
+                                           @Nullable Date hardwareAdded,
+                                           @Nullable Date macAdded,
+                                           boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateToken(long id, @Nullable String token) throws EntityNotPresentException, FormatMismatchException {
+  public @NotNull IHardware updateToken(long id,
+                                        @Nullable String token) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateMacAddress(long id, @Nullable String macAddress) throws EntityNotPresentException, FormatMismatchException {
+  public @NotNull IHardware updateMacAddress(long id,
+                                             @Nullable String macAddress) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateHardwareAdded(long id, @Nullable Date hardwareAdded) throws EntityNotPresentException, FormatMismatchException {
+  public @NotNull IHardware updateHardwareAdded(long id,
+                                                @Nullable Date hardwareAdded) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateMacAdded(long id, @Nullable Date macAdded) throws EntityNotPresentException, FormatMismatchException {
+  public @NotNull IHardware updateMacAdded(long id,
+                                           @Nullable Date macAdded) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateTokenActive(long id, boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException {
+  public @NotNull IHardware updateTokenActive(long id,
+                                              boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 

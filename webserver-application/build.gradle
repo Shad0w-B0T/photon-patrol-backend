@@ -1,18 +1,28 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
-    id 'java'
+  alias(libs.plugins.spring)
+}
+
+apply plugin: libs.plugins.dependencymanagement.get().pluginId
+apply plugin: libs.plugins.spring.get().pluginId
+
+ext {
+  driverClass = "de.hdm.photon.Driver"
 }
 
 group = 'de.hdm'
 version = '1.0.0'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
   implementation project(":schema")
   implementation project(":database")
   implementation project(":webserver-logic")
+  implementation platform(SpringBootPlugin.BOM_COORDINATES)
 
   //Spring
   implementation libs.spring.boot.starter.parent
@@ -26,5 +36,37 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
+}
+
+dependencyManagement {
+  imports {
+    mavenBom(SpringBootPlugin.BOM_COORDINATES)
+  }
+}
+
+springBoot {
+  mainClass = "${driverClass}"
+
+  bootJar {
+    archiveFileName.set("queue-build.jar")
+  }
+  buildInfo()
+}
+
+jar {
+  dependsOn(":schema:build")
+  dependsOn(":database:build")
+  dependsOn(":webserver-logic:build")
+
+  manifest {
+    attributes "Main-Class": "${driverClass}"
+  }
+
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+
+  //exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 }
