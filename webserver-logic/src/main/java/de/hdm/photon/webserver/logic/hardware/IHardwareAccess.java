@@ -1,9 +1,9 @@
 package de.hdm.photon.webserver.logic.hardware;
 
+import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
-import jakarta.validation.constraints.Null;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,13 +24,14 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @return a new hardware object (hardware interface or hardware entity).
    * @throws EntityNotPresentException     see {@link EntityNotPresentException}.
    * @throws EntityAlreadyPresentException see {@link EntityAlreadyPresentException}.
+   * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE createHardware(@Nullable final String token,
                           @Nullable final String macAddress,
                           @Nullable final Date hardwareAdded,
                           @Nullable final Date macAdded,
-                          final boolean tokenIsActive) throws EntityNotPresentException, EntityAlreadyPresentException;
+                          final boolean tokenIsActive) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException;
 
 
   //--------------------------------------------------READ--------------------------------------------------------------
@@ -107,6 +108,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param tokenIsActive value whether the token is active or not.
    * @return updated hardware object (hardware interface or hardware entity).
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
+   * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE updateHardware(final long id,
@@ -114,7 +116,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
                           @Nullable final String macAddress,
                           @Nullable final Date hardwareAdded,
                           @Nullable final Date macAdded,
-                          final boolean tokenIsActive) throws EntityNotPresentException;
+                          final boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the token with the given parameter.
@@ -123,10 +125,11 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param token value to verify permissions.
    * @return updated hardware object with updated token.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
+   * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE updateToken(final long id,
-                       @Nullable final String token) throws EntityNotPresentException;
+                       @Nullable final String token) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the MAC address with the given parameter.
@@ -135,10 +138,11 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param macAddress value of the mac address.
    * @return hardware object with updated MAC address.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
+   * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE updateMacAddress(final long id,
-                            @Nullable final String macAddress) throws EntityNotPresentException;
+                            @Nullable final String macAddress) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the date when the hardware was added with the given parameter.
@@ -147,10 +151,11 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param hardwareAdded date when the hardware was added.
    * @return hardware object with updated date of when the hardware was added.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
+   * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE updateHardwareAdded(final long id,
-                               @Nullable final Date hardwareAdded) throws EntityNotPresentException;
+                               @Nullable final Date hardwareAdded) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the date when the MAC address was added with the given parameter.
@@ -159,10 +164,11 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param macAdded date when the mac address first was added.
    * @return hardware object with updated date of when the MAC was added.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
+   * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE updateMacAdded(final long id,
-                          @Nullable final Date macAdded) throws EntityNotPresentException;
+                          @Nullable final Date macAdded) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the token whether it is active or not.
@@ -171,10 +177,11 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param tokenIsActive value whether the token is active or not.
    * @return hardware object with updated token.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
+   * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE updateTokenActive(final long id,
-                             final boolean tokenIsActive) throws EntityNotPresentException;
+                             final boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException;
 
   //------------------------------------------------DELETE--------------------------------------------------------------
 
