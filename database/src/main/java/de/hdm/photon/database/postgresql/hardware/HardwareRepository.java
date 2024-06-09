@@ -150,33 +150,4 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
    */
   int deleteAllByMacAdded(@NotNull Date macAdded);
 
-
-  //------------------------------------------ Key active or not -------------------------------------------------
-
-  /**
-   * Checks if at least one entity with the specified value for the "keyIsActive" attribute exists.
-   *
-   * @param keyIsActive the value to search for
-   * @return true if at least one entity with the specified value exists, otherwise false
-   */
-  boolean existsByKeyIsActive(boolean keyIsActive);
-
-
-  /**
-   * Query to get a list of active keys.
-   *
-   * @param keyIsActive whether key is active or not.
-   * @return a List of all active keys.
-   */
-  @NotNull
-  List<HardwareEntity> findByKeyIsActive(boolean keyIsActive);
-
-  /**
-   * Query to delete all entities by active/inactive key.
-   *
-   * @param keyIsActive whether key is active or not.
-   * @return an int value of how many were deleted.
-   */
-  int deleteAllByKeyIsActive(boolean keyIsActive);
-
 }

@@ -1,5 +1,6 @@
 package de.hdm.photon.webserver.logic.hardware;
 
+import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
@@ -30,7 +31,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
                           @Nullable final String macAddress,
                           @Nullable final Date hardwareAdded,
                           @Nullable final Date macAdded,
-                          final boolean tokenIsActive) throws EntityNotPresentException, EntityAlreadyPresentException;
+                          final boolean tokenIsActive) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException;
 
 
   //--------------------------------------------------READ--------------------------------------------------------------

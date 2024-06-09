@@ -6,6 +6,7 @@ import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.webserver.logic.ceck.AddressVerifier;
+import de.hdm.photon.webserver.logic.ceck.IAddressVerifier;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,7 +25,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   @Autowired
   private HardwareRepository hardwareRepository;
   @Autowired
-  private AddressVerifier addressVerifier;
+  private IAddressVerifier addressVerifier;
 
 
   @Override
@@ -32,7 +33,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
                                                 @Nullable String macAddress,
                                                 @Nullable Date hardwareAdded,
                                                 @Nullable Date macAdded,
-                                                boolean keyIsActive) throws EntityNotPresentException, EntityAlreadyPresentException {
+                                                boolean keyIsActive) throws FormatMismatchException {
     this.validateContent(macAddress);
 
     log.info("Try to creating validated hardware");
