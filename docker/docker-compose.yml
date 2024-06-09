@@ -40,7 +40,7 @@ services:
     ports:
       - "8086:8086"
     env_file:
-      - env/postgres.env
+      - env/influx.env
     networks:
       - photon-testnet
   nginx:
