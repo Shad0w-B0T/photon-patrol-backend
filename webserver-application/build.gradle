@@ -57,7 +57,7 @@ springBoot {
 jar {
   dependsOn(":schema:build")
   dependsOn(":database:build")
-  dependsOn(":queue-logic:build")
+  dependsOn(":webserver-logic:build")
 
   manifest {
     attributes "Main-Class": "${driverClass}"
