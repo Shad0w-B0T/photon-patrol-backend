@@ -31,5 +31,5 @@ reflections = "org.reflections:reflections:0.10.2"
 
 [plugins]
 lombok = "io.freefair.lombok:8.1.0"
-boot = "org.springframework.boot:3.1.0"
+spring = "org.springframework.boot:3.2.1"
 dependencymanagement = "io.spring.dependency-management:1.1.2"
