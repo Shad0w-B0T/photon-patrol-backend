@@ -29,6 +29,12 @@ dependencies {
   implementation libs.spring.boot.starter.web
   implementation libs.spring.boot.autoconfigure
   implementation libs.spring.boot.starter.data.jpa
+  implementation libs.spring.doc
+
+  //Data
+  implementation libs.hikari
+  implementation libs.postgresql
+  implementation libs.log4j
 
   testImplementation project(":schema")
   testImplementation project(":database")
