@@ -12,10 +12,10 @@
 image: gradle:jdk17-alpine
 
 stages:
-  - update
-  - security
   - build
   - test
+  - update
+  - security
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
@@ -45,7 +45,7 @@ test:
 update-dependency-check:
   stage: update
   script:
-    - gradle dependencyCheckUpdate --info
+    - ./gradlew dependencyCheckUpdate --info
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
@@ -56,12 +56,12 @@ update-dependency-check:
 dependency-check:
   stage: security
   script:
-    - gradle dependencyCheckAnalyze --info
+    - ./gradlew dependencyCheckAnalyze --info -f JSON -o dependency-check-report.json
   artifacts:
     paths:
-      - build/reports/dependency-check-report.html
+      - dependency-check-report.json
     reports:
-      dependency_scanning: build/reports/dependency-check-report.json
+      dependency_scanning: dependency-check-report.json
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
