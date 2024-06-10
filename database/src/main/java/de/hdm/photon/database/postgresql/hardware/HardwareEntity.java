@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -16,7 +15,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 
@@ -27,7 +25,7 @@ import java.util.Set;
 public final class HardwareEntity implements IHardware {
 
   @Id
-  @Column(nullable=false)
+  @Column(name = "hardware_id", nullable=false)
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private long id;
 
@@ -50,10 +48,12 @@ public final class HardwareEntity implements IHardware {
   private boolean tokenIsActive;
 
   /**
-   * Foreign Key to get Data from the hardware entity.
+   * "@ManyToOne / @OneToMany"
+   * Lesen: Weise eine HardwareEntity (one) to LoggingEntity (many) zu.
+   * Man ist in der HardwareEntity Klasse und weist diese der LoggingEntity zu.
    */
-  @OneToMany(cascade={CascadeType.DETACH, CascadeType.REMOVE})
-  private Set<LoggingEntity> loggingEntities;
+  @OneToMany(cascade=CascadeType.DETACH, mappedBy = "logging_entity")
+  private Set<LoggingEntity> loggingEntity;
 
   //Empty Constructor
   public HardwareEntity() {

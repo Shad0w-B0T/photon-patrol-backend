@@ -9,11 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
@@ -32,7 +30,7 @@ public final class LoggingEntity implements ILogging {
 
 
   @Id
-  @Column(nullable=false)
+  @Column(name = "logging_id", nullable=false)
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private long id;
 
@@ -42,12 +40,9 @@ public final class LoggingEntity implements ILogging {
   @Column(nullable=false, name="ip_timestamp")
   private Date timestampOfIp;
 
-  /**
-   *
-   */
-  @JoinColumn(name = "hardware_entity")
   @ManyToOne
-  private HardwareEntity hardware;
+  @JoinColumn(name = "hardware_id", nullable = false)
+  public HardwareEntity hardwareEntity;
 
   //Empty Constructor
   public LoggingEntity() {
