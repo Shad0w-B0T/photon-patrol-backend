@@ -24,8 +24,6 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
 
   @Autowired
   private HardwareRepository hardwareRepository;
-  @Autowired
-  private AddressVerifier addressVerifier;
 
   @Autowired
   private IAddressVerifier iAddressVerifier;

@@ -1,11 +1,15 @@
 package de.hdm.photon.database.postgresql.logging;
 
+import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.schema.logging.ILogging;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -37,6 +41,13 @@ public final class LoggingEntity implements ILogging {
 
   @Column(nullable=false, name="ip_timestamp")
   private Date timestampOfIp;
+
+  /**
+   *
+   */
+  @JoinColumn(name = "hardware_entity")
+  @ManyToOne
+  private HardwareEntity hardware;
 
   //Empty Constructor
   public LoggingEntity() {
