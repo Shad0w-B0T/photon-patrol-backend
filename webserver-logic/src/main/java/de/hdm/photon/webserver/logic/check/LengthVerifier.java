@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Log4j2
 @Component
-public class LengthVerifier implements ILengthVerifier {
+public final class LengthVerifier implements ILengthVerifier {
 
   /**
    * see {@link ILengthVerifier#validateLength(String, String)}
@@ -20,7 +20,7 @@ public class LengthVerifier implements ILengthVerifier {
     //Null checks
     Objects.requireNonNull(address);
     Objects.requireNonNull(typeOfAddress);
-    if (address.isEmpty() || typeOfAddress.isEmpty()) {
+    if (address.isBlank() || typeOfAddress.isBlank()) {
       throw new FormatMismatchException("Address is empty.");
     }
 
@@ -32,7 +32,7 @@ public class LengthVerifier implements ILengthVerifier {
     switch (typeOfAddress) {
       case "IPv4" -> lengthOfAddress = IPv4_CHARACTER_LENGTH;
       case "MAC" -> lengthOfAddress = MAC_ADDRESS_LENGTH;
-      default -> throw new FormatMismatchException("Invalid type of address. Valid types are IPv4, IPv6, MAC.");
+      default -> throw new FormatMismatchException("Invalid type of address. Valid types are IPv4, MAC.");
     }
 
     return address.length() == lengthOfAddress;

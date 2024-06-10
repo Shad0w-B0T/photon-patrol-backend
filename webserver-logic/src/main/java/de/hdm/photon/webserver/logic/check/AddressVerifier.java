@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 @Log4j2
 @Component
-public class AddressVerifier implements IAddressVerifier {
+public final class AddressVerifier implements IAddressVerifier {
 
   @Autowired
   private LengthVerifier lengthVerifier;
