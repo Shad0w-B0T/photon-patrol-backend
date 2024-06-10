@@ -45,7 +45,7 @@ test:
 update-dependency-check:
   stage: update
   script:
-    - ./gradlew dependencyCheckUpdate --info
+    - gradle dependencyCheckUpdate --info
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
@@ -56,7 +56,7 @@ update-dependency-check:
 dependency-check:
   stage: security
   script:
-    - ./gradlew dependencyCheckAnalyze --info -f JSON -o dependency-check-report.json
+    - gradle dependencyCheckAnalyze --info -f JSON -o dependency-check-report.json
   artifacts:
     paths:
       - dependency-check-report.json
