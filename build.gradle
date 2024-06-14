@@ -40,9 +40,10 @@ allprojects {
   }
 }
 
+/**
+ * Configuration of owasp.
+ */
 dependencyCheck {
-
-
   //failBuildOnCVSS = -1
   //suppressionFile = "dependency-check-suppressions.xml"
   format = "HTML"

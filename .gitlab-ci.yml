@@ -56,12 +56,12 @@ update-dependency-check:
 dependency-check:
   stage: security
   script:
-    - gradle dependencyCheckAnalyze --info -f JSON -o dependency-check-report.json
+    - gradle dependencyCheckAnalyze --info
   artifacts:
     paths:
-      - dependency-check-report.json
+      - build/reports/dependency-check-report.html
     reports:
-      dependency_scanning: dependency-check-report.json
+      dependency_scanning: build/reports/dependency-check-report.json
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
