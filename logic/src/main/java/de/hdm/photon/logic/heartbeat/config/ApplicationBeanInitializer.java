@@ -1,6 +1,6 @@
-package de.hdm.photon.queue.application.config;
+package de.hdm.photon.logic.heartbeat.config;
 
-import de.hdm.photon.queue.application.heartbeat.HeartbeatTask;
+import de.hdm.photon.logic.heartbeat.HeartbeatTask;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

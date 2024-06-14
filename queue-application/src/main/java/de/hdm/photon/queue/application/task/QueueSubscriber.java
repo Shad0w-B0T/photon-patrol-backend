@@ -1,7 +1,7 @@
 package de.hdm.photon.queue.application.task;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hdm.photon.queue.application.heartbeat.HeartbeatInfo;
+import de.hdm.photon.logic.heartbeat.HeartbeatInfo;
 import de.hdm.photon.queue.logic.connection.IRabbitConnection;
 import de.hdm.photon.queue.logic.connection.IRabbitSubscriber;
 import de.hdm.photon.schema.exception.connection.RabbitConnectionException;
