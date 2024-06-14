@@ -11,6 +11,12 @@
 
 image: gradle:jdk17-alpine
 
+stages:
+  - build
+  - test
+  - update
+  - security
+
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
   - export GRADLE_USER_HOME
@@ -34,3 +40,30 @@ test:
     paths:
       - build
       - .gradle
+
+# Separater Job zum Aktualisieren der Datenbank
+update-dependency-check:
+  stage: update
+  script:
+    - gradle dependencyCheckUpdate --info
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - .gradle
+      - build/dependency-check-data
+
+# Sicherheitscheck-Job
+dependency-check:
+  stage: security
+  script:
+    - gradle dependencyCheckAnalyze --info
+  artifacts:
+    paths:
+      - build/reports/dependency-check-report.html
+    reports:
+      dependency_scanning: build/reports/dependency-check-report.json
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - .gradle
+      - build/dependency-check-data
