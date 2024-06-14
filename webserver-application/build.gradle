@@ -21,6 +21,7 @@ repositories {
 dependencies {
   implementation project(":schema")
   implementation project(":database")
+  implementation project(":logic")
   implementation project(":webserver-logic")
   implementation platform(SpringBootPlugin.BOM_COORDINATES)
 
@@ -38,6 +39,7 @@ dependencies {
 
   testImplementation project(":schema")
   testImplementation project(":database")
+  testImplementation project(":logic")
   testImplementation project(":webserver-logic")
 }
 
@@ -63,6 +65,7 @@ springBoot {
 jar {
   dependsOn(":schema:build")
   dependsOn(":database:build")
+  dependsOn(":logic:build")
   dependsOn(":webserver-logic:build")
 
   manifest {
