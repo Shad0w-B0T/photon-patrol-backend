@@ -18,6 +18,8 @@ dependencies {
   //Data
   implementation libs.hikari
   implementation libs.postgresql
+  implementation libs.database.influxdb
+
 
   //#-------- Tests
   //Access to schema

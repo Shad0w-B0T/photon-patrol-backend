@@ -15,6 +15,8 @@ spring-boot-starter-data-jpa = "org.springframework.boot:spring-boot-starter-dat
 spring-boot-starter-security = "org.springframework.boot:spring-boot-starter-security:3.1.4"
 spring-boot-starter-validation = "org.springframework.boot:spring-boot-starter-validation:3.1.4"
 
+database-influxdb = "org.influxdb:influxdb-java:2.24"
+
 hikari = 'com.zaxxer:HikariCP:5.0.1'
 rabbitmq = 'com.rabbitmq:amqp-client:5.19.0'
 hibernate = "org.hibernate.orm:hibernate-community-dialects:6.4.4.Final"
