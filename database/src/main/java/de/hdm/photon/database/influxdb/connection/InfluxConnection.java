@@ -3,7 +3,10 @@ package de.hdm.photon.database.influxdb.connection;
 import org.influxdb.InfluxDB;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public final class InfluxConnection extends AbstractInfluxConnection {
 
   @Autowired
