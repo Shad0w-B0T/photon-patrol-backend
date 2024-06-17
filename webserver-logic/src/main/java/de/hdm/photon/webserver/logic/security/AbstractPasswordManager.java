@@ -17,7 +17,6 @@ import java.util.Objects;
 public abstract class AbstractPasswordManager implements IPasswordManager {
 
   private final static @NotNull String FALLBACK_PASSWORD_STORAGE = "./security/pass.key";
-  private static final Logger log = LogManager.getLogger(AbstractPasswordManager.class);
 
   private final @NotNull MessageDigest messageDigest;
   private final @NotNull String passwordStorage;
