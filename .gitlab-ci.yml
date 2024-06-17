@@ -47,7 +47,7 @@ update-dependency-check:
   script:
     - gradle dependencyCheckUpdate --info
   cache:
-    key: "$CI_COMMIT_REF_SLUG"
+    key: "$CI_COMMIT_REF_NAME"
     paths:
       - .gradle
       - build/dependency-check-data
@@ -63,7 +63,7 @@ dependency-check:
     reports:
       dependency_scanning: build/reports/dependency-check-report.json
   cache:
-    key: "$CI_COMMIT_REF_SLUG"
+    key: "$CI_COMMIT_REF_NAME"
     paths:
       - .gradle
       - build/dependency-check-data
