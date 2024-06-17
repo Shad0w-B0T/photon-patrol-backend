@@ -1,4 +1,4 @@
-package de.hdm.photon.queue.application.heartbeat;
+package de.hdm.photon.logic.heartbeat;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

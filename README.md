@@ -63,6 +63,7 @@ The project was divided into two sub-projects. There is a queue application and 
 flowchart TD
   schema("schema")
   database("database")
+  logic("logic")
   queue-logic("queue-logic")
   queue-application("queue-application")
   web-logic("web-logic")
@@ -71,8 +72,10 @@ flowchart TD
   web-application == utilised ==> web-logic
   queue-application == utilised ==> queue-logic
 
-  web-logic == utilised ==> database
-  queue-logic == utilised ==> database
+  web-logic == utilised ==> logic
+  queue-logic == utilised ==> logic
+
+  logic == utilised ==> database
 
   database == utilised ==> schema
 ```

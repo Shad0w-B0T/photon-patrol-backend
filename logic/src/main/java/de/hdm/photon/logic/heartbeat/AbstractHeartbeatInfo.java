@@ -1,4 +1,4 @@
-package de.hdm.photon.queue.application.heartbeat;
+package de.hdm.photon.logic.heartbeat;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;

@@ -12,6 +12,7 @@ repositories {
 dependencies {
   implementation project(":schema")
   implementation project(":database")
+  implementation project(":logic")
 
   //Spring
   implementation libs.spring.boot.starter.parent
@@ -22,6 +23,7 @@ dependencies {
 
   testImplementation project(":schema")
   testImplementation project(":database")
+  testImplementation project(":logic")
 }
 
 test {

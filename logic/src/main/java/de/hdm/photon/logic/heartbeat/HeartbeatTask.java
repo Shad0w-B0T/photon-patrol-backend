@@ -1,4 +1,4 @@
-package de.hdm.photon.queue.application.heartbeat;
+package de.hdm.photon.logic.heartbeat;
 
 
 import lombok.extern.log4j.Log4j2;
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.TimerTask;
-import java.util.UUID;
 
 
 /**
