@@ -31,9 +31,7 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
     final Point.Builder pointBuilder = Point.measurement("temperature")
         .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
 
-    /*fields.forEach((string, o) -> {
-      pointBuilder.addField(string, o);
-    });*/
+    pointBuilder.fields(fields);
 
     final Point point = pointBuilder.build();
 
