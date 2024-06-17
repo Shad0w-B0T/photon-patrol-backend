@@ -59,7 +59,7 @@ dependency-check:
     - gradle dependencyCheckAnalyze --info
   artifacts:
     paths:
-      - build/reports/dependency-check-report.html
+      - build/reports/dependency-check-report.json
     reports:
       dependency_scanning: build/reports/dependency-check-report.json
   cache:
