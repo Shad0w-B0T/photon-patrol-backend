@@ -19,14 +19,15 @@ import java.util.List;
 @Component
 @Log4j2
 @NoArgsConstructor
-public class HardwareManager implements IHardwareAccess<IHardware> {
+public class HardwareManager implements IHardwareManager {
 
   @Autowired
   private HardwareHelper hardwareHelper;
 
   @Override
   @Transactional
-  public @NotNull IHardware createHardware(@Nullable String token,
+  public @NotNull IHardware createHardware(long loggingId,
+                                           @Nullable String token,
                                            @Nullable String macAddress,
                                            @Nullable Date hardwareAdded,
                                            @Nullable Date macAdded,
@@ -36,7 +37,7 @@ public class HardwareManager implements IHardwareAccess<IHardware> {
 
   @Override
   @Transactional
-  public @NotNull IHardware getHardware(long id) throws EntityAlreadyPresentException {
+  public @NotNull IHardware getHardware(long hardwareId) throws EntityNotPresentException {
     return null;
   }
 
@@ -72,7 +73,7 @@ public class HardwareManager implements IHardwareAccess<IHardware> {
 
   @Override
   @Transactional
-  public @NotNull IHardware updateHardware(long id,
+  public @NotNull IHardware updateHardware(long hardwareId,
                                            @Nullable String token,
                                            @Nullable String macAddress,
                                            @Nullable Date hardwareAdded,
@@ -83,42 +84,42 @@ public class HardwareManager implements IHardwareAccess<IHardware> {
 
   @Override
   @Transactional
-  public @NotNull IHardware updateToken(long id,
+  public @NotNull IHardware updateToken(long hardwareId,
                                         @Nullable String token) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateMacAddress(long id,
+  public @NotNull IHardware updateMacAddress(long hardwareId,
                                              @Nullable String macAddress) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateHardwareAdded(long id,
+  public @NotNull IHardware updateHardwareAdded(long hardwareId,
                                                 @Nullable Date hardwareAdded) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateMacAdded(long id,
+  public @NotNull IHardware updateMacAdded(long hardwareId,
                                            @Nullable Date macAdded) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public @NotNull IHardware updateTokenActive(long id,
+  public @NotNull IHardware updateTokenActive(long hardwareId,
                                               boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
   @Override
   @Transactional
-  public boolean deleteHardware(long id) throws EntityNotPresentException {
+  public boolean deleteHardware(long hardwareId) throws EntityNotPresentException {
     return false;
   }
 }

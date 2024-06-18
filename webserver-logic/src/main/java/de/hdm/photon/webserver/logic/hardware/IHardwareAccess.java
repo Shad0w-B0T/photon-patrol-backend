@@ -16,6 +16,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   //------------------------------------------------CREATE--------------------------------------------------------------
 
   /**
+   * @param loggingId     id of the logging object.
    * @param token         value to verify permissions.
    * @param macAddress    value of the mac address.
    * @param hardwareAdded date when the hardware was added.
@@ -27,7 +28,8 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  HARDWARE createHardware(@Nullable final String token,
+  HARDWARE createHardware(final long loggingId,
+                          @Nullable final String token,
                           @Nullable final String macAddress,
                           @Nullable final Date hardwareAdded,
                           @Nullable final Date macAdded,
@@ -39,12 +41,12 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   /**
    * Get a hardware object via id.
    *
-   * @param id the unique id of the hardware object.
+   * @param hardwareId the unique id of the hardware object.
    * @return hardware with the given id.
-   * @throws EntityAlreadyPresentException see {@link EntityAlreadyPresentException}
+   * @throws EntityNotPresentException see {@link EntityNotPresentException}
    */
   @NotNull
-  HARDWARE getHardware(final long id) throws EntityAlreadyPresentException;
+  HARDWARE getHardware(final long hardwareId) throws EntityNotPresentException;
 
 
   /**
@@ -100,7 +102,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   /**
    * This method updates a whole hardware object with the given parameters.
    *
-   * @param id            unique id of the hardware object.
+   * @param hardwareId            unique id of the hardware object.
    * @param token         value to verify permissions.
    * @param macAddress    value of the mac address.
    * @param hardwareAdded date when the hardware was added.
@@ -111,7 +113,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  HARDWARE updateHardware(final long id,
+  HARDWARE updateHardware(final long hardwareId,
                           @Nullable final String token,
                           @Nullable final String macAddress,
                           @Nullable final Date hardwareAdded,
@@ -121,66 +123,66 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   /**
    * This method updates the token with the given parameter.
    *
-   * @param id    the unique id of the hardware.
+   * @param hardwareId    the unique id of the hardware.
    * @param token value to verify permissions.
    * @return updated hardware object with updated token.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  HARDWARE updateToken(final long id,
+  HARDWARE updateToken(final long hardwareId,
                        @Nullable final String token) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the MAC address with the given parameter.
    *
-   * @param id         the unique id of the hardware.
+   * @param hardwareId         the unique id of the hardware.
    * @param macAddress value of the mac address.
    * @return hardware object with updated MAC address.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  HARDWARE updateMacAddress(final long id,
+  HARDWARE updateMacAddress(final long hardwareId,
                             @Nullable final String macAddress) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the date when the hardware was added with the given parameter.
    *
-   * @param id            the unique id of the hardware.
+   * @param hardwareId            the unique id of the hardware.
    * @param hardwareAdded date when the hardware was added.
    * @return hardware object with updated date of when the hardware was added.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  HARDWARE updateHardwareAdded(final long id,
+  HARDWARE updateHardwareAdded(final long hardwareId,
                                @Nullable final Date hardwareAdded) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the date when the MAC address was added with the given parameter.
    *
-   * @param id       the unique id of the hardware.
+   * @param hardwareId       the unique id of the hardware.
    * @param macAdded date when the mac address first was added.
    * @return hardware object with updated date of when the MAC was added.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  HARDWARE updateMacAdded(final long id,
+  HARDWARE updateMacAdded(final long hardwareId,
                           @Nullable final Date macAdded) throws EntityNotPresentException, FormatMismatchException;
 
   /**
    * This method updates the token whether it is active or not.
    *
-   * @param id            the unique id of the hardware.
+   * @param hardwareId            the unique id of the hardware.
    * @param tokenIsActive value whether the token is active or not.
    * @return hardware object with updated token.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  HARDWARE updateTokenActive(final long id,
+  HARDWARE updateTokenActive(final long hardwareId,
                              final boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException;
 
   //------------------------------------------------DELETE--------------------------------------------------------------
@@ -188,10 +190,10 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   /**
    * Deletes the hardware via id.
    *
-   * @param id the unique id of the hardware.
+   * @param hardwareId the unique id of the hardware.
    * @return true if the hardware was deleted.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    */
-  boolean deleteHardware(final long id) throws EntityNotPresentException;
+  boolean deleteHardware(final long hardwareId) throws EntityNotPresentException;
 
 }
