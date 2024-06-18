@@ -11,7 +11,7 @@ public final class SecurityFilterTest {
   @DisplayName("Test HeartbeatInfo Positive")
   public void testSecurityFilterPositive() {
     //Positive Tests
-    Assertions.assertDoesNotThrow(SecurityFilter::new);
+    Assertions.assertDoesNotThrow(() -> new SecurityFilter());
   }
 
   @Test
@@ -43,6 +43,8 @@ public final class SecurityFilterTest {
   @DisplayName("Test HeartbeatInfo Negative")
   public void testSecurityFilterNegative() {
     //Negative Tests
+    Assertions.assertThrows(NullPointerException.class, () -> new SecurityFilter(null));
+
     final ISecurityFilter securityFilter = new SecurityFilter();
 
     Assertions.assertThrows(NullPointerException.class, () -> {
