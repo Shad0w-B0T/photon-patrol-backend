@@ -6,56 +6,95 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 
+/**
+ * AbstractSecurityFilter provides an abstract implementation of the ISecurityFilter interface
+ * with common functionalities for managing and applying security rules.
+ */
 @Log4j2
 public abstract class AbstractSecurityFilter implements ISecurityFilter {
 
   private final @NotNull MultiValueMap<Class<?>, Predicate<Object>> ruleMap;
 
+  /**
+   * Default constructor initializing the rule map.
+   */
   protected AbstractSecurityFilter() {
     this.ruleMap = new LinkedMultiValueMap<>();
   }
 
+  /**
+   * Constructor that merges rules from another ISecurityFilter.
+   *
+   * @param includeFilter the ISecurityFilter to include rules from; can be null
+   */
+  protected AbstractSecurityFilter(@Nullable final ISecurityFilter includeFilter) {
+    this();
 
+    // Null check
+    Objects.requireNonNull(includeFilter);
+
+    this.ruleMap.putAll(includeFilter.ruleMap());
+    log.info("Merged a total of {} objects.", includeFilter.ruleMap().size());
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @SuppressWarnings("unchecked")
   public <TYPE> ISecurityFilter rule(@Nullable Class<TYPE> typeClass,
                                      @Nullable Predicate<TYPE> typePredicate) {
-    //Null check
+    // Null check
     Objects.requireNonNull(typeClass);
     Objects.requireNonNull(typePredicate);
 
-    //Add rule with cast.
+    // Add rule with cast.
     this.ruleMap.add(typeClass, o -> typePredicate.test((TYPE) o));
     log.info("Added rule to type={}.", typeClass.getSimpleName());
 
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public <TYPE> boolean check(@Nullable TYPE type) {
+    //Null check
+    Objects.requireNonNull(type);
+
     try {
       this.checkWithException(type);
       return true;
     } catch (final SecurityException exception) {
       return false;
+    } catch (final NullPointerException exception) {
+      return true;
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
+  @SuppressWarnings("unchecked")
   public <TYPE> void checkWithException(@Nullable TYPE type) throws SecurityException {
-    //Null check
+    // Null check
     Objects.requireNonNull(type);
 
     final Class<?> typeClass = type.getClass();
-    @Nullable final List<Predicate<Object>> predicateList = this.ruleMap.get(typeClass);
 
+    @Nullable final List<Predicate<Object>> predicateList = this.ruleMap.get(typeClass);
     if (predicateList == null || predicateList.isEmpty()) {
-      log.warn("No rules are defined for type={}.", typeClass);
+      log.warn("No rules are defined for type={}.", typeClass.getSimpleName());
       throw new NullPointerException("No rule for type="+typeClass+" defined.");
     }
 
@@ -70,5 +109,46 @@ public abstract class AbstractSecurityFilter implements ISecurityFilter {
     }
 
     log.info("Type={} with values is valid.", typeClass.getSimpleName());
+  }
+
+  /**
+   * Checks if a given object's fields pass the security rules defined for their types.
+   *
+   * @param <OBJECT> the type of the object to check
+   * @param object   the object to check; can be null
+   * @return true if all fields of the object pass the security rules, false otherwise
+   * @throws NullPointerException if the provided object is null
+   */
+  @Override
+  public <OBJECT> boolean checkObject(@Nullable OBJECT object) {
+    // Null check
+    Objects.requireNonNull(object);
+
+    final Class<?> typeClass = object.getClass();
+
+    for (final Field declaredField : typeClass.getDeclaredFields()) {
+      log.info("Checking field={} of object={}.", declaredField.getName(), typeClass.getSimpleName());
+      try {
+        declaredField.setAccessible(true);
+        final Object fieldValue = declaredField.get(object);
+
+        if (this.check(fieldValue)) {
+          continue;
+        }
+
+        log.warn("Security mismatch for field={} of object={}.", declaredField.getName(), typeClass.getSimpleName());
+        return false;
+      } catch (final IllegalAccessException ignored) {
+      }
+    }
+    return true;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public @NotNull Map<Class<?>, List<Predicate<Object>>> ruleMap() {
+    return this.ruleMap;
   }
 }
