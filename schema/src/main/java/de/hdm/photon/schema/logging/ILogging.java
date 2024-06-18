@@ -1,5 +1,6 @@
 package de.hdm.photon.schema.logging;
 
+import de.hdm.photon.schema.entity.Identifiable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
@@ -7,7 +8,7 @@ import java.util.Date;
 
 
 @Schema(implementation = LoggingRecord.class)
-public interface ILogging {
+public interface ILogging extends Identifiable {
 
   /**
    * @return the id of the object.
