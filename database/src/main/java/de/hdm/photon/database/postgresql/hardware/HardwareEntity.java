@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -52,7 +53,8 @@ public final class HardwareEntity implements IHardware {
    * Lesen: Weise eine HardwareEntity (one) to LoggingEntity (many) zu.
    * Man ist in der HardwareEntity Klasse und weist diese der LoggingEntity zu.
    */
-  @OneToMany(cascade=CascadeType.DETACH, mappedBy = "logging_entity")
+  @OneToMany(cascade=CascadeType.DETACH)
+  @JoinColumn(name = "hardware_id")
   private Set<LoggingEntity> loggingEntity;
 
   //Empty Constructor
