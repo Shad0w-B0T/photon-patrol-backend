@@ -1,28 +1,56 @@
 package de.hdm.photon.queue.application.task;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hdm.photon.logic.heartbeat.HeartbeatInfo;
+import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
+import de.hdm.photon.logic.security.io.ISecurityFilter;
+import de.hdm.photon.logic.security.io.SecurityFilter;
 import de.hdm.photon.queue.logic.connection.IRabbitConnection;
 import de.hdm.photon.queue.logic.connection.IRabbitSubscriber;
+import de.hdm.photon.queue.logic.event.MessageReceiveEvent;
 import de.hdm.photon.schema.exception.connection.RabbitConnectionException;
+import de.hdm.photon.schema.payload.IMessagePayload;
+import de.hdm.photon.schema.payload.ImmutableMessagePayload;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 @Log4j2
 @Component
 public final class QueueSubscriber {
   @Autowired
-  private HeartbeatInfo heartbeatInfo;
+  private ApplicationEventPublisher eventPublisher;
+  @Autowired
+  private IHeartbeatInfo heartbeatInfo;
   @Autowired
   private IRabbitConnection rabbitConnection;
   @Autowired
   private ObjectMapper objectMapper;
 
+  private final @NotNull Executor executor;
+  private final @NotNull ISecurityFilter securityFilter;
+
+  public QueueSubscriber() {
+    this.executor = Executors.newCachedThreadPool();
+    this.securityFilter = new SecurityFilter();
+  }
+
   @PostConstruct
   public void init() throws RabbitConnectionException {
+    this.securityFilter
+        .rule(String.class, s -> s.length()<=512)
+        .rule(Integer.class, integer -> integer>=0)
+        .rule(Long.class, aLong -> aLong>=0)
+        .rule(Float.class, aFloat -> aFloat>=0)
+        .rule(Double.class, aDouble -> aDouble>=0);
+
     final IRabbitSubscriber rabbitSubscriber = this.rabbitConnection.subscriber(true);
 
     rabbitSubscriber.subscribe(bytes -> {
@@ -33,9 +61,32 @@ public final class QueueSubscriber {
       }
 
       log.info("Data set received with the length of {} bytes. Message is being processed.", bytes.length);
-      System.out.println("Got: "+new String(bytes));
+      this.processMessage(bytes);
+
       this.heartbeatInfo.reset();
     });
     log.info("Subscribed to system, waiting for messages.");
+  }
+
+  /**
+   * Processes a message in a byte array by deserializing it, sanitizing it, and publishing an event.
+   *
+   * @param bytes the byte array containing the message; cannot be null
+   */
+  private void processMessage(final byte @NotNull [] bytes) {
+    this.executor.execute(() -> {
+      try {
+        final IMessagePayload messagePayload = this.objectMapper.readValue(bytes, ImmutableMessagePayload.class);
+
+        // Sanitize
+        this.securityFilter.checkObject(messagePayload);
+
+        // Execute event
+        this.eventPublisher.publishEvent(new MessageReceiveEvent(this, messagePayload));
+        log.info("Parsed message and passed to backend.");
+      } catch (final IOException exception) {
+        log.warn("Error while mapping payload: {}.", new String(bytes));
+      }
+    });
   }
 }
