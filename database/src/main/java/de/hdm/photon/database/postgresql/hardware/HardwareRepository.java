@@ -1,11 +1,11 @@
 package de.hdm.photon.database.postgresql.hardware;
 
 import de.hdm.photon.database.postgresql.logging.LoggingEntity;
+import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -16,29 +16,29 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
   /**
    * Query to check if the id exists.
    *
-   * @param id unique id of the entity.
+   * @param hardwareId unique id of the entity.
    * @return true if the entity with the id exists.
    */
-  boolean existsById(long id);
+  boolean existsById(long hardwareId);
 
 
   /**
    * Query to get an entity via id.
    *
-   * @param id value of the id.
+   * @param hardwareId value of the id.
    * @return an Optional if present. Null if no match.
    */
   @NotNull
-  Optional<LoggingEntity> findById(long id);
+  Optional<HardwareEntity> findById(long hardwareId);
 
 
   /**
    * Query to delete the entity via id.
    *
-   * @param id value of the id.
+   * @param hardwareId value of the id.
    * @return an int value of how many were deleted.
    */
-  int deleteById(long id);
+  int deleteById(long hardwareId);
 
   //------------------------------------------ Token -------------------------------------------------
 
@@ -150,4 +150,15 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
    */
   int deleteAllByMacAdded(@NotNull Date macAdded);
 
+
+  /**
+   * Get the hardware by id. If no match throw Exception.
+   *
+   * @param hardwareId id of the entity.
+   * @return hardware entity.
+   * @throws EntityNotPresentException if entity not present.
+   */
+  default @NotNull HardwareEntity hardwareElseThrow(final long hardwareId) throws EntityNotPresentException {
+    return this.findById(hardwareId).orElseThrow(() -> new EntityNotPresentException("No hardware entity with id ="+hardwareId+"present!"));
+  }
 }
