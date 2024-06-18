@@ -7,4 +7,5 @@ include 'webserver-application'
 include 'queue-logic'
 include 'queue-application'
 include 'logic'
+include 'pseudo-hardware'
 
