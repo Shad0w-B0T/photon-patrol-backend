@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 public class InfluxConfig {
 
     @Bean
-    public InfluxDB influxDB(@Value("§{influxdb.url}") @NotNull String url,
-                             @Value("§{influxdb.user}") @NotNull String user,
-                             @Value("§{influxdb.password}") @NotNull String password,
-                             @Value("§{influxdb.database}") @NotNull String database) {
+    public InfluxDB influxDB(@Value("${application.influxdb.url}") @NotNull String url,
+                             @Value("${application.influxdb.user}") @NotNull String user,
+                             @Value("${application.influxdb.password}") @NotNull String password,
+                             @Value("${application.influxdb.database}") @NotNull String database) {
         //Init db
         final InfluxDB connect = InfluxDBFactory.connect(url, user, password);
 

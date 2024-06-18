@@ -1,11 +1,6 @@
 [libraries]
 annotations = "org.jetbrains:annotations:24.0.1"
-common = "dev.dotspace:common:1.0.8.3"
 log4j = "org.apache.logging.log4j:log4j-core:2.20.0"
-guice = "com.google.inject:guice:7.0.0"
-guava = "com.google.guava:guava:32.1.1-jre"
-jackson-databind = "com.fasterxml.jackson.core:jackson-databind:2.15.2"
-jackson-core = "com.fasterxml.jackson.core:jackson-core:2.15.2"
 
 spring-boot-starter-parent = "org.springframework.boot:spring-boot-starter-parent:3.1.4"
 spring-boot-starter-web = "org.springframework.boot:spring-boot-starter-web:3.1.4"
@@ -36,4 +31,5 @@ reflections = "org.reflections:reflections:0.10.2"
 lombok = "io.freefair.lombok:8.1.0"
 spring = "org.springframework.boot:3.2.1"
 dependencymanagement = "io.spring.dependency-management:1.1.2"
-owasp = "org.owasp.dependencycheck:8.4.3"
+owasp = "org.owasp.dependencycheck:9.0.10"
+# 8.4.3

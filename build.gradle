@@ -46,6 +46,6 @@ allprojects {
 dependencyCheck {
   //failBuildOnCVSS = -1
   //suppressionFile = "dependency-check-suppressions.xml"
-  format = "JSON"
+  format = "ALL"
   outputDirectory = "build/reports/"
 }
