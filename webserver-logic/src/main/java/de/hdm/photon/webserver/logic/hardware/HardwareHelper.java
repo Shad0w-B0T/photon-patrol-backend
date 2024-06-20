@@ -39,6 +39,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
    */
   @Override
   @Transactional
+  @SuppressWarnings("all")
   public @NotNull HardwareEntity createHardware(final long loggingId,
                                                 @Nullable String token,
                                                 @Nullable String macAddress,
@@ -48,7 +49,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
 
     this.iAddressVerifier.validateMacAddress(macAddress);
     this.iAddressVerifier.validateContentOfMac(macAddress);
-    this.isPresent(macAddress);
+    this.macIsPresent(macAddress);
 
     log.info("Attempting to create a new hardware in logging with id: {}", loggingId);
 
@@ -154,7 +155,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
         macAdded);
 
     final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
-    this.isPresent(macAddress);
+    this.macIsPresent(macAddress);
 
     hardwareEntity.macAddress(macAddress);
     hardwareEntity.hardwareAdded(hardwareAdded);
@@ -238,7 +239,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
    * @throws EntityAlreadyPresentException If the hardware already exists.
    */
   @Transactional
-  protected void isPresent(@Nullable String macAddress) throws EntityAlreadyPresentException {
+  protected void macIsPresent(@Nullable String macAddress) throws EntityAlreadyPresentException {
     if (macAddress == null || macAddress.isBlank()) {
       throw new NullPointerException("MAC address is null!");
     }
