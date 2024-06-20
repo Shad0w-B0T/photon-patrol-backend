@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
@@ -35,9 +36,11 @@ public final class LoggingEntity implements ILogging {
   private long id;
 
   @Column(nullable=false, name="ip_address", length=100)
+  @Setter
   private String ipAddress;
 
   @Column(nullable=false, name="ip_timestamp")
+  @Setter
   private Date timestampOfIp;
 
   @ManyToOne
