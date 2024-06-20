@@ -103,7 +103,6 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * This method updates a whole hardware object with the given parameters.
    *
    * @param hardwareId            unique id of the hardware object.
-   * @param token         value to verify permissions.
    * @param macAddress    value of the mac address.
    * @param hardwareAdded date when the hardware was added.
    * @param macAdded      date when the mac address first was added.
@@ -114,24 +113,10 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    */
   @NotNull
   HARDWARE updateHardware(final long hardwareId,
-                          @Nullable final String token,
                           @Nullable final String macAddress,
                           @Nullable final Date hardwareAdded,
                           @Nullable final Date macAdded,
-                          final boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException;
-
-  /**
-   * This method updates the token with the given parameter.
-   *
-   * @param hardwareId    the unique id of the hardware.
-   * @param token value to verify permissions.
-   * @return updated hardware object with updated token.
-   * @throws EntityNotPresentException see {@link EntityNotPresentException}
-   * @throws FormatMismatchException       see {@link FormatMismatchException}
-   */
-  @NotNull
-  HARDWARE updateToken(final long hardwareId,
-                       @Nullable final String token) throws EntityNotPresentException, FormatMismatchException;
+                          final boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException;
 
   /**
    * This method updates the MAC address with the given parameter.
