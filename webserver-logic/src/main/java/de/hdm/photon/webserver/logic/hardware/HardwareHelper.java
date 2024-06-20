@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 @Log4j2
@@ -103,68 +104,130 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
         .toList();
   }
 
+  /**
+   * see {@link IHardwareAccess#getMacAdded(Date)}
+   */
   @Override
   @Transactional
   public @NotNull List<HardwareEntity> getMacAdded(Date macAdded) throws EntityNotPresentException {
-    return List.of();
+    return this.hardwareRepository
+        .findByMacAdded(macAdded)
+        .stream()
+        .toList();
   }
 
+  /**
+   * see {@link IHardwareAccess#getActiveToken(boolean)}
+   */
   @Override
   @Transactional
   public @NotNull List<HardwareEntity> getActiveToken(boolean tokenIsActive) throws EntityNotPresentException {
-    return List.of();
+    return this.hardwareRepository
+        .findByTokenIsActive(tokenIsActive)
+        .stream()
+        .toList();
   }
 
+  /**
+   * see {@link IHardwareAccess#updateHardware(long, String, Date, Date, boolean)}
+   */
   @Override
   @Transactional
   public @NotNull HardwareEntity updateHardware(long hardwareId,
-                                                @Nullable String token,
                                                 @Nullable String macAddress,
                                                 @Nullable Date hardwareAdded,
                                                 @Nullable Date macAdded,
-                                                boolean tokenIsActive) throws EntityNotPresentException {
-    return null;
+                                                boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException {
+
+    Objects.requireNonNull(macAddress);
+    Objects.requireNonNull(hardwareAdded);
+    Objects.requireNonNull(macAdded);
+
+    this.iAddressVerifier.validateMacAddress(macAddress);
+    this.iAddressVerifier.validateContentOfMac(macAddress);
+
+    log.info("Attempting to update hardware with id: '{}'. New mac address: '{}'. New date when the "+
+            "hardware was added: '{}'. New date when the mac was added: '{}'",
+        hardwareId,
+        macAddress,
+        hardwareAdded,
+        macAdded);
+
+    final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
+    this.isPresent(macAddress);
+
+    hardwareEntity.macAddress(macAddress);
+    hardwareEntity.hardwareAdded(hardwareAdded);
+    hardwareEntity.tokenIsActive(tokenIsActive);
+
+    final HardwareEntity updatedHardware = this.hardwareRepository.save(hardwareEntity);
+    log.info("Hardware with id: {} updated successfully.", hardwareId);
+    return updatedHardware;
   }
 
-  @Override
-  @Transactional
-  public @NotNull HardwareEntity updateToken(long hardwareId,
-                                             @Nullable String token) throws EntityNotPresentException {
-    return null;
-  }
-
+  /**
+   * see {@link IHardwareAccess#updateMacAddress(long, String)}
+   */
   @Override
   @Transactional
   public @NotNull HardwareEntity updateMacAddress(long hardwareId,
                                                   @Nullable String macAddress) throws EntityNotPresentException {
-    return null;
+    final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
+    hardwareEntity.macAddress(macAddress);
+    return this.hardwareRepository.save(hardwareEntity);
   }
 
+  /**
+   * see {@link IHardwareAccess#updateHardwareAdded(long, Date)}
+   */
   @Override
   @Transactional
   public @NotNull HardwareEntity updateHardwareAdded(long hardwareId,
                                                      @Nullable Date hardwareAdded) throws EntityNotPresentException {
-    return null;
+    final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
+    hardwareEntity.hardwareAdded(hardwareAdded);
+    return this.hardwareRepository.save(hardwareEntity);
   }
 
+  /**
+   * see {@link IHardwareAccess#updateMacAdded(long, Date)}
+   */
   @Override
   @Transactional
   public @NotNull HardwareEntity updateMacAdded(long hardwareId,
                                                 @Nullable Date macAdded) throws EntityNotPresentException {
-    return null;
+    final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
+    hardwareEntity.macAdded(macAdded);
+    return this.hardwareRepository.save(hardwareEntity);
   }
 
+  /**
+   * see {@link IHardwareAccess#updateTokenActive(long, boolean)}
+   */
   @Override
   @Transactional
   public @NotNull HardwareEntity updateTokenActive(long hardwareId,
                                                    boolean tokenIsActive) throws EntityNotPresentException {
-    return null;
+    final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
+    hardwareEntity.tokenIsActive(tokenIsActive);
+    return this.hardwareRepository.save(hardwareEntity);
   }
 
+  /**
+   * see {@link IHardwareAccess#deleteHardware(long)}
+   */
   @Override
   @Transactional
   public boolean deleteHardware(long hardwareId) throws EntityNotPresentException {
-    return false;
+    log.info("Attempting to delete Hardware with id: {}", hardwareId);
+
+    //Check if present.
+    this.getHardware(hardwareId);
+
+    this.hardwareRepository.deleteById(hardwareId);
+    log.info("Hardware with id {} was successfully deleted.", hardwareId);
+
+    return this.hardwareRepository.findById(hardwareId).isEmpty();
   }
 
 
