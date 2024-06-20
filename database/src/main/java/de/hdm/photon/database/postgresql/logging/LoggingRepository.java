@@ -1,6 +1,7 @@
 package de.hdm.photon.database.postgresql.logging;
 
 
+import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -85,4 +86,23 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
   Optional<LoggingEntity> findByIpAddressAndTimestampOfIp(@NotNull String ipAddress,
                                                           @NotNull Date timestamp);
 
+  /**
+   * Query to get a timestamp of the ip.
+   *
+   * @param timestamp date when the ip was added.
+   * @return an Optional if present. Null if no match.
+   */
+  @NotNull
+  Optional<LoggingEntity> findByTimestampOfIp(@NotNull Date timestamp);
+
+  /**
+   * Get the logging entity by id. If no match throw Exception.
+   *
+   * @param loggingId id of the entity.
+   * @return logging entity.
+   * @throws EntityNotPresentException if entity not present.
+   */
+  default @NotNull LoggingEntity loggingElseThrow(final long loggingId) throws EntityNotPresentException {
+    return this.findById(loggingId).orElseThrow(() -> new EntityNotPresentException("No logging entity with id ="+loggingId+"present!"));
+  }
 }

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springdoc.core.service.RequestBodyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
+
+import java.util.Date;
 import java.util.List;
 
 
@@ -122,7 +125,7 @@ public final class HardwareController {
               })
       })
   public @NotNull ResponseEntity<List<IHardware>> getMetricOfHardware(@PathVariable final long hardwareId)throws EntityNotPresentException{
-  //  return ResponseEntity.ok(this.hardwareManager.);
+   //return ResponseEntity.ok(this.hardwareManager.);
     return null;
   }
 
@@ -159,32 +162,7 @@ public final class HardwareController {
 
 
 
-  /**
-   * Retrieves the edit of a specific hardware.
-   *
-   * @param hardwareId The ID of the hardware to retrieve.
-   * @return .
-   * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
-   */
-  @GetMapping("/{id}/edit")
-  @ResponseBody
-  @Operation(
-      summary="Get edit of  a specific hardware.",
-      description="Method to get edit of a specific hardware.",
-      responses={
-          @ApiResponse(
-              responseCode="200",
-              description="List of edit was successfully retrieved.",
-              content={
-                  @Content(
-                      mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
-                  )
-              })
-      })
-  public @NotNull ResponseEntity<List<IHardware>> getEditOfHardware(@PathVariable final long hardwareId)throws EntityNotPresentException{
-    return null;
-  }
+
 
 
 
@@ -193,6 +171,12 @@ public final class HardwareController {
   /**
    * Creates a new hardware.
    *
+   * @param loggingId The ID of the loggingEntity to retrieve.
+   * @param token set the token.
+   * @param macAddress set the macAddress.
+   * @param hardwareAdded set the date of when the hardware was added.
+   * @param macAdded set the macAdded.
+   * @param tokenIsActive set the state of the token.
    * @return ResponseEntity containing the newly created hardware.
    * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
    */
@@ -212,31 +196,39 @@ public final class HardwareController {
                   )
               })
       })
-  public @NotNull ResponseEntity<List<IHardware>> createNewHardware()
-      throws EntityNotPresentException, EntityAlreadyPresentException {
-   // return ResponseEntity.ok(this.hardwareManager.createHardware());
-    return  null;
+  public @NotNull ResponseEntity<IHardware> createNewHardware(@PathVariable final long loggingId,
+                                                              @RequestBody @Nullable String token,
+                                                              @RequestBody @Nullable String macAddress,
+                                                              @RequestBody @Nullable Date hardwareAdded,
+                                                              @RequestBody @Nullable Date macAdded,
+                                                              @RequestBody boolean tokenIsActive)
+      throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+      return ResponseEntity.ok(this.hardwareManager.createHardware(loggingId, token, macAddress, hardwareAdded,
+          macAdded, tokenIsActive));
   }
 
   //-------------------------------------------------------PUT----------------------------------------------------------
 
   /**
-   * Update the state of the token in a specified hardware.
+   * Update the settings of a specified hardware.
    *
    * @param hardwareId The ID of the hardware to retrieve.
-   * @param tokenIsActive set the state of the token to active.
+   * @param macAddress change the macAddress.
+   * @param hardwareAdded change the date of when the hardware was added.
+   * @param macAdded change the macAdded.
+   * @param tokenIsActive change the state of the token.
    * @return ResponseEntity containing the updated state of a token.
    * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
    */
-  @PutMapping("/{id}/activate")
+  @PutMapping("/{id}/edit")
   @ResponseBody
   @Operation(
-      summary="update token state.",
-      description="Method to set state of token to active.",
+      summary="update hardware stats.",
+      description="Method to change the stats of a specific hardware.",
       responses={
           @ApiResponse(
               responseCode="200",
-              description="state of token was successfully activated.",
+              description="parameters were successfully changed.",
               content={
                   @Content(
                       mediaType=MediaType.APPLICATION_JSON_VALUE,
@@ -244,43 +236,14 @@ public final class HardwareController {
                   )
               })
       })
-  public @NotNull ResponseEntity<IHardware> updateTokenStateToActive(@PathVariable final long hardwareId,
-                                                                     @RequestBody final boolean tokenIsActive)
-      throws EntityNotPresentException, FormatMismatchException {
-    return ResponseEntity.ok(this.hardwareManager.updateTokenActive(hardwareId, tokenIsActive));
-  }
-
-
-
-  /**
-   * Update the state of the token in a specified hardware.
-   *
-   * @param hardwareId The ID of the hardware to retrieve.
-   * @param tokenIsDeactive set the state of the token to deactive.
-   * @return ResponseEntity containing the updated state of a token.
-   * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
-   */
-  @PutMapping("/{id}/deactivate")
-  @ResponseBody
-  @Operation(
-      summary="update token state.",
-      description="Method to set state of token to deactive.",
-      responses={
-          @ApiResponse(
-              responseCode="200",
-              description="state of token was successfully deactivated.",
-              content={
-                  @Content(
-                      mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
-                  )
-              })
-      })
-  public @NotNull ResponseEntity<IHardware> updateTokenStateToDeactive(@PathVariable final long hardwareId,
-                                                                       @RequestBody final boolean tokenIsDeactive)
-      throws EntityNotPresentException, FormatMismatchException {
-    //return ResponseEntity.ok(this.hardwareManager.updateTokenDeactive(hardwareId, tokenIsDeactive));
-    return null;
+  public @NotNull ResponseEntity<IHardware> updateHardware(@PathVariable final long hardwareId,
+                                                           @RequestBody @Nullable String macAddress,
+                                                           @RequestBody @Nullable Date hardwareAdded,
+                                                           @RequestBody @Nullable Date macAdded,
+                                                           @RequestBody final boolean tokenIsActive)
+      throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException {
+    return ResponseEntity.ok(this.hardwareManager.updateHardware(hardwareId, macAddress, hardwareAdded, macAdded,
+        tokenIsActive));
   }
   //-------------------------------------------------------DELETE-------------------------------------------------------
 
@@ -307,10 +270,9 @@ public final class HardwareController {
                   )
               })
       })
-  public @NotNull ResponseEntity<IResponseMessage> deleteSpecificHardware(@PathVariable final long hardwareId)
+  public @NotNull ResponseEntity<Boolean> deleteSpecificHardware(@PathVariable final long hardwareId)
       throws EntityNotPresentException {
- //   return ResponseEntity.ok(this.hardwareManager.deleteHardware(hardwareId));
-    return null;
+    return ResponseEntity.ok(this.hardwareManager.deleteHardware(hardwareId));
   }
 
 }
