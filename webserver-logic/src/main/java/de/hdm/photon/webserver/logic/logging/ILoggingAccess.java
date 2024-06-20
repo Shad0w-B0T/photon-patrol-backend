@@ -69,7 +69,7 @@ public interface ILoggingAccess<LOGGING extends ILogging> {
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    */
   @NotNull
-  LOGGING getTimestampOfIp(final Date timestampOfIp) throws EntityNotPresentException;
+  List<LOGGING> getTimestampOfIp(final Date timestampOfIp) throws EntityNotPresentException;
 
   //------------------------------------------------UPDATE--------------------------------------------------------------
 
@@ -86,7 +86,7 @@ public interface ILoggingAccess<LOGGING extends ILogging> {
   @NotNull
   LOGGING updateLogging(final long loggingId,
                         @Nullable final String ipAddress,
-                        @Nullable final Date timestampOfIp) throws EntityNotPresentException, FormatMismatchException;
+                        @Nullable final Date timestampOfIp) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException;
 
   /**
    * This method updates the ip address with the given parameter.
