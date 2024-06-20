@@ -154,7 +154,7 @@ public abstract class AbstractInfluxMapper implements IInfluxMapper {
                 contentField.set(type, object); // Set the field's value
               } catch (final IllegalArgumentException exception) {
                 // Error: wrong type
-                exception.printStackTrace();
+                log.warn("Can' use type for field={}.", series.getColumns().get(currentValue), exception);
               }
             }
 
