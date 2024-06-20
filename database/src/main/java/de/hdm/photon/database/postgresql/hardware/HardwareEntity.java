@@ -38,6 +38,7 @@ public final class HardwareEntity implements IHardware {
   private String macAddress;
 
   @Column(name="hardware_added")
+  @Setter
   private Date hardwareAdded;
 
   @Column(name="mac_added")
