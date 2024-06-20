@@ -74,12 +74,13 @@ public abstract class AbstractInfluxMapper implements IInfluxMapper {
         continue;
       }
 
+      //Ignore if annotation is not present.
+      if (!declaredField.isAnnotationPresent(InfluxValue.class)) {
+        continue;
+      }
+
       // Check if the field is annotated with @InfluxValue
       final InfluxValue influxValue = declaredField.getAnnotation(InfluxValue.class);
-
-      if (influxValue == null) {
-        continue; // If not annotated with @InfluxValue, skip the field
-      }
 
       // Add the field to contentFields map with the annotation's name as the key
       contentFields.put(influxValue.name(), declaredField);
