@@ -1,6 +1,5 @@
 package de.hdm.photon.database.postgresql.hardware;
 
-import de.hdm.photon.database.postgresql.logging.LoggingEntity;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -66,6 +65,16 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
    * @return an int value of how many were deleted.
    */
   int deleteByToken(@NotNull String token);
+
+
+  /**
+   * Query to get an entity if the token is active.
+   *
+   * @param tokenIsActive boolean whether the token is active.
+   * @return an Optional if present. Null if no match.
+   */
+  @NotNull
+  Optional<HardwareEntity> findByTokenIsActive(boolean tokenIsActive);
 
   //------------------------------------------ MAC -------------------------------------------------
 
