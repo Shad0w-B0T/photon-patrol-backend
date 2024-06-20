@@ -93,11 +93,11 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#getHardwareAdded(Date)}
+   * see {@link IHardwareAccess#getHardwareAddedList(Date)}
    */
   @Override
   @Transactional
-  public @NotNull List<HardwareEntity> getHardwareAdded(Date hardwareAdded) throws EntityNotPresentException {
+  public @NotNull List<HardwareEntity> getHardwareAddedList(Date hardwareAdded) throws EntityNotPresentException {
     return this.hardwareRepository
         .findByHardwareAdded(hardwareAdded)
         .stream()
@@ -105,11 +105,11 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#getMacAdded(Date)}
+   * see {@link IHardwareAccess#getMacAddedList(Date)}
    */
   @Override
   @Transactional
-  public @NotNull List<HardwareEntity> getMacAdded(Date macAdded) throws EntityNotPresentException {
+  public @NotNull List<HardwareEntity> getMacAddedList(Date macAdded) throws EntityNotPresentException {
     return this.hardwareRepository
         .findByMacAdded(macAdded)
         .stream()
@@ -117,11 +117,11 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#getActiveToken(boolean)}
+   * see {@link IHardwareAccess#getActiveTokenList(boolean)}
    */
   @Override
   @Transactional
-  public @NotNull List<HardwareEntity> getActiveToken(boolean tokenIsActive) throws EntityNotPresentException {
+  public @NotNull List<HardwareEntity> getActiveTokenList(boolean tokenIsActive) throws EntityNotPresentException {
     return this.hardwareRepository
         .findByTokenIsActive(tokenIsActive)
         .stream()
