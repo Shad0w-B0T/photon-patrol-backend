@@ -74,18 +74,10 @@ public class HardwareManager implements IHardwareManager {
   @Override
   @Transactional
   public @NotNull IHardware updateHardware(long hardwareId,
-                                           @Nullable String token,
                                            @Nullable String macAddress,
                                            @Nullable Date hardwareAdded,
                                            @Nullable Date macAdded,
                                            boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException {
-    return null;
-  }
-
-  @Override
-  @Transactional
-  public @NotNull IHardware updateToken(long hardwareId,
-                                        @Nullable String token) throws EntityNotPresentException, FormatMismatchException {
     return null;
   }
 
