@@ -13,9 +13,20 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 
+/**
+ * Configuration class for setting up MQTT client.
+ */
 @Configuration
 public class ApplicationConfig {
-
+  /**
+   * Creates and configures an MQTT client bean.
+   *
+   * @param url      the URL of the MQTT broker
+   * @param user     the username for the MQTT broker
+   * @param password the password for the MQTT broker
+   * @return a configured {@link IMqttClient} instance
+   * @throws MqttException if any MQTT error occurs
+   */
   @Bean
   public @NotNull IMqttClient client(@Value("${application.mqtt.url}") @NotNull final String url,
                                      @Value("${application.mqtt.user}") @NotNull final String user,

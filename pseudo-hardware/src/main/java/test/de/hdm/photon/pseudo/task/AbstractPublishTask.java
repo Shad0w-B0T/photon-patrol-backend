@@ -18,6 +18,10 @@ import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 
 
+
+/**
+ * Abstract class for publishing tasks using MQTT.
+ */
 @Log4j2
 public abstract class AbstractPublishTask extends TimerTask {
 
@@ -29,13 +33,24 @@ public abstract class AbstractPublishTask extends TimerTask {
   private final @NotNull String token;
   private final @NotNull Map<String, Object> values;
 
+  /**
+   * Constructs an AbstractPublishTask with the given parameters.
+   *
+   * @param objectMapper  the ObjectMapper for JSON processing
+   * @param mqttClient    the MQTT client for publishing messages
+   * @param topic         the MQTT topic to publish to
+   * @param macAddress    the MAC address for the message payload
+   * @param token         the token for the message payload
+   * @param valuePattern  the JSON string representing the value pattern
+   * @throws JsonProcessingException if the valuePattern cannot be processed
+   */
   protected AbstractPublishTask(@Nullable final ObjectMapper objectMapper,
                                 @Nullable final IMqttClient mqttClient,
                                 @Nullable final String topic,
                                 @Nullable final String macAddress,
                                 @Nullable final String token,
                                 @Nullable final String valuePattern) throws JsonProcessingException {
-    //Null check
+    // Null check
     Objects.requireNonNull(objectMapper);
     Objects.requireNonNull(mqttClient);
     Objects.requireNonNull(topic);
@@ -52,6 +67,9 @@ public abstract class AbstractPublishTask extends TimerTask {
     this.values = this.objectMapper.readValue(valuePattern, PatternMap.class);
   }
 
+  /**
+   * Executes the task to publish a message to the MQTT topic.
+   */
   @Override
   public void run() {
     final Map<String, Object> objectMap = new HashMap<>();
@@ -81,7 +99,9 @@ public abstract class AbstractPublishTask extends TimerTask {
     }
   }
 
+  /**
+   * Private static class for pattern map used in value processing.
+   */
   private static class PatternMap extends HashMap<String, Object> {
-
   }
 }
