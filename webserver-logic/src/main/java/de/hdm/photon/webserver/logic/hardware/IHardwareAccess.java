@@ -75,7 +75,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    */
   @NotNull
-  List<HARDWARE> getHardwareAdded(final Date hardwareAdded) throws EntityNotPresentException;
+  List<HARDWARE> getHardwareAddedList(final Date hardwareAdded) throws EntityNotPresentException;
 
   /**
    * Get a list of all hardware objects when the mac was added.
@@ -85,7 +85,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    */
   @NotNull
-  List<HARDWARE> getMacAdded(final Date macAdded) throws EntityNotPresentException;
+  List<HARDWARE> getMacAddedList(final Date macAdded) throws EntityNotPresentException;
 
   /**
    * Get a list of all hardware objects which have an active/inactive token.
@@ -95,7 +95,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    */
   @NotNull
-  List<HARDWARE> getActiveToken(final boolean tokenIsActive) throws EntityNotPresentException;
+  List<HARDWARE> getActiveTokenList(final boolean tokenIsActive) throws EntityNotPresentException;
 
   //------------------------------------------------UPDATE--------------------------------------------------------------
 
