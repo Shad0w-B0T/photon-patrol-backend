@@ -16,24 +16,15 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   //------------------------------------------------CREATE--------------------------------------------------------------
 
   /**
-   * @param loggingId     id of the logging object.
-   * @param token         value to verify permissions.
-   * @param macAddress    value of the mac address.
-   * @param hardwareAdded date when the hardware was added.
-   * @param macAdded      date when the mac address first was added.
-   * @param tokenIsActive value whether the token is active or not.
-   * @return a new hardware object (hardware interface or hardware entity).
-   * @throws EntityNotPresentException     see {@link EntityNotPresentException}.
+   * Create a new empty hardware object.
+   *
+   * @return a new hardware object.
+   * @throws EntityNotPresentException see {@link EntityNotPresentException}.
    * @throws EntityAlreadyPresentException see {@link EntityAlreadyPresentException}.
-   * @throws FormatMismatchException       see {@link FormatMismatchException}
+   * @throws FormatMismatchException see {@link FormatMismatchException}
    */
   @NotNull
-  HARDWARE createHardware(final long loggingId,
-                          @Nullable final String token,
-                          @Nullable final String macAddress,
-                          @Nullable final Date hardwareAdded,
-                          @Nullable final Date macAdded,
-                          final boolean tokenIsActive) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException;
+  HARDWARE createHardware() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException;
 
 
   //--------------------------------------------------READ--------------------------------------------------------------
