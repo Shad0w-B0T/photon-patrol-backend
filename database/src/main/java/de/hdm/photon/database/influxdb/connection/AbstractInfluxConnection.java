@@ -1,8 +1,5 @@
 package de.hdm.photon.database.influxdb.connection;
 
-import de.hdm.photon.database.influxdb.annoation.InfluxMeasurement;
-import de.hdm.photon.database.influxdb.annoation.InfluxTime;
-import de.hdm.photon.database.influxdb.annoation.InfluxValue;
 import de.hdm.photon.database.influxdb.entity.InfluxHardwareEntity;
 import de.hdm.photon.database.influxdb.mapper.IInfluxMapper;
 import de.hdm.photon.database.influxdb.mapper.InfluxMapper;
@@ -10,19 +7,9 @@ import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
-import org.influxdb.dto.QueryResult.Series;
-import org.influxdb.impl.InfluxDBMapper;
-import org.influxdb.impl.InfluxDBResultMapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
