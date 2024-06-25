@@ -17,17 +17,16 @@ public interface ILoggingAccess<LOGGING extends ILogging> {
   //------------------------------------------------CREATE--------------------------------------------------------------
 
   /**
+   * Create a logging object
+   *
    * @param ipAddress     value of the ip.
-   * @param timestampOfIp value of the timestamp to the ip.
    * @return a new logging object (logging interface or logging entity).
    * @throws EntityNotPresentException     see {@link EntityNotPresentException}.
    * @throws EntityAlreadyPresentException see {@link EntityAlreadyPresentException}.
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  LOGGING createLogging(final long hardwareId,
-                        @Nullable String ipAddress,
-                        @Nullable Date timestampOfIp) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException;
+  LOGGING createLogging(@Nullable String ipAddress) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException;
 
 
   //--------------------------------------------------READ--------------------------------------------------------------

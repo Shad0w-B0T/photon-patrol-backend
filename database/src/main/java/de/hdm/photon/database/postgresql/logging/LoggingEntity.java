@@ -52,10 +52,8 @@ public final class LoggingEntity implements ILogging {
   }
 
   //Constructor
-  public LoggingEntity(final long id,
-                       final String ipAddress,
+  public LoggingEntity(final String ipAddress,
                        final Date timestampOfIp) {
-    this.id = id;
     this.ipAddress = ipAddress;
     this.timestampOfIp = timestampOfIp;
   }

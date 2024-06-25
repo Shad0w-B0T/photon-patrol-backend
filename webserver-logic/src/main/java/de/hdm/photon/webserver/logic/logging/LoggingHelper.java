@@ -30,25 +30,26 @@ public class LoggingHelper implements ILoggingAccess<LoggingEntity> {
 
 
   /**
-   * see {@link ILoggingAccess#createLogging(long, String, Date)}
+   * see {@link ILoggingAccess#createLogging(String)}
    */
   @Override
   @Transactional
   @SuppressWarnings("all")
-  public @NotNull LoggingEntity createLogging(long hardwareId,
-                                              @Nullable String ipAddress,
-                                              @Nullable Date timestampOfIp) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+  public @NotNull LoggingEntity createLogging(@Nullable String ipAddress) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+
+    log.info("Attempting to create a new logging object.");
+    log.debug("Validating if the ip address is valid.");
     this.addressVerifier.validateIpAddress(ipAddress);
     this.addressVerifier.validateContentOfIP(ipAddress);
+
+    log.debug("Creating a timestamp for the ip.");
+    final Date timestampOfIp = new Date();
+
     this.ipAndTimestampIsPresent(ipAddress, timestampOfIp);
 
+    final LoggingEntity loggingEntity = new LoggingEntity(ipAddress, timestampOfIp);
 
-    log.info("Attempting to create a new logging object with id: {}", hardwareId);
-
-    final LoggingEntity loggingEntity = new LoggingEntity(hardwareId, ipAddress, timestampOfIp);
-
-    log.info("New logging entity successfully created with the id: {}", hardwareId);
-
+    log.info("New logging entity successfully created: {}", loggingEntity.toString());
     return this.loggingRepository.save(loggingEntity);
   }
 
