@@ -3,12 +3,14 @@ package de.hdm.photon.logic.utils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
+@Component
 public final class TokenGenerator {
   //Store alphabet chars
   private final static @NotNull String ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";

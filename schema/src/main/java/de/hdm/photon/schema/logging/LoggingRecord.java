@@ -1,7 +1,7 @@
 package de.hdm.photon.schema.logging;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 

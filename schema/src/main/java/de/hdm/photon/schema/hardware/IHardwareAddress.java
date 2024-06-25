@@ -1,8 +1,7 @@
 package de.hdm.photon.schema.hardware;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.lang.Nullable;
-
+import org.jetbrains.annotations.Nullable;
 
 public interface IHardwareAddress {
 
