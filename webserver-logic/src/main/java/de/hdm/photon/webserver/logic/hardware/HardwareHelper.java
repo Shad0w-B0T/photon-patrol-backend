@@ -2,13 +2,11 @@ package de.hdm.photon.webserver.logic.hardware;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.logging.LoggingEntity;
 import de.hdm.photon.logic.utils.TokenGenerator;
 import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.webserver.logic.check.IAddressVerifier;
-import de.hdm.photon.webserver.logic.logging.ILoggingAccess;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +43,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
     final boolean tokenIsActive = true;
     final HardwareEntity hardwareEntity = new HardwareEntity(token, null, hardwareAdded, null, tokenIsActive);
 
-    log.info("New hardware created successfully: {}", hardwareEntity);
+    log.info("New hardware successfully created: {}", hardwareEntity.toString());
     return this.hardwareRepository.save(hardwareEntity);
   }
 
