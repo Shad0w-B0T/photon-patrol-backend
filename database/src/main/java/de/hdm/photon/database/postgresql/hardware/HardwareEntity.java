@@ -63,13 +63,11 @@ public final class HardwareEntity implements IHardware {
   }
 
   //Constructor
-  public HardwareEntity(final long id,
-                        final String token,
+  public HardwareEntity(final String token,
                         final String macAddress,
                         final Date hardwareAdded,
                         final Date macAdded,
                         final boolean tokenIsActive) {
-    this.id = id;
     this.token = token;
     this.macAddress = macAddress;
     this.hardwareAdded = hardwareAdded;
