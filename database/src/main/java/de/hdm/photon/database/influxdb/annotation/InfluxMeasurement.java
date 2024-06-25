@@ -1,4 +1,4 @@
-package de.hdm.photon.database.influxdb.annoation;
+package de.hdm.photon.database.influxdb.annotation;
 
 
 import java.lang.annotation.ElementType;
