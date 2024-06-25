@@ -101,68 +101,6 @@ public final class HardwareController {
 
 
 
-  /**
-   * Retrieves the metric of a specific hardware.
-   *
-   * @param hardwareId The ID of the hardware to retrieve.
-   * @return ResponseEntity containing a list of metrics from the specific hardware.
-   * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
-   */
-  @GetMapping("/{id}/metric")
-  @ResponseBody
-  @Operation(
-      summary="Get all metric of hardware.",
-      description="Method to get all metric of a specific hardware.",
-      responses={
-          @ApiResponse(
-              responseCode="200",
-              description="List of all metric was successfully retrieved.",
-              content={
-                  @Content(
-                      mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
-                  )
-              })
-      })
-  public @NotNull ResponseEntity<List<IHardware>> getMetricOfHardware(@PathVariable final long hardwareId)throws EntityNotPresentException{
-   //return ResponseEntity.ok(this.hardwareManager.);
-    return null;
-  }
-
-
-
-  /**
-   * Retrieves a specific metric of a hardware.
-   *
-   * @param hardwareId The ID of the hardware to retrieve.
-   * @param specificMetric to retrieve the specific metric of the hardware.
-   * @return ResponseEntity containing specific metric of a hardware.
-   * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
-   */
-  @GetMapping("/{id}/metric/{metrics}")
-  @ResponseBody
-  @Operation(
-      summary="Get a specific metric of hardware.",
-      description="Method to get a specific metric of a hardware.",
-      responses={
-          @ApiResponse(
-              responseCode="200",
-              description="List of a specific metric was successfully retrieved.",
-              content={
-                  @Content(
-                      mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
-                  )
-              })
-      })
-  public @NotNull ResponseEntity<List<IHardware>> getSpecificMetricOfHardware(@PathVariable final long hardwareId,
-                                                                              @PathVariable final long specificMetric)throws EntityNotPresentException{
-    return null;
-  }
-
-
-
-
 
 
 
@@ -220,7 +158,7 @@ public final class HardwareController {
    * @return ResponseEntity containing the updated state of a token.
    * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
    */
-  @PutMapping("/{id}/edit")
+  @PutMapping("/{id}")
   @ResponseBody
   @Operation(
       summary="update hardware stats.",
