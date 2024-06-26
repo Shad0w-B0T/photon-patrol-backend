@@ -1,14 +1,14 @@
 package de.hdm.photon.webserver.application.web.v1.hardware;
 
 
+import de.hdm.photon.logic.hardware.HardwareManager;
+import de.hdm.photon.logic.hardware.IHardwareManager;
 import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.webserver.application.web.controller.AbstractWebController;
 import de.hdm.photon.webserver.application.web.controller.IControllerMessage;
-import de.hdm.photon.webserver.logic.hardware.HardwareManager;
-import de.hdm.photon.webserver.logic.hardware.IHardwareManager;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springdoc.core.service.RequestBodyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +42,6 @@ import java.util.List;
 public final class HardwareController extends AbstractWebController {
   @Autowired
   private IHardwareManager hardwareManager;
-  @Autowired
-  private RequestBodyService requestBodyBuilder;
 
   //-------------------------------------------------------GET----------------------------------------------------------
 
