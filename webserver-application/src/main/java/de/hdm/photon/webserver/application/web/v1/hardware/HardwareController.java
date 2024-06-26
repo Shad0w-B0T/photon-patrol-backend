@@ -5,6 +5,8 @@ import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
+import de.hdm.photon.webserver.application.web.controller.AbstractWebController;
+import de.hdm.photon.webserver.application.web.controller.IControllerMessage;
 import de.hdm.photon.webserver.logic.hardware.HardwareManager;
 import de.hdm.photon.webserver.logic.hardware.IHardwareManager;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,7 +40,7 @@ import java.util.List;
 @Log4j2
 @RequestMapping("/api/v1/hardware")
 @Tag(name="Hardware Endpoint", description="Manipulate Hardware.")
-public final class HardwareController {
+public final class HardwareController extends AbstractWebController {
   @Autowired
   private IHardwareManager hardwareManager;
   @Autowired
@@ -68,7 +70,7 @@ public final class HardwareController {
               })
       })
   public @NotNull ResponseEntity<List<IHardware>> getHardware() {
-    return ResponseEntity.ok(this.hardwareManager.getHardwareList());
+    return this.body(200, this.hardwareManager.getHardwareList());
   }
 
 
@@ -96,7 +98,7 @@ public final class HardwareController {
               })
       })
   public @NotNull ResponseEntity<IHardware> getSpecificHardware(@PathVariable(name="id") final long hardwareId) throws EntityNotPresentException {
-    return ResponseEntity.ok(this.hardwareManager.getHardware(hardwareId));
+    return this.body(200, this.hardwareManager.getHardware(hardwareId));
   }
 
 
@@ -126,7 +128,7 @@ public final class HardwareController {
               })
       })
   public @NotNull ResponseEntity<IHardware> createHardware() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
-    return ResponseEntity.ok(this.hardwareManager.createHardware());
+    return this.body(201, this.hardwareManager.createHardware());
   }
 
   //-------------------------------------------------------PUT----------------------------------------------------------
@@ -164,8 +166,8 @@ public final class HardwareController {
                                                            @RequestBody @Nullable Date macAdded,
                                                            @RequestBody final boolean tokenIsActive)
       throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException {
-    return ResponseEntity.ok(this.hardwareManager.updateHardware(hardwareId, macAddress, hardwareAdded, macAdded,
-        tokenIsActive));
+    return this.body(200,
+        this.hardwareManager.updateHardware(hardwareId, macAddress, hardwareAdded, macAdded, tokenIsActive));
   }
   //-------------------------------------------------------DELETE-------------------------------------------------------
 
@@ -188,13 +190,17 @@ public final class HardwareController {
               content={
                   @Content(
                       mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
+                      array=@ArraySchema(schema=@Schema(implementation=IControllerMessage.class))
                   )
               })
       })
-  public @NotNull ResponseEntity<Boolean> deleteSpecificHardware(@PathVariable(name="id") final long hardwareId)
+  public @NotNull ResponseEntity<IControllerMessage> deleteSpecificHardware(@PathVariable(name="id") final long hardwareId)
       throws EntityNotPresentException {
-    return ResponseEntity.ok(this.hardwareManager.deleteHardware(hardwareId));
+    if (this.hardwareManager.deleteHardware(hardwareId)) {
+      return this.successMessage(200, String.format("Successfully deleted hardware %s.", hardwareId));
+    }
+
+    return this.errorMessage(500, String.format("Error while deleting hardware %s.", hardwareId));
   }
 
 }
