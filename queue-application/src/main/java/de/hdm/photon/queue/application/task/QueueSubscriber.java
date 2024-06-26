@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilter;
+import de.hdm.photon.logic.security.io.SecurityRule;
 import de.hdm.photon.queue.logic.connection.IRabbitConnection;
 import de.hdm.photon.queue.logic.connection.IRabbitSubscriber;
 import de.hdm.photon.queue.logic.event.MessageReceiveEvent;
@@ -46,10 +47,10 @@ public final class QueueSubscriber {
   public void init() throws RabbitConnectionException {
     this.securityFilter
         .rule(String.class, s -> s.length()<=512)
-        .rule(Integer.class, integer -> integer>=0)
-        .rule(Long.class, aLong -> aLong>=0)
-        .rule(Float.class, aFloat -> aFloat>=0)
-        .rule(Double.class, aDouble -> aDouble>=0);
+        .rule(Integer.class, SecurityRule.INT_POSITIVE)
+        .rule(Long.class, SecurityRule.LONG_POSITIVE)
+        .rule(Float.class, SecurityRule.FLOAT_POSITIVE)
+        .rule(Double.class, SecurityRule.DOUBLE_POSITIVE);
 
     final IRabbitSubscriber rabbitSubscriber = this.rabbitConnection.subscriber(true);
 
@@ -83,7 +84,7 @@ public final class QueueSubscriber {
 
         // Execute event
         this.eventPublisher.publishEvent(new MessageReceiveEvent(this, messagePayload));
-        log.info("Parsed message and passed to backend.");
+        log.debug("Parsed message and passed to backend.");
       } catch (final IOException exception) {
         log.warn("Error while mapping payload: {}.", new String(bytes));
       }
