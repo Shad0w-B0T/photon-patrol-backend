@@ -24,14 +24,12 @@ public class LoggingManager implements ILoggingAccess<ILogging> {
   private LoggingHelper loggingHelper;
 
   /**
-   * see {@link ILoggingAccess#createLogging(long, String, Date)}
+   * see {@link ILoggingAccess#createLogging(String)}
    */
   @Override
   @Transactional
-  public @NotNull ILogging createLogging(long hardwareId,
-                                         @Nullable String ipAddress,
-                                         @Nullable Date timestampOfIp) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
-    return LoggingFactory.convertToRecord(this.loggingHelper.createLogging(hardwareId, ipAddress, timestampOfIp));
+  public @NotNull ILogging createLogging(@Nullable String ipAddress) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+    return LoggingFactory.convertToRecord(this.loggingHelper.createLogging(ipAddress));
   }
 
   /**

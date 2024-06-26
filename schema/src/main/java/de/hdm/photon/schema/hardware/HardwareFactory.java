@@ -1,9 +1,8 @@
 package de.hdm.photon.schema.hardware;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.lang.Nullable;
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -27,11 +26,9 @@ public final class HardwareFactory {
                                                   @Nullable String macAddress,
                                                   @Nullable Date hardwareAdded,
                                                   @Nullable Date macAdded,
-                                                  @Nullable boolean tokenIsActive) {
+                                                  boolean tokenIsActive) {
     Objects.requireNonNull(token);
-    Objects.requireNonNull(macAddress);
     Objects.requireNonNull(hardwareAdded);
-    Objects.requireNonNull(macAdded);
 
     final IHardware hardware = new HardwareRecord(id, token, macAddress, hardwareAdded, macAdded, tokenIsActive);
     log.debug("The hardware object with the id: {} was successfully created.", hardware.id());

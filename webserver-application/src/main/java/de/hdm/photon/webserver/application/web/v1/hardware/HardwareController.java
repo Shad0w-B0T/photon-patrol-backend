@@ -2,8 +2,10 @@ package de.hdm.photon.webserver.application.web.v1.hardware;
 
 
 import de.hdm.photon.schema.exception.auth.FormatMismatchException;
+import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
+import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
-import de.hdm.photon.webserver.application.web.response.IResponseMessage;
+import de.hdm.photon.webserver.logic.hardware.HardwareManager;
 import de.hdm.photon.webserver.logic.hardware.IHardwareManager;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -27,8 +29,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
-import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 
 import java.util.Date;
 import java.util.List;
@@ -108,13 +108,8 @@ public final class HardwareController {
 
   /**
    * Creates a new hardware.
+   * see {@link HardwareManager#createHardware()}
    *
-   * @param loggingId The ID of the loggingEntity to retrieve.
-   * @param token set the token.
-   * @param macAddress set the macAddress.
-   * @param hardwareAdded set the date of when the hardware was added.
-   * @param macAdded set the macAdded.
-   * @param tokenIsActive set the state of the token.
    * @return ResponseEntity containing the newly created hardware.
    * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
    */
@@ -134,15 +129,8 @@ public final class HardwareController {
                   )
               })
       })
-  public @NotNull ResponseEntity<IHardware> createNewHardware(@PathVariable final long loggingId,
-                                                              @RequestBody @Nullable String token,
-                                                              @RequestBody @Nullable String macAddress,
-                                                              @RequestBody @Nullable Date hardwareAdded,
-                                                              @RequestBody @Nullable Date macAdded,
-                                                              @RequestBody boolean tokenIsActive)
-      throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
-      return ResponseEntity.ok(this.hardwareManager.createHardware(loggingId, token, macAddress, hardwareAdded,
-          macAdded, tokenIsActive));
+  public @NotNull ResponseEntity<IHardware> createHardware() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+    return ResponseEntity.ok(this.hardwareManager.createHardware());
   }
 
   //-------------------------------------------------------PUT----------------------------------------------------------

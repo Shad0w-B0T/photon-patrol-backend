@@ -2,8 +2,7 @@ package de.hdm.photon.schema.hardware;
 
 import de.hdm.photon.schema.entity.Identifiable;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.lang.Nullable;
-
+import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 
 @Schema(implementation = HardwareRecord.class)

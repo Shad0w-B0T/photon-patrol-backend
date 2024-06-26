@@ -1,5 +1,6 @@
 package de.hdm.photon.webserver.logic.hardware;
 
+import de.hdm.photon.logic.utils.TokenGenerator;
 import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
@@ -26,17 +27,12 @@ public class HardwareManager implements IHardwareManager {
   private HardwareHelper hardwareHelper;
 
   /**
-   * see {@link IHardwareAccess#createHardware(long, String, String, Date, Date, boolean)}
+   * see {@link IHardwareAccess#createHardware()}
    */
   @Override
   @Transactional
-  public @NotNull IHardware createHardware(long loggingId,
-                                           @Nullable String token,
-                                           @Nullable String macAddress,
-                                           @Nullable Date hardwareAdded,
-                                           @Nullable Date macAdded,
-                                           boolean tokenIsActive) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
-    return HardwareFactory.convertToRecord(this.hardwareHelper.createHardware(loggingId, token, macAddress, hardwareAdded, macAdded, tokenIsActive));
+  public @NotNull IHardware createHardware() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+    return HardwareFactory.convertToRecord(this.hardwareHelper.createHardware());
   }
 
   /**

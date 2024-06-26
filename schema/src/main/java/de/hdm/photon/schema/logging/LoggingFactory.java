@@ -1,9 +1,8 @@
 package de.hdm.photon.schema.logging;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.lang.Nullable;
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 import java.util.Objects;
 

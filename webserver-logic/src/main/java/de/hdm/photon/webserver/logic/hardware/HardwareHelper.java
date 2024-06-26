@@ -2,12 +2,11 @@ package de.hdm.photon.webserver.logic.hardware;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.logging.LoggingEntity;
+import de.hdm.photon.logic.utils.TokenGenerator;
 import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.webserver.logic.check.IAddressVerifier;
-import de.hdm.photon.webserver.logic.logging.ILoggingAccess;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -30,35 +29,21 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   @Autowired
   private IAddressVerifier iAddressVerifier;
 
-  @Autowired
-  private ILoggingAccess<LoggingEntity> loggingHelper;
-
-
   /**
-   * see {@link IHardwareAccess#createHardware(long, String, String, Date, Date, boolean)}
+   * see {@link IHardwareAccess#createHardware()}
    */
   @Override
   @Transactional
-  @SuppressWarnings("all")
-  public @NotNull HardwareEntity createHardware(final long loggingId,
-                                                @Nullable String token,
-                                                @Nullable String macAddress,
-                                                @Nullable Date hardwareAdded,
-                                                @Nullable Date macAdded,
-                                                boolean tokenIsActive) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+  public @NotNull HardwareEntity createHardware() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
 
-    this.iAddressVerifier.validateMacAddress(macAddress);
-    this.iAddressVerifier.validateContentOfMac(macAddress);
-    this.macIsPresent(macAddress);
+    log.info("Attempting to create a new hardware object.");
 
-    log.info("Attempting to create a new hardware in logging with id: {}", loggingId);
+    final String token = TokenGenerator.randomString(64);
+    final Date hardwareAdded = new Date();
+    final boolean tokenIsActive = true;
+    final HardwareEntity hardwareEntity = new HardwareEntity(token, null, hardwareAdded, null, tokenIsActive);
 
-    final LoggingEntity loggingEntity = this.loggingHelper.getLogging(loggingId);
-
-    final HardwareEntity hardwareEntity =
-        new HardwareEntity(loggingId, token, macAddress, hardwareAdded, macAdded, tokenIsActive);
-
-    log.info("New hardware created successfully: {}", hardwareEntity);
+    log.info("New hardware successfully created: {}", hardwareEntity.toString());
     return this.hardwareRepository.save(hardwareEntity);
   }
 
