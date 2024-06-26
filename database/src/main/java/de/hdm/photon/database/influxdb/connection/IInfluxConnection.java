@@ -1,44 +1,36 @@
 package de.hdm.photon.database.influxdb.connection;
 
+import de.hdm.photon.database.influxdb.entity.IInfluxHardwareEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 
 public interface IInfluxConnection {
-  /**
-   * Retrieves all measurement names from InfluxDB.
-   *
-   * @return A list of measurement names.
-   */
   @NotNull List<String> getMeasurements();
 
-  /**
-   * Retrieves measurement names from InfluxDB that have been updated after a specified Unix timestamp (in milliseconds).
-   *
-   * @param time Unix timestamp (in milliseconds) representing the time after which measurements were updated.
-   * @return A list of measurement names updated after the specified time.
-   */
   @NotNull List<String> getMeasurementsAfter(final long time);
 
-  /**
-   * Retrieves measurement names from InfluxDB that have been updated after a specified Date.
-   *
-   * @param date Date object representing the time after which measurements were updated.
-   * @return A list of measurement names updated after the specified Date.
-   */
-  @NotNull List<String> getMeasurementsAfter(@Nullable final Date date);
+  default @NotNull List<IInfluxHardwareEntity> getMeasurements(@Nullable final String hardware) {
+    return this.getMeasurements(hardware, -1);
+  }
 
-  void getMeasurements(@Nullable final String hardware);
+  @NotNull List<IInfluxHardwareEntity> getMeasurements(@Nullable final String hardware,
+                                                       final long groupBy);
+
+  default @NotNull List<IInfluxHardwareEntity> getMeasurementsAfter(@Nullable final String hardware,
+                                                                    final long time) {
+    return this.getMeasurementsAfter(hardware, time, -1);
+  }
+
+  @NotNull List<IInfluxHardwareEntity> getMeasurementsAfter(@Nullable final String hardware,
+                                                            final long time,
+                                                            final long groupBy);
 
   boolean addMeasurements(@Nullable final String hardware,
                           @Nullable final Map<String, Object> fields);
 
- /* List<Object> getFields(@Nullable final String pointName,
-                        @Nullable final Map<String, Object> fields);
-
-  */
+  void t();
 }
