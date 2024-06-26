@@ -1,6 +1,6 @@
 package test.de.hdm.photon.database.influxdb.annotations;
 
-import de.hdm.photon.database.influxdb.annoation.InfluxValue;
+import de.hdm.photon.database.influxdb.annotation.InfluxValue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
