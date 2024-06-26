@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test;
 public final class SecurityFilterTest {
 
   @Test
-  @DisplayName("Test HeartbeatInfo Positive")
+  @DisplayName("Test SecurityFilter Positive")
   public void testSecurityFilterPositive() {
     //Positive Tests
     Assertions.assertDoesNotThrow(() -> new SecurityFilter());
   }
 
   @Test
-  @DisplayName("Test HeartbeatInfo Positive Specific")
+  @DisplayName("Test SecurityFilter Positive Specific")
   public void testSecurityFilterPositiveSpecific() {
     //Positive Tests
     final ISecurityFilter securityFilter = new SecurityFilter();
@@ -40,7 +40,7 @@ public final class SecurityFilterTest {
   }
 
   @Test
-  @DisplayName("Test HeartbeatInfo Negative")
+  @DisplayName("Test SecurityFilter Negative")
   public void testSecurityFilterNegative() {
     //Negative Tests
     Assertions.assertThrows(NullPointerException.class, () -> new SecurityFilter(null));
