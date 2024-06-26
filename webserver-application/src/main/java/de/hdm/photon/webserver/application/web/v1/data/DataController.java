@@ -1,10 +1,9 @@
 package de.hdm.photon.webserver.application.web.v1.data;
 
-import de.hdm.photon.database.influxdb.connection.IInfluxConnection;
 import de.hdm.photon.logic.measurement.IMeasurementManager;
-import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.schema.measurement.IMeasurementTable;
 import de.hdm.photon.schema.measurement.Measurement;
+import de.hdm.photon.webserver.application.web.controller.AbstractWebController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,7 +13,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +29,7 @@ import java.util.List;
 @Log4j2
 @RequestMapping("/api/v1/measurement")
 @Tag(name="Measurements Endpoint", description="Get measurements.")
-public final class DataController {
+public final class DataController extends AbstractWebController {
 
   @Autowired
   private IMeasurementManager measurementManager;
@@ -65,10 +63,10 @@ public final class DataController {
   public ResponseEntity<List<String>> getMeasurements(@RequestParam(name="after", defaultValue="-1") final long unixAfter) {
     //Get with param
     if (unixAfter>0) {
-      return ResponseEntity.ok(this.measurementManager.getMeasurements(unixAfter));
+      return this.body(200, this.measurementManager.getMeasurements(unixAfter));
     }
 
-    return ResponseEntity.ok(this.measurementManager.getMeasurements());
+    return this.body(200, this.measurementManager.getMeasurements());
   }
 
 
@@ -95,11 +93,11 @@ public final class DataController {
                                                            @RequestParam(name="groupBy", defaultValue="-1") final long groupTime) {
     //Get with param
     if (unixAfter>0) {
-      return ResponseEntity.ok(this.measurementManager.getMeasurements(hardware, unixAfter, groupTime,
+      return this.body(200, this.measurementManager.getMeasurements(hardware, unixAfter, groupTime,
           List.of(Measurement.values())));
     }
 
-    return ResponseEntity.ok(this.measurementManager.getMeasurements(hardware, groupTime,
+    return this.body(200, this.measurementManager.getMeasurements(hardware, groupTime,
         List.of(Measurement.values())));
   }
 }
