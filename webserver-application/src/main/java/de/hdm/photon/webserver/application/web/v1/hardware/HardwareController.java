@@ -37,7 +37,7 @@ import java.util.List;
 @RestController
 @Log4j2
 @RequestMapping("/api/v1/hardware")
-@Tag(name = "Hardware Endpoint", description = "Manipulate Hardware.")
+@Tag(name="Hardware Endpoint", description="Manipulate Hardware.")
 public final class HardwareController {
   @Autowired
   private IHardwareManager hardwareManager;
@@ -45,6 +45,7 @@ public final class HardwareController {
   private RequestBodyService requestBodyBuilder;
 
   //-------------------------------------------------------GET----------------------------------------------------------
+
   /**
    * Retrieves all hardware.
    *
@@ -66,10 +67,9 @@ public final class HardwareController {
                   )
               })
       })
-  public @NotNull ResponseEntity<List<IHardware>> getHardware(){
+  public @NotNull ResponseEntity<List<IHardware>> getHardware() {
     return ResponseEntity.ok(this.hardwareManager.getHardwareList());
   }
-
 
 
   /**
@@ -95,13 +95,9 @@ public final class HardwareController {
                   )
               })
       })
-  public @NotNull ResponseEntity<IHardware> getSpecificHardware(@PathVariable final long hardwareId) throws EntityNotPresentException{
+  public @NotNull ResponseEntity<IHardware> getSpecificHardware(@PathVariable(name="id") final long hardwareId) throws EntityNotPresentException {
     return ResponseEntity.ok(this.hardwareManager.getHardware(hardwareId));
   }
-
-
-
-
 
 
   //-------------------------------------------------------POST---------------------------------------------------------
@@ -138,10 +134,10 @@ public final class HardwareController {
   /**
    * Update the settings of a specified hardware.
    *
-   * @param hardwareId The ID of the hardware to retrieve.
-   * @param macAddress change the macAddress.
+   * @param hardwareId    The ID of the hardware to retrieve.
+   * @param macAddress    change the macAddress.
    * @param hardwareAdded change the date of when the hardware was added.
-   * @param macAdded change the macAdded.
+   * @param macAdded      change the macAdded.
    * @param tokenIsActive change the state of the token.
    * @return ResponseEntity containing the updated state of a token.
    * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
@@ -162,7 +158,7 @@ public final class HardwareController {
                   )
               })
       })
-  public @NotNull ResponseEntity<IHardware> updateHardware(@PathVariable final long hardwareId,
+  public @NotNull ResponseEntity<IHardware> updateHardware(@PathVariable(name="id") final long hardwareId,
                                                            @RequestBody @Nullable String macAddress,
                                                            @RequestBody @Nullable Date hardwareAdded,
                                                            @RequestBody @Nullable Date macAdded,
@@ -196,7 +192,7 @@ public final class HardwareController {
                   )
               })
       })
-  public @NotNull ResponseEntity<Boolean> deleteSpecificHardware(@PathVariable final long hardwareId)
+  public @NotNull ResponseEntity<Boolean> deleteSpecificHardware(@PathVariable(name="id") final long hardwareId)
       throws EntityNotPresentException {
     return ResponseEntity.ok(this.hardwareManager.deleteHardware(hardwareId));
   }
