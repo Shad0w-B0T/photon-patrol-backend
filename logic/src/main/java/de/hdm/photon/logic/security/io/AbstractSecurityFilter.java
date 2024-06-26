@@ -7,8 +7,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -50,8 +52,8 @@ public abstract class AbstractSecurityFilter implements ISecurityFilter {
    */
   @Override
   @SuppressWarnings("unchecked")
-  public <TYPE> ISecurityFilter rule(@Nullable Class<TYPE> typeClass,
-                                     @Nullable Predicate<TYPE> typePredicate) {
+  public <TYPE> @NotNull ISecurityFilter rule(@Nullable Class<TYPE> typeClass,
+                                              @Nullable Predicate<TYPE> typePredicate) {
     // Null check
     Objects.requireNonNull(typeClass);
     Objects.requireNonNull(typePredicate);
@@ -79,6 +81,57 @@ public abstract class AbstractSecurityFilter implements ISecurityFilter {
     } catch (final NullPointerException exception) {
       return true;
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public <OBJECT> boolean checkCollection(@Nullable Collection<OBJECT> collection) {
+    //Null check
+    Objects.requireNonNull(collection);
+
+    //Store value of check
+    boolean valid = true;
+
+    //Iterate trough objects.
+    for (final OBJECT object : collection) {
+      //o.k.
+      if (object != null && this.check(object)) {
+        continue;
+      }
+
+      //Not valid and interrupt.
+      valid = false;
+      break;
+    }
+
+    return valid;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public <KEY, VALUE> boolean checkMap(@Nullable Map<KEY, VALUE> map) {
+    //Null check
+    Objects.requireNonNull(map);
+    //Store value of check
+    boolean valid = true;
+    for (final Entry<KEY, VALUE> keyvalueEntry : map.entrySet()) {
+      final KEY key = keyvalueEntry.getKey();
+      final VALUE value = keyvalueEntry.getValue();
+
+      //o.k.
+      if ((key != null && this.check(key)) && (value != null && this.check(value))) {
+        continue;
+      }
+      //Not valid and interrupt.
+      valid = false;
+      break;
+    }
+
+    return valid;
   }
 
   /**

@@ -3,6 +3,7 @@ package de.hdm.photon.logic.security.io;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -52,6 +53,10 @@ public interface ISecurityFilter {
    * @return true if the object passes the security rules, false otherwise
    */
   <OBJECT> boolean checkObject(@Nullable final OBJECT object);
+
+  <OBJECT> boolean checkCollection(@Nullable Collection<OBJECT> collection);
+
+  <KEY, VALUE> boolean checkMap(@Nullable Map<KEY, VALUE> map);
 
   /**
    * Returns the map of security rules defined for each type.
