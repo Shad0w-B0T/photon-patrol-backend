@@ -1,8 +1,8 @@
 package de.hdm.photon.database.influxdb.entity;
 
-import de.hdm.photon.database.influxdb.annoation.InfluxMeasurement;
-import de.hdm.photon.database.influxdb.annoation.InfluxTime;
-import de.hdm.photon.database.influxdb.annoation.InfluxValue;
+import de.hdm.photon.database.influxdb.annotation.InfluxMeasurement;
+import de.hdm.photon.database.influxdb.annotation.InfluxTime;
+import de.hdm.photon.database.influxdb.annotation.InfluxValue;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
