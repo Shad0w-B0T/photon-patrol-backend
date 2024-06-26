@@ -10,26 +10,6 @@ import java.util.Optional;
 
 public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> {
 
-  //------------------------------------------ ID -------------------------------------------------
-
-  /**
-   * Query to check if the id exists.
-   *
-   * @param hardwareId unique id of the entity.
-   * @return true if the entity with the id exists.
-   */
-  boolean existsById(long hardwareId);
-
-
-  /**
-   * Query to get an entity via id.
-   *
-   * @param hardwareId value of the id.
-   * @return an Optional if present. Null if no match.
-   */
-  @NotNull
-  Optional<HardwareEntity> findById(long hardwareId);
-
   //------------------------------------------ Token -------------------------------------------------
 
   /**

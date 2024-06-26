@@ -1,4 +1,4 @@
-package de.hdm.photon.webserver.logic.hardware;
+package de.hdm.photon.logic.hardware;
 
 import de.hdm.photon.schema.hardware.IHardware;
 

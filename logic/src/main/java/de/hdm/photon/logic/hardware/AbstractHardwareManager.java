@@ -1,54 +1,57 @@
-package de.hdm.photon.webserver.logic.hardware;
+package de.hdm.photon.logic.hardware;
 
-import de.hdm.photon.logic.utils.TokenGenerator;
 import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.HardwareFactory;
 import de.hdm.photon.schema.hardware.IHardware;
-import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
-@Component
-@Log4j2
-@NoArgsConstructor
-public class HardwareManager implements IHardwareManager {
+public abstract class AbstractHardwareManager implements IHardwareManager {
 
-  @Autowired
-  private HardwareHelper hardwareHelper;
+  private final @NotNull IHardwareHelper hardwareHelper;
+
+  protected AbstractHardwareManager(@Nullable final IHardwareHelper hardwareHelper) {
+    //Null check
+    Objects.requireNonNull(hardwareHelper);
+
+    this.hardwareHelper = hardwareHelper;
+  }
 
   /**
-   * see {@link IHardwareAccess#createHardware()}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
-  public @NotNull IHardware createHardware() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+  public @NotNull IHardware createHardware() {
     return HardwareFactory.convertToRecord(this.hardwareHelper.createHardware());
   }
 
   /**
-   * see {@link IHardwareAccess#getHardware(long)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
   public @NotNull IHardware getHardware(long hardwareId) throws EntityNotPresentException {
     return HardwareFactory.convertToRecord(this.hardwareHelper.getHardware(hardwareId));
   }
 
   /**
-   * see {@link IHardwareAccess#getHardwareList()}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
+  public @NotNull IHardware getHardware(@Nullable String token) throws EntityNotPresentException {
+    return HardwareFactory.convertToRecord(this.hardwareHelper.getHardware(token));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public @NotNull List<IHardware> getHardwareList() {
     return this.hardwareHelper
         .getHardwareList()
@@ -58,20 +61,18 @@ public class HardwareManager implements IHardwareManager {
   }
 
   /**
-   * see {@link IHardwareAccess#getMacAddress(String)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
-  public @NotNull IHardware getMacAddress(String macAddress) throws EntityNotPresentException {
+  public @NotNull IHardware getMacAddress(@Nullable String macAddress) throws EntityNotPresentException {
     return HardwareFactory.convertToRecord(this.hardwareHelper.getMacAddress(macAddress));
   }
 
   /**
-   * see {@link IHardwareAccess#getHardwareAddedList(Date)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
-  public @NotNull List<IHardware> getHardwareAddedList(Date hardwareAdded) throws EntityNotPresentException {
+  public @NotNull List<IHardware> getHardwareAddedList(@Nullable Date hardwareAdded) {
     return this.hardwareHelper
         .getHardwareAddedList(hardwareAdded)
         .stream()
@@ -80,11 +81,10 @@ public class HardwareManager implements IHardwareManager {
   }
 
   /**
-   * see {@link IHardwareAccess#getMacAddedList(Date)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
-  public @NotNull List<IHardware> getMacAddedList(Date macAdded) throws EntityNotPresentException {
+  public @NotNull List<IHardware> getMacAddedList(@Nullable Date macAdded) {
     return this.hardwareHelper
         .getMacAddedList(macAdded)
         .stream()
@@ -93,11 +93,10 @@ public class HardwareManager implements IHardwareManager {
   }
 
   /**
-   * see {@link IHardwareAccess#getActiveTokenList(boolean)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
-  public @NotNull List<IHardware> getActiveTokenList(boolean tokenIsActive) throws EntityNotPresentException {
+  public @NotNull List<IHardware> getActiveTokenList(boolean tokenIsActive) {
     return this.hardwareHelper
         .getActiveTokenList(tokenIsActive)
         .stream()
@@ -106,10 +105,9 @@ public class HardwareManager implements IHardwareManager {
   }
 
   /**
-   * see {@link IHardwareAccess#updateHardware(long, String, Date, Date, boolean)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
   public @NotNull IHardware updateHardware(long hardwareId,
                                            @Nullable String macAddress,
                                            @Nullable Date hardwareAdded,
@@ -119,50 +117,26 @@ public class HardwareManager implements IHardwareManager {
   }
 
   /**
-   * see {@link IHardwareAccess#updateMacAddress(long, String)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
   public @NotNull IHardware updateMacAddress(long hardwareId,
                                              @Nullable String macAddress) throws EntityNotPresentException, FormatMismatchException {
     return HardwareFactory.convertToRecord(this.hardwareHelper.updateMacAddress(hardwareId, macAddress));
   }
 
   /**
-   * see {@link IHardwareAccess#updateHardwareAdded(long, Date)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
-  public @NotNull IHardware updateHardwareAdded(long hardwareId,
-                                                @Nullable Date hardwareAdded) throws EntityNotPresentException, FormatMismatchException {
-    return HardwareFactory.convertToRecord(this.hardwareHelper.updateHardwareAdded(hardwareId, hardwareAdded));
-  }
-
-  /**
-   * see {@link IHardwareAccess#updateMacAddress(long, String)}
-   */
-  @Override
-  @Transactional
-  public @NotNull IHardware updateMacAdded(long hardwareId,
-                                           @Nullable Date macAdded) throws EntityNotPresentException, FormatMismatchException {
-    return HardwareFactory.convertToRecord(this.hardwareHelper.updateMacAdded(hardwareId, macAdded));
-  }
-
-  /**
-   * see {@link IHardwareAccess#updateTokenActive(long, boolean)}
-   */
-  @Override
-  @Transactional
-  public @NotNull IHardware updateTokenActive(long hardwareId,
-                                              boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException {
+  public @NotNull IHardware updateTokenActive(long hardwareId, boolean tokenIsActive) throws EntityNotPresentException {
     return HardwareFactory.convertToRecord(this.hardwareHelper.updateTokenActive(hardwareId, tokenIsActive));
   }
 
   /**
-   * see {@link IHardwareAccess#deleteHardware(long)}
+   * {@inheritDoc}
    */
   @Override
-  @Transactional
   public boolean deleteHardware(long hardwareId) throws EntityNotPresentException {
     return this.hardwareHelper.deleteHardware(hardwareId);
   }

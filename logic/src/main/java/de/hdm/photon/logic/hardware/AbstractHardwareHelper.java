@@ -1,17 +1,16 @@
-package de.hdm.photon.webserver.logic.hardware;
+package de.hdm.photon.logic.hardware;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
+import de.hdm.photon.logic.security.io.ISecurityFilter;
+import de.hdm.photon.logic.security.io.SecurityFilters;
 import de.hdm.photon.logic.utils.TokenGenerator;
 import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
-import de.hdm.photon.webserver.logic.check.IAddressVerifier;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -20,35 +19,38 @@ import java.util.Objects;
 
 
 @Log4j2
-@Component
-public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
+public abstract class AbstractHardwareHelper implements IHardwareHelper {
 
-  @Autowired
-  private HardwareRepository hardwareRepository;
+  private final @NotNull HardwareRepository hardwareRepository;
+  private final @NotNull ISecurityFilter macFilter;
 
-  @Autowired
-  private IAddressVerifier iAddressVerifier;
+  protected AbstractHardwareHelper(@Nullable final HardwareRepository hardwareRepository) {
+    //Null check
+    Objects.requireNonNull(hardwareRepository);
+
+    this.hardwareRepository = hardwareRepository;
+
+    this.macFilter = SecurityFilters.macStringFilter();
+  }
 
   /**
-   * see {@link IHardwareAccess#createHardware()}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
-  public @NotNull HardwareEntity createHardware() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+  public @NotNull HardwareEntity createHardware() {
 
     log.info("Attempting to create a new hardware object.");
 
     final String token = TokenGenerator.randomString(64);
-    final Date hardwareAdded = new Date();
-    final boolean tokenIsActive = true;
-    final HardwareEntity hardwareEntity = new HardwareEntity(token, null, hardwareAdded, null, tokenIsActive);
+    final HardwareEntity hardwareEntity = new HardwareEntity(token, null, new Date(), null, true);
 
     log.info("New hardware successfully created: {}", hardwareEntity.toString());
     return this.hardwareRepository.save(hardwareEntity);
   }
 
   /**
-   * see {@link IHardwareAccess#getHardware(long)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
@@ -57,7 +59,21 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#getHardwareList()}
+   * {@inheritDoc}
+   */
+  @Override
+  @Transactional
+  public @NotNull HardwareEntity getHardware(@Nullable String token) throws EntityNotPresentException {
+    //Null check
+    Objects.requireNonNull(token);
+
+    return this.hardwareRepository
+        .findByToken(token)
+        .orElseThrow(() -> new EntityNotPresentException("No entity with given token found."));
+  }
+
+  /**
+   * {@inheritDoc}
    */
   @Override
   @Transactional
@@ -66,24 +82,28 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#getMacAddress(String)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
-  public @NotNull HardwareEntity getMacAddress(String macAddress) throws EntityNotPresentException {
+  public @NotNull HardwareEntity getMacAddress(@Nullable String macAddress) throws EntityNotPresentException {
+    //Null check
+    Objects.requireNonNull(macAddress);
+
     return this.hardwareRepository
         .findByMacAddress(macAddress)
-        .orElseThrow(
-            () -> new EntityNotPresentException("No hardware with the mac address = "+macAddress+" available.")
-        );
+        .orElseThrow(() -> new EntityNotPresentException("No hardware with the mac address = "+macAddress+" available."));
   }
 
   /**
-   * see {@link IHardwareAccess#getHardwareAddedList(Date)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
-  public @NotNull List<HardwareEntity> getHardwareAddedList(Date hardwareAdded) throws EntityNotPresentException {
+  public @NotNull List<HardwareEntity> getHardwareAddedList(@Nullable Date hardwareAdded) {
+    //Null check
+    Objects.requireNonNull(hardwareAdded);
+
     return this.hardwareRepository
         .findByHardwareAdded(hardwareAdded)
         .stream()
@@ -91,11 +111,14 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#getMacAddedList(Date)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
-  public @NotNull List<HardwareEntity> getMacAddedList(Date macAdded) throws EntityNotPresentException {
+  public @NotNull List<HardwareEntity> getMacAddedList(@Nullable Date macAdded) {
+    //Null check
+    Objects.requireNonNull(macAdded);
+
     return this.hardwareRepository
         .findByMacAdded(macAdded)
         .stream()
@@ -103,11 +126,11 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#getActiveTokenList(boolean)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
-  public @NotNull List<HardwareEntity> getActiveTokenList(boolean tokenIsActive) throws EntityNotPresentException {
+  public @NotNull List<HardwareEntity> getActiveTokenList(boolean tokenIsActive) {
     return this.hardwareRepository
         .findByTokenIsActive(tokenIsActive)
         .stream()
@@ -115,7 +138,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#updateHardware(long, String, Date, Date, boolean)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
@@ -124,13 +147,14 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
                                                 @Nullable Date hardwareAdded,
                                                 @Nullable Date macAdded,
                                                 boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException {
-
+    //Null check
     Objects.requireNonNull(macAddress);
     Objects.requireNonNull(hardwareAdded);
     Objects.requireNonNull(macAdded);
 
-    this.iAddressVerifier.validateMacAddress(macAddress);
-    this.iAddressVerifier.validateContentOfMac(macAddress);
+    if (!this.macFilter.check(macAdded)) {
+      throw new FormatMismatchException("Can't update hardware, given mac address is illegal.");
+    }
 
     log.info("Attempting to update hardware with id: '{}'. New mac address: '{}'. New date when the "+
             "hardware was added: '{}'. New date when the mac was added: '{}'",
@@ -139,8 +163,11 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
         hardwareAdded,
         macAdded);
 
+    if (!this.hardwareRepository.existsByMacAddress(macAddress)) {
+      throw new EntityAlreadyPresentException("Hardware with this mac already exists.");
+    }
+
     final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
-    this.macIsPresent(macAddress);
 
     hardwareEntity.macAddress(macAddress);
     hardwareEntity.hardwareAdded(hardwareAdded);
@@ -152,43 +179,27 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#updateMacAddress(long, String)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
   public @NotNull HardwareEntity updateMacAddress(long hardwareId,
-                                                  @Nullable String macAddress) throws EntityNotPresentException {
+                                                  @Nullable String macAddress) throws EntityNotPresentException, FormatMismatchException {
+    //Null check
+    Objects.requireNonNull(macAddress);
+
+    if (!this.macFilter.check(macAddress)) {
+      throw new FormatMismatchException("Can't update mac, given mac address is illegal.");
+    }
+
     final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
     hardwareEntity.macAddress(macAddress);
+    hardwareEntity.macAdded(new Date());
     return this.hardwareRepository.save(hardwareEntity);
   }
 
   /**
-   * see {@link IHardwareAccess#updateHardwareAdded(long, Date)}
-   */
-  @Override
-  @Transactional
-  public @NotNull HardwareEntity updateHardwareAdded(long hardwareId,
-                                                     @Nullable Date hardwareAdded) throws EntityNotPresentException {
-    final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
-    hardwareEntity.hardwareAdded(hardwareAdded);
-    return this.hardwareRepository.save(hardwareEntity);
-  }
-
-  /**
-   * see {@link IHardwareAccess#updateMacAdded(long, Date)}
-   */
-  @Override
-  @Transactional
-  public @NotNull HardwareEntity updateMacAdded(long hardwareId,
-                                                @Nullable Date macAdded) throws EntityNotPresentException {
-    final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
-    hardwareEntity.macAdded(macAdded);
-    return this.hardwareRepository.save(hardwareEntity);
-  }
-
-  /**
-   * see {@link IHardwareAccess#updateTokenActive(long, boolean)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
@@ -200,7 +211,7 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
   }
 
   /**
-   * see {@link IHardwareAccess#deleteHardware(long)}
+   * {@inheritDoc}
    */
   @Override
   @Transactional
@@ -215,23 +226,4 @@ public class HardwareHelper implements IHardwareAccess<HardwareEntity> {
 
     return this.hardwareRepository.findById(hardwareId).isEmpty();
   }
-
-
-  /**
-   * Checks if a hardware with the specified parameter already exists in the database.
-   *
-   * @param macAddress The mac address of the hardware. Not null.
-   * @throws EntityAlreadyPresentException If the hardware already exists.
-   */
-  @Transactional
-  protected void macIsPresent(@Nullable String macAddress) throws EntityAlreadyPresentException {
-    if (macAddress == null || macAddress.isBlank()) {
-      throw new NullPointerException("MAC address is null!");
-    }
-    if (!this.hardwareRepository.existsByMacAddress(macAddress)) {
-      return;
-    }
-    throw new EntityAlreadyPresentException("Hardware with this mac already exists.");
-  }
-
 }
