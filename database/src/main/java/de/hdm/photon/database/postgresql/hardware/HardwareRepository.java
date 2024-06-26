@@ -30,15 +30,6 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
   @NotNull
   Optional<HardwareEntity> findById(long hardwareId);
 
-
-  /**
-   * Query to delete the entity via id.
-   *
-   * @param hardwareId value of the id.
-   * @return an int value of how many were deleted.
-   */
-  int deleteById(long hardwareId);
-
   //------------------------------------------ Token -------------------------------------------------
 
   /**
