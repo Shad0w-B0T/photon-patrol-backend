@@ -1,8 +1,8 @@
 package de.hdm.photon.database.influxdb.mapper;
 
-import de.hdm.photon.database.influxdb.annoation.InfluxMeasurement;
-import de.hdm.photon.database.influxdb.annoation.InfluxTime;
-import de.hdm.photon.database.influxdb.annoation.InfluxValue;
+import de.hdm.photon.database.influxdb.annotation.InfluxMeasurement;
+import de.hdm.photon.database.influxdb.annotation.InfluxTime;
+import de.hdm.photon.database.influxdb.annotation.InfluxValue;
 import lombok.extern.log4j.Log4j2;
 import org.influxdb.dto.QueryResult;
 import org.influxdb.dto.QueryResult.Result;
@@ -27,6 +27,12 @@ import java.util.Objects;
  */
 public abstract class AbstractInfluxMapper implements IInfluxMapper {
 
+  private final @NotNull Map<Class<?>, ClassBlueprint> blueprintMap;
+
+  public AbstractInfluxMapper() {
+    this.blueprintMap = new HashMap<>();
+  }
+
   /**
    * Record to store class blueprint information.
    *
@@ -50,6 +56,12 @@ public abstract class AbstractInfluxMapper implements IInfluxMapper {
   private <TYPE> @NotNull ClassBlueprint getBlueprint(@Nullable final Class<TYPE> blueprint) {
     // Null check
     Objects.requireNonNull(blueprint);
+
+    @Nullable final ClassBlueprint cachePrint = this.blueprintMap.get(blueprint);
+
+    if (cachePrint != null) {
+      return cachePrint;
+    }
 
     log.info("Get class blueprint for influx mapper of class={}.", blueprint.getSimpleName());
     Field measurementField = null;
@@ -88,7 +100,11 @@ public abstract class AbstractInfluxMapper implements IInfluxMapper {
     }
 
     // Return a new ClassBlueprint with the identified fields
-    return new ClassBlueprint(measurementField, timeField, contentFields);
+    final ClassBlueprint classBlueprint = new ClassBlueprint(measurementField, timeField, contentFields);
+
+    this.blueprintMap.put(blueprint, classBlueprint);
+
+    return classBlueprint;
   }
 
   /**
@@ -113,9 +129,12 @@ public abstract class AbstractInfluxMapper implements IInfluxMapper {
 
     final ClassBlueprint classBlueprint = this.getBlueprint(typeClass);
 
+
     // Iterate through all results in the query
     for (final Result result : queryResults) {
-      System.out.println(result.getSeries().get(0).getName());
+      if (result.getSeries() == null) {
+        continue; //Todo error
+      }
       // Iterate through all series in the result
       for (final Series series : result.getSeries()) {
         try {
@@ -169,5 +188,52 @@ public abstract class AbstractInfluxMapper implements IInfluxMapper {
     }
 
     return response; // Return the list of objects
+  }
+
+  @Override
+  public ITimeMap toMap(@Nullable QueryResult queryResult) {
+    // Null check
+    Objects.requireNonNull(queryResult);
+
+    final List<Result> queryResults = queryResult.getResults();
+    Objects.requireNonNull(queryResult, "No results.");
+
+    final ITimeMap timeMap = new TimeMap();
+
+    // Iterate through all results in the query
+    for (final Result result : queryResults) {
+      if (result.getSeries() == null) {
+        continue; //Todo error
+      }
+
+      // Iterate through all series in the result
+      for (final Series series : result.getSeries()) {
+
+          // Iterate through all values in the series
+          for (final List<Object> value : series.getValues()) {
+            int index = 0;
+
+            long time = -1;
+            // Iterate through all objects in the value list
+            for (Object object : value) {
+              final int currentValue = index++;
+
+              if (object == null) {
+                continue; // Skip if the object is null
+              }
+
+              // Check if the column is "time" and set the time field if present
+              if (series.getColumns().get(0).equals("time") && currentValue == 0 && time < 0) {
+                time = Instant.parse((String) object).toEpochMilli();
+                continue;
+              }
+
+              timeMap.addValue(time, series.getColumns().get(currentValue), object);
+            }
+          }
+      }
+    }
+
+    return timeMap;
   }
 }

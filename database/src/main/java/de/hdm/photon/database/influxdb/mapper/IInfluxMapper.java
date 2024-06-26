@@ -5,6 +5,7 @@ import org.influxdb.dto.QueryResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface IInfluxMapper {
@@ -15,5 +16,7 @@ public interface IInfluxMapper {
 
   <TYPE> List<TYPE> toObject(@Nullable final Class<TYPE> typeClass,
                              @Nullable final QueryResult queryResult);
+
+  ITimeMap toMap(@Nullable final QueryResult queryResult);
 
 }
