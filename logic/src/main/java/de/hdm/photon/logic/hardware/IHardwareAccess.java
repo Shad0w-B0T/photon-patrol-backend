@@ -4,6 +4,7 @@ import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
+import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -85,6 +86,10 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   List<HARDWARE> getActiveTokenList(final boolean tokenIsActive);
 
   //------------------------------------------------UPDATE--------------------------------------------------------------
+
+  //Todo: Docs
+  @NotNull
+  HARDWARE toggleHardwareActive(final long hardwareId) throws EntityNotPresentException;
 
   /**
    * This method updates a whole hardware object with the given parameters.

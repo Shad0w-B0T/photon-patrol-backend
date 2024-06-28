@@ -166,6 +166,28 @@ public final class HardwareController extends AbstractWebController {
     return this.body(200,
         this.hardwareManager.updateHardware(hardwareId, macAddress, hardwareAdded, macAdded, tokenIsActive));
   }
+
+//Todo:Docs
+  @PutMapping("/{id}/toggle")
+  @ResponseBody
+  @Operation(
+      summary="",
+      description="",
+      responses={
+          @ApiResponse(
+              responseCode="200",
+              description="parameters were successfully changed.",
+              content={
+                  @Content(
+                      mediaType=MediaType.APPLICATION_JSON_VALUE,
+                     schema=@Schema(implementation=IHardware.class)
+                  )
+              })
+      })
+  public @NotNull ResponseEntity<IHardware> toggleHardware(@PathVariable(name="id") final long hardwareId)
+      throws EntityNotPresentException {
+    return this.body(200, this.hardwareManager.toggleHardwareActive(hardwareId));
+  }
   //-------------------------------------------------------DELETE-------------------------------------------------------
 
   /**

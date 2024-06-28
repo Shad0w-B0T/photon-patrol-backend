@@ -108,6 +108,14 @@ public abstract class AbstractHardwareManager implements IHardwareManager {
    * {@inheritDoc}
    */
   @Override
+  public @NotNull IHardware toggleHardwareActive(long hardwareId) throws EntityNotPresentException {
+    return HardwareFactory.convertToRecord(this.hardwareHelper.toggleHardwareActive(hardwareId));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public @NotNull IHardware updateHardware(long hardwareId,
                                            @Nullable String macAddress,
                                            @Nullable Date hardwareAdded,

@@ -8,6 +8,7 @@ import de.hdm.photon.logic.utils.TokenGenerator;
 import de.hdm.photon.schema.exception.auth.FormatMismatchException;
 import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -135,6 +136,22 @@ public abstract class AbstractHardwareHelper implements IHardwareHelper {
         .findByTokenIsActive(tokenIsActive)
         .stream()
         .toList();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public @NotNull HardwareEntity toggleHardwareActive(long hardwareId) throws EntityNotPresentException {
+    //Check
+    Objects.checkIndex(hardwareId, Long.MAX_VALUE);
+
+    final HardwareEntity hardwareEntity = this.getHardware(hardwareId);
+
+    hardwareEntity.tokenIsActive(!hardwareEntity.tokenIsActive());
+    this.hardwareRepository.save(hardwareEntity);
+
+    return hardwareEntity;
   }
 
   /**
