@@ -1,11 +1,10 @@
 package de.hdm.photon.database.influxdb.mapper;
 
-import org.influxdb.InfluxDB;
+import de.hdm.photon.schema.measurement.ITimeMap;
 import org.influxdb.dto.QueryResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
 
 public interface IInfluxMapper {

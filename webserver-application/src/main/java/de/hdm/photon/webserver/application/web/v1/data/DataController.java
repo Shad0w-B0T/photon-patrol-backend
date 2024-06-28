@@ -1,7 +1,9 @@
 package de.hdm.photon.webserver.application.web.v1.data;
 
 import de.hdm.photon.logic.measurement.IMeasurementManager;
+import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.measurement.IMeasurementTable;
+import de.hdm.photon.schema.measurement.ITimePeriod;
 import de.hdm.photon.schema.measurement.Measurement;
 import de.hdm.photon.webserver.application.web.controller.AbstractWebController;
 import io.swagger.v3.oas.annotations.Operation;
@@ -99,5 +101,55 @@ public final class DataController extends AbstractWebController {
 
     return this.body(200, this.measurementManager.getMeasurements(hardware, groupTime,
         List.of(Measurement.values())));
+  }
+
+  @GetMapping("/{hardware}/data")
+  @ResponseBody
+  @Operation(
+      summary="",
+      description="",
+      responses={
+          @ApiResponse(
+              responseCode="200",
+              description="List of measurement names",
+              content={
+                  @Content(
+                      mediaType=MediaType.APPLICATION_JSON_VALUE,
+                      array=@ArraySchema(schema=@Schema(implementation=String.class))
+                  )
+              }
+          )
+      }
+  )
+  public ResponseEntity<List<String>> getMeasurements(@PathVariable @NotNull String hardware,
+                                                      @RequestParam(name="after", defaultValue="-1") final long after) throws EntityNotPresentException {
+    //Get with param
+    return this.body(200, this.measurementManager.getMeasurementsNameList(hardware, after));
+  }
+
+  @GetMapping("/{hardware}/data/{measurement}")
+  @ResponseBody
+  @Operation(
+      summary="",
+      description="",
+      responses={
+          @ApiResponse(
+              responseCode="200",
+              description="List values",
+              content={
+                  @Content(
+                      mediaType=MediaType.APPLICATION_JSON_VALUE,
+                      schema=@Schema(implementation=ITimePeriod.class)
+                  )
+              }
+          )
+      }
+  )
+  public ResponseEntity<ITimePeriod<?>> getMeasurements(@PathVariable @NotNull String hardware,
+                                                        @PathVariable @NotNull String measurement,
+                                                        @RequestParam(name="groupBy", defaultValue="-1") final long groupBy,
+                                                        @RequestParam(name="after", defaultValue="-1") final long after) throws EntityNotPresentException {
+    //Get with param
+    return this.body(200, this.measurementManager.getMeasurementsOfKey(hardware, measurement, groupBy, after));
   }
 }

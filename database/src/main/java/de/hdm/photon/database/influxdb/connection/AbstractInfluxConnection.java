@@ -3,6 +3,10 @@ package de.hdm.photon.database.influxdb.connection;
 import de.hdm.photon.database.influxdb.entity.IInfluxHardwareEntity;
 import de.hdm.photon.database.influxdb.entity.InfluxHardwareEntity;
 import de.hdm.photon.database.influxdb.mapper.IInfluxMapper;
+import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.measurement.ITimeMap;
+import de.hdm.photon.schema.measurement.ITimePeriod;
+import de.hdm.photon.schema.measurement.ImmutableTimePeriod;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
@@ -13,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public abstract class AbstractInfluxConnection implements IInfluxConnection {
@@ -144,15 +149,82 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
   }
 
   @Override
-  public void t() {
-    System.out.println(this.influxMapper.toMap(this.query(String.format("SELECT mean(\"engineX\") FROM \"%s\" GROUP BY time"+
-        "(%ds)", "Test", 20))));
+  public @NotNull ITimePeriod<?> getMeasurementsOfKey(@Nullable final String hardware,
+                                                      @Nullable final String key,
+                                                      final long groupBy,
+                                                      final long after) throws EntityNotPresentException {
+    final String afterString = after>0 ? " WHERE time > "+after+"ms " : "";
 
-    System.out.println(this.query(String.format("SELECT mean(\"engineX\"), max(\"engineX\"), min(\"engineX\")  "+
-        "FROM \"%s\"", "Test")));
-    System.out.println(this.influxMapper.toMap(this.query(String.format("SELECT mean(\"engineX\"), max(\"engineX\"), min(\"engineX\")  "+
-        "FROM \"%s\"", "Test"))).toString());
+    final ITimeMap periodTimeMap = this.influxMapper.toMap(
+        this.query("SELECT mean(\""+key+"\"), max(\""+key+"\"), min(\""+key+"\") FROM \""+hardware+"\""+afterString));
 
+    final Map<Long, Map<String, Object>> periodMap = periodTimeMap.asMap();
+
+    if (periodMap.isEmpty()) {
+      throw new EntityNotPresentException("No hardware="+hardware+" present!");
+    }
+
+    final Map<String, Object> values = new ArrayList<>(periodMap.values()).get(0);
+
+    if (values == null || values.isEmpty()) {
+      throw new EntityNotPresentException("No values for date="+hardware+" present!");
+    }
+
+    final ITimeMap timeMap;
+
+    if (groupBy<=0) {
+      timeMap = this.influxMapper.toMap(
+          this.query("SELECT \""+key+"\" as value FROM \""+hardware+"\""+afterString));
+    } else {
+      timeMap = this.influxMapper.toMap(
+          this.query("SELECT mean(\""+key+"\") as value FROM \""+hardware+"\" "+afterString+" GROUP BY time("+groupBy+"ms)"));
+    }
+
+    return new ImmutableTimePeriod<>(values.get("min"), values.get("max"), values.get("mean"), timeMap.asMap());
+  }
+
+  @Override
+  public @NotNull List<String> getMeasurementsNameList(@Nullable String hardware,
+                                                       long after) throws EntityNotPresentException {
+    final String afterString = after>0 ? " WHERE time > "+after+"ms " : "";
+
+    final QueryResult queryResult = this.query("SELECT * FROM \""+hardware+"\""+afterString+" LIMIT 1");
+
+    if (queryResult.hasError()) {
+      throw new EntityNotPresentException("Hardware="+hardware+" does not exists or has no fields.");
+    }
+
+    return queryResult.getResults().stream()
+        // Filter out results that have no series
+        .filter(result -> result.getSeries() != null)
+        // Flatten the list of series from each result
+        .flatMap(result -> result.getSeries().stream())
+        // Flatten the list of values from each series
+        .flatMap(series -> series.getValues().stream())
+        // Find the first row of values
+        .findFirst()
+        // Map the row to the list of column names
+        .map(row ->
+            queryResult.getResults()
+                .stream()
+                // Filter out results that have no series
+                .filter(result -> result.getSeries() != null)
+                // Flatten the list of series from each result
+                .flatMap(result -> result.getSeries().stream())
+                // Find the first series
+                .findFirst()
+                // Get the list of columns from the first series
+                .map(QueryResult.Series::getColumns)
+                // If no series is found, return an empty list
+                .orElseGet(List::of)
+        )
+        // If no row is found, return an empty list
+        .orElseGet(Collections::emptyList)
+        .stream()
+        // Filter out the "time" column
+        .filter(name -> !name.equals("time"))
+        // Collect the results into a list
+        .toList();
   }
 
   private @NotNull QueryResult query(@Nullable final String command) {

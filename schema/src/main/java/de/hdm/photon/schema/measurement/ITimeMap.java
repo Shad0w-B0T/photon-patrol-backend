@@ -1,4 +1,4 @@
-package de.hdm.photon.database.influxdb.mapper;
+package de.hdm.photon.schema.measurement;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

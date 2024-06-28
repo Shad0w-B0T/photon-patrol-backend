@@ -1,4 +1,4 @@
-package de.hdm.photon.database.influxdb.mapper;
+package de.hdm.photon.schema.measurement;
 
 import lombok.ToString;
 import lombok.extern.log4j.Log4j2;

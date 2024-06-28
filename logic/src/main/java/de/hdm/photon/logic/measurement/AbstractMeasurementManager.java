@@ -4,8 +4,10 @@ import de.hdm.photon.database.influxdb.connection.IInfluxConnection;
 import de.hdm.photon.database.influxdb.entity.IInfluxHardwareEntity;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilter;
+import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardwareData;
 import de.hdm.photon.schema.measurement.IMeasurementTable;
+import de.hdm.photon.schema.measurement.ITimePeriod;
 import de.hdm.photon.schema.measurement.ITimeValue;
 import de.hdm.photon.schema.measurement.ImmutableMeasurementTable;
 import de.hdm.photon.schema.measurement.ImmutableTimeValue;
@@ -78,6 +80,7 @@ public abstract class AbstractMeasurementManager implements IMeasurementManager 
         measurements);
   }
 
+
   private @NotNull IMeasurementTable measurementTables(@Nullable final String hardware,
                                                        @Nullable final List<IInfluxHardwareEntity> list,
                                                        @Nullable final List<Measurement> measurements) {
@@ -107,6 +110,20 @@ public abstract class AbstractMeasurementManager implements IMeasurementManager 
     }
 
     return new ImmutableMeasurementTable(hardware, valueMap);
+  }
+
+  @Override
+  public @NotNull ITimePeriod<?> getMeasurementsOfKey(@Nullable String hardware,
+                                                      @Nullable String value,
+                                                      long groupBy,
+                                                      final long after) throws EntityNotPresentException {
+    return this.influxConnection.getMeasurementsOfKey(hardware, value, groupBy, after);
+  }
+
+  @Override
+  public @NotNull List<String> getMeasurementsNameList(@Nullable String hardware,
+                                                       long after) throws EntityNotPresentException {
+    return this.influxConnection.getMeasurementsNameList(hardware, after);
   }
 
   @Override

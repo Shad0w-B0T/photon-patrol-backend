@@ -1,6 +1,8 @@
 package de.hdm.photon.database.influxdb.connection;
 
 import de.hdm.photon.database.influxdb.entity.IInfluxHardwareEntity;
+import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.measurement.ITimePeriod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,5 +34,29 @@ public interface IInfluxConnection {
   boolean addMeasurements(@Nullable final String hardware,
                           @Nullable final Map<String, Object> fields);
 
-  void t();
+
+  @NotNull List<String> getMeasurementsNameList(@Nullable final String hardware,
+                                                final long after) throws EntityNotPresentException;
+
+  @NotNull ITimePeriod<?> getMeasurementsOfKey(@Nullable final String hardware,
+                                               @Nullable final String key,
+                                               final long groupBy,
+                                               final long after) throws EntityNotPresentException;
+
+  default @NotNull ITimePeriod<?> getMeasurementsOfKey(@Nullable final String hardware,
+                                                       final long groupBy,
+                                                       final long after) throws EntityNotPresentException {
+    return this.getMeasurementsOfKey(hardware, "*", groupBy, after);
+  }
+
+  default @NotNull ITimePeriod<?> getMeasurementsOfKey(@Nullable final String hardware,
+                                                       @Nullable final String key,
+                                                       final long groupBy) throws EntityNotPresentException {
+    return this.getMeasurementsOfKey(hardware, key, groupBy, -1);
+  }
+
+  default @NotNull ITimePeriod<?> getMeasurementsOfKey(@Nullable final String hardware,
+                                                       @Nullable final String key) throws EntityNotPresentException {
+    return this.getMeasurementsOfKey(hardware, key, -1);
+  }
 }
