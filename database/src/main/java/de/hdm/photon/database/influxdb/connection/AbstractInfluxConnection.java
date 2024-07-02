@@ -1,7 +1,5 @@
 package de.hdm.photon.database.influxdb.connection;
 
-import de.hdm.photon.database.influxdb.entity.IInfluxHardwareEntity;
-import de.hdm.photon.database.influxdb.entity.InfluxHardwareEntity;
 import de.hdm.photon.database.influxdb.mapper.IInfluxMapper;
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
 import de.hdm.photon.schema.measurement.ITimeMap;
@@ -17,7 +15,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public abstract class AbstractInfluxConnection implements IInfluxConnection {
@@ -75,55 +72,6 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
                     .flatMap(Collection::stream))
                 .findAny()
                 .isPresent())
-        .toList();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public @NotNull List<IInfluxHardwareEntity> getMeasurements(@Nullable String hardware,
-                                                              long groupBy) {
-    //Null check
-    Objects.requireNonNull(hardware);
-
-    final List<InfluxHardwareEntity> entities;
-
-    if (groupBy>0) {
-      entities = this.influxMapper.toObject(InfluxHardwareEntity.class,
-          this.query(String.format("SELECT mean(*) FROM \"%s\" GROUP BY time(%dms)", hardware, groupBy)));
-    } else {
-      entities = this.influxMapper
-          .toObject(InfluxHardwareEntity.class, this.query(String.format("SELECT * FROM \"%s\"", hardware)));
-    }
-
-    return entities
-        .stream()
-        .map(influxHardwareEntity -> (IInfluxHardwareEntity) influxHardwareEntity)
-        .toList();
-  }
-
-  @Override
-  public @NotNull List<IInfluxHardwareEntity> getMeasurementsAfter(@Nullable String hardware,
-                                                                   long time,
-                                                                   long groupBy) {
-    //Null check
-    Objects.requireNonNull(hardware);
-    Objects.checkIndex(time, Long.MAX_VALUE);
-
-    final List<InfluxHardwareEntity> entities;
-
-    if (groupBy>0) {
-      entities = this.influxMapper.toObject(InfluxHardwareEntity.class,
-          this.query(String.format("SELECT mean(*) FROM \"%s\" WHERE time > %dms GROUP BY time(%dms)", hardware, time, groupBy)));
-    } else {
-      entities = this.influxMapper.toObject(InfluxHardwareEntity.class,
-          this.query(String.format("SELECT * FROM \"%s\" WHERE time > %dms", hardware, time)));
-    }
-
-    return entities
-        .stream()
-        .map(influxHardwareEntity -> (IInfluxHardwareEntity) influxHardwareEntity)
         .toList();
   }
 
@@ -225,6 +173,31 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
         .filter(name -> !name.equals("time"))
         // Collect the results into a list
         .toList();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean deleteMeasurements(@Nullable String hardware) {
+    //Null check
+    Objects.requireNonNull(hardware);
+
+    final QueryResult queryResult = this.query("DELETE FROM \""+hardware+"\"");
+
+    return !queryResult.hasError();
+  }
+
+  @Override
+  public boolean deleteMeasurements(@Nullable String hardware,
+                                    @Nullable String key) {
+    //Null check
+    Objects.requireNonNull(hardware);
+    Objects.requireNonNull(key);
+
+    final QueryResult queryResult = this.query("DROP SERIES FROM \""+hardware+"\" WHERE \""+key+"\" =~ /.*/");
+
+    return !queryResult.hasError();
   }
 
   private @NotNull QueryResult query(@Nullable final String command) {
