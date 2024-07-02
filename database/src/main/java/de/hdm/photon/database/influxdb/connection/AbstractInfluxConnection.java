@@ -59,7 +59,7 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
 
     return measurements.stream()
         .filter(measurement ->
-            this.query(String.format("SELECT * FROM \"%s\" WHERE time > %dms LIMIT 1", measurement, time))
+            this.query("SELECT * FROM \""+this.escape(measurement)+"\" WHERE time > "+time+"ms LIMIT 1")
                 .getResults()
                 .stream()
                 .flatMap(result -> Optional
@@ -101,10 +101,17 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
                                                       @Nullable final String key,
                                                       final long groupBy,
                                                       final long after) throws EntityNotPresentException {
+    //Null check
+    Objects.requireNonNull(hardware);
+    Objects.requireNonNull(key);
+
     final String afterString = after>0 ? " WHERE time > "+after+"ms " : "";
+    final String escapeKey = this.escape(key);
+    final String escapeHardware = this.escape(hardware);
 
     final ITimeMap periodTimeMap = this.influxMapper.toMap(
-        this.query("SELECT mean(\""+key+"\"), max(\""+key+"\"), min(\""+key+"\") FROM \""+hardware+"\""+afterString));
+        this.query("SELECT mean(\""+escapeKey+"\"), max(\""+escapeKey+"\"), min(\""+escapeKey+"\") FROM \""+escapeHardware+
+            "\""+afterString));
 
     final Map<Long, Map<String, Object>> periodMap = periodTimeMap.asMap();
 
@@ -122,10 +129,10 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
 
     if (groupBy<=0) {
       timeMap = this.influxMapper.toMap(
-          this.query("SELECT \""+key+"\" as value FROM \""+hardware+"\""+afterString));
+          this.query("SELECT \""+escapeKey+"\" as value FROM \""+escapeHardware+"\""+afterString));
     } else {
       timeMap = this.influxMapper.toMap(
-          this.query("SELECT mean(\""+key+"\") as value FROM \""+hardware+"\" "+afterString+" GROUP BY time("+groupBy+"ms)"));
+          this.query("SELECT mean(\""+escapeKey+"\") as value FROM \""+escapeHardware+"\" "+afterString+" GROUP BY time("+groupBy+"ms)"));
     }
 
     return new ImmutableTimePeriod<>(values.get("min"), values.get("max"), values.get("mean"), timeMap.asMap());
@@ -134,9 +141,12 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
   @Override
   public @NotNull List<String> getMeasurementsNameList(@Nullable String hardware,
                                                        long after) throws EntityNotPresentException {
+    //Null check
+    Objects.requireNonNull(hardware);
+
     final String afterString = after>0 ? " WHERE time > "+after+"ms " : "";
 
-    final QueryResult queryResult = this.query("SELECT * FROM \""+hardware+"\""+afterString+" LIMIT 1");
+    final QueryResult queryResult = this.query("SELECT * FROM \""+this.escape(hardware)+"\""+afterString+" LIMIT 1");
 
     if (queryResult.hasError()) {
       throw new EntityNotPresentException("Hardware="+hardware+" does not exists or has no fields.");
@@ -183,7 +193,7 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
     //Null check
     Objects.requireNonNull(hardware);
 
-    final QueryResult queryResult = this.query("DELETE FROM \""+hardware+"\"");
+    final QueryResult queryResult = this.query("DELETE FROM \""+this.escape(hardware)+"\"");
 
     return !queryResult.hasError();
   }
@@ -195,14 +205,35 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
     Objects.requireNonNull(hardware);
     Objects.requireNonNull(key);
 
-    final QueryResult queryResult = this.query("DROP SERIES FROM \""+hardware+"\" WHERE \""+key+"\" =~ /.*/");
+    final QueryResult queryResult = this.query("DROP SERIES FROM \""+this.escape(hardware)+"\" WHERE \""+this.escape(key)+"\" "+
+        "=~ /.*/");
 
     return !queryResult.hasError();
   }
 
+  /**
+   * Executes a query command on the InfluxDB database and returns the result.
+   *
+   * @param command the query command to be executed. Can be null.
+   * @return the result of the query execution as a {@link QueryResult} object.
+   * @throws NullPointerException if the database field is null.
+   */
   private @NotNull QueryResult query(@Nullable final String command) {
     final Query query = new Query(command, this.database);
 
     return this.influxDB.query(query);
+  }
+
+  /**
+   * Escapes special characters in a given string value. Currently, this method
+   * replaces double quotes with escaped double quotes.
+   *
+   * @param value the string value to be escaped.
+   * @return the escaped string value.
+   * @throws NullPointerException if the input value is null.
+   */
+  private String escape(String value) {
+    // Implement escaping logic if needed
+    return value.replace("\"", "\\\"");
   }
 }
