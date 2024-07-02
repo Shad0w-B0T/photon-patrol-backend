@@ -1,9 +1,7 @@
 package de.hdm.photon.logic.measurement;
 
 import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
-import de.hdm.photon.schema.measurement.IMeasurementTable;
 import de.hdm.photon.schema.measurement.ITimePeriod;
-import de.hdm.photon.schema.measurement.Measurement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
