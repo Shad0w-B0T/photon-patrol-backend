@@ -21,10 +21,10 @@ public final class PublishTaskTest {
   public void testPublishTaskNegative() {
     //Negative Tests
     Assertions.assertThrows(NullPointerException.class,
-        () -> new PublishTask(null, null, null, null, null, null));
+        () -> new PublishTask(null, null, null, null, null, null, 0, null));
     Assertions.assertThrows(NullPointerException.class,
-        () -> new PublishTask(new ObjectMapper(), null, null, null, null, null));
+        () -> new PublishTask(new ObjectMapper(), null, null, null, null, null, 0, null));
     Assertions.assertThrows(NullPointerException.class,
-        () -> new PublishTask(new ObjectMapper(), null, "", "", "", ""));
+        () -> new PublishTask(new ObjectMapper(), null, "", "", "", "", 0, ""));
   }
 }
