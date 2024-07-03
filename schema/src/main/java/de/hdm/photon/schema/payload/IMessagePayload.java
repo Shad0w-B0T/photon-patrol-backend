@@ -13,6 +13,12 @@ import java.util.Map;
  * It also provides a method to retrieve a map of values associated with the message payload.
  */
 public interface IMessagePayload extends IHardwareAddress, IHardwareToken {
+
+  @org.jetbrains.annotations.NotNull String address();
+
+  int bitResolution();
+
+
   /**
    * Retrieves a map of values associated with this message payload.
    * The map contains key-value pairs where the key is a {@link String} and the value is an {@link Object}.

@@ -18,7 +18,6 @@ import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-
 /**
  * Abstract class for publishing tasks using MQTT.
  */
@@ -30,7 +29,9 @@ public abstract class AbstractPublishTask extends TimerTask {
 
   private final @NotNull String topic;
   private final @NotNull String macAddress;
+  private final @NotNull String ipAddress;
   private final @NotNull String token;
+  private final int bitResolution;
   private final @NotNull Map<String, Object> values;
 
   /**
@@ -41,6 +42,8 @@ public abstract class AbstractPublishTask extends TimerTask {
    * @param topic         the MQTT topic to publish to
    * @param macAddress    the MAC address for the message payload
    * @param token         the token for the message payload
+   * @param ipAddress     the address of the message payload
+   * @param bitResolution the bitResolution of the message payload
    * @param valuePattern  the JSON string representing the value pattern
    * @throws JsonProcessingException if the valuePattern cannot be processed
    */
@@ -49,6 +52,8 @@ public abstract class AbstractPublishTask extends TimerTask {
                                 @Nullable final String topic,
                                 @Nullable final String macAddress,
                                 @Nullable final String token,
+                                @Nullable final String ipAddress,
+                                final int bitResolution,
                                 @Nullable final String valuePattern) throws JsonProcessingException {
     // Null check
     Objects.requireNonNull(objectMapper);
@@ -56,13 +61,17 @@ public abstract class AbstractPublishTask extends TimerTask {
     Objects.requireNonNull(topic);
     Objects.requireNonNull(macAddress);
     Objects.requireNonNull(token);
+    Objects.requireNonNull(ipAddress);
     Objects.requireNonNull(valuePattern);
+    Objects.checkIndex(bitResolution, 32);
 
     this.objectMapper = objectMapper;
     this.mqttClient = mqttClient;
     this.topic = topic;
     this.macAddress = macAddress;
     this.token = token;
+    this.ipAddress = ipAddress;
+    this.bitResolution = bitResolution;
 
     this.values = this.objectMapper.readValue(valuePattern, PatternMap.class);
   }
@@ -79,7 +88,7 @@ public abstract class AbstractPublishTask extends TimerTask {
       Object setValue = o;
       if (o instanceof String value) {
         if (value.equals("random-int")) {
-          setValue = random.nextInt();
+          setValue = (int) ((Math.pow(2., this.bitResolution))*(random.nextDouble()));
         }
         if (value.equals("random-double")) {
           setValue = random.nextDouble();
@@ -89,11 +98,14 @@ public abstract class AbstractPublishTask extends TimerTask {
       objectMap.put(string, setValue);
     });
 
-    final IMessagePayload messagePayload = new ImmutableMessagePayload(this.token, this.macAddress, objectMap);
+    final IMessagePayload messagePayload = new ImmutableMessagePayload(this.macAddress, this.token, this.ipAddress,
+        this.bitResolution, objectMap);
 
     try {
-      this.mqttClient.publish(this.topic, objectMapper.writeValueAsBytes(messagePayload), 1, true);
-      log.info("Published message to topic of mqtt.");
+      final byte[] payload = this.objectMapper.writeValueAsBytes(messagePayload);
+
+      this.mqttClient.publish(this.topic, payload, 1, true);
+      log.info("Published message to topic of mqtt. ({})", new String(payload));
     } catch (final MqttException | JsonProcessingException exception) {
       throw new RuntimeException(exception);
     }

@@ -33,7 +33,9 @@ public final class PublishTask extends AbstractPublishTask {
                      @Value("${application.mqtt.topic}") @Nullable String topic,
                      @Value("${application.hardware.mac}") @Nullable String macAddress,
                      @Value("${application.hardware.token}") @Nullable String token,
+                     @Value("${application.hardware.ip}") @Nullable String ipAddress,
+                     @Value("${application.hardware.resolution}") int bitResolution,
                      @Value("${application.hardware.values}") @Nullable String valuePattern) throws JsonProcessingException {
-    super(objectMapper, mqttClient, topic, macAddress, token, valuePattern);
+    super(objectMapper, mqttClient, topic, macAddress, token, ipAddress, bitResolution, valuePattern);
   }
 }
