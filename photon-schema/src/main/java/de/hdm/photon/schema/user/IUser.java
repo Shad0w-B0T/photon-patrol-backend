@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 public interface IUser extends IUserCredentials, Identifiable {
 
 
-
   @NotNull String salt();
 
 }
