@@ -7,4 +7,5 @@ include 'photon-webserver-application'
 include 'photon-queue-logic'
 include 'photon-queue-application'
 include 'test-photon-virtual-hardware'
+include 'test-photon-environment'
 
