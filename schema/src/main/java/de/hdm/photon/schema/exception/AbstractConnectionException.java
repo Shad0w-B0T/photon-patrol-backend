@@ -1,4 +1,4 @@
-package de.hdm.photon.schema.exception.connection;
+package de.hdm.photon.schema.exception;
 
 import org.jetbrains.annotations.Nullable;
 

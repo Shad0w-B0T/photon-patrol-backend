@@ -1,4 +1,4 @@
-package de.hdm.photon.schema.exception.auth;
+package de.hdm.photon.schema.exception;
 
 
 public final class FormatMismatchException extends Exception{
