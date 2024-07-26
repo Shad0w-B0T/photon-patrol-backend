@@ -1,9 +1,10 @@
 plugins {
   id 'java-library'
   alias(libs.plugins.lombok)
+  alias(libs.plugins.owasp)
 }
 
-group = 'de.hdm-stuttgart'
+group = 'de.hdm'
 version = '1.0.0'
 
 /**
@@ -37,4 +38,14 @@ allprojects {
   test {
     useJUnitPlatform()
   }
+}
+
+/**
+ * Configuration of owasp.
+ */
+dependencyCheck {
+  //failBuildOnCVSS = -1
+  //suppressionFile = "dependency-check-suppressions.xml"
+  format = "ALL"
+  outputDirectory = "build/reports/"
 }

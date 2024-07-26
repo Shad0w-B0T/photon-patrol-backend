@@ -1,0 +1,25 @@
+plugins {
+  id 'java'
+}
+
+group = 'de.hdm'
+version = '1.0.0'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(":schema")
+  implementation project(":database")
+  implementation project(":logic")
+
+  implementation libs.rabbitmq
+
+  testImplementation project(":schema")
+  testImplementation project(":database")
+}
+
+test {
+  useJUnitPlatform()
+}

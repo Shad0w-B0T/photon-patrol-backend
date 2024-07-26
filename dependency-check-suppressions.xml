@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppression xmlns="">
+  <!-- Example suppression rule -->
+  <!--
+  <suppress>
+      <filePath regex="true">.*[/\\]example[/\\].*</filePath>
+      <cve>CVE-1234-5678</cve>
+  </suppress>
+  -->
+</suppression>

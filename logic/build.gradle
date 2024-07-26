@@ -1,0 +1,23 @@
+plugins {
+  id 'java'
+}
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(":schema")
+  implementation project(":database")
+
+  implementation libs.spring.boot.autoconfigure
+  implementation libs.spring.boot.starter.parent
+  implementation libs.spring.boot.starter.data.jpa
+
+  testImplementation project(":schema")
+  testImplementation project(":database")
+  testImplementation libs.spring.boot.autoconfigure
+}
+
+test {
+  useJUnitPlatform()
+}

@@ -9,7 +9,13 @@
 # https://gradle.org/
 # https://github.com/gradle/gradle
 
-image: gradle:alpine
+image: gradle:jdk17-alpine
+
+stages:
+  - build
+  - test
+  - update
+  - security
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
@@ -34,3 +40,30 @@ test:
     paths:
       - build
       - .gradle
+
+# Separater Job zum Aktualisieren der Datenbank
+#update-dependency-check:
+#  stage: update
+#  script:
+#    - gradle dependencyCheckUpdate --info
+#  cache:
+#    key: "$CI_COMMIT_REF_NAME"
+#    paths:
+#      - .gradle
+#      - build/dependency-check-data
+
+# Sicherheitscheck-Job
+#dependency-check:
+#  stage: security
+#  script:
+#    - gradle dependencyCheckAnalyze --info
+#  artifacts:
+#    paths:
+#      - build/reports/dependency-check-report.json
+#    reports:
+#      dependency_scanning: build/reports/dependency-check-report.json
+#  cache:
+#    key: "$CI_COMMIT_REF_NAME"
+#    paths:
+#      - .gradle
+#      - build/dependency-check-data

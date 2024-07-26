@@ -1,0 +1,82 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+  alias(libs.plugins.spring)
+}
+
+apply plugin: libs.plugins.dependencymanagement.get().pluginId
+apply plugin: libs.plugins.spring.get().pluginId
+
+ext {
+  driverClass = "de.hdm.photon.Driver"
+}
+
+group = 'de.hdm'
+version = '1.0.0'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(":schema")
+  implementation project(":database")
+  implementation project(":logic")
+  implementation project(":webserver-logic")
+  implementation platform(SpringBootPlugin.BOM_COORDINATES)
+
+  //Spring
+  implementation libs.spring.boot.starter.parent
+  implementation libs.spring.boot.starter.web
+  implementation libs.spring.boot.autoconfigure
+  implementation libs.spring.boot.starter.data.jpa
+  implementation libs.spring.boot.starter.security
+  implementation libs.spring.doc
+
+  //Data
+  implementation libs.hikari
+  implementation libs.postgresql
+  implementation libs.log4j
+
+  testImplementation project(":schema")
+  testImplementation project(":database")
+  testImplementation project(":logic")
+  testImplementation project(":webserver-logic")
+}
+
+test {
+  useJUnitPlatform()
+}
+
+dependencyManagement {
+  imports {
+    mavenBom(SpringBootPlugin.BOM_COORDINATES)
+  }
+}
+
+springBoot {
+  mainClass = "${driverClass}"
+
+  bootJar {
+    archiveFileName.set("queue-build.jar")
+  }
+  buildInfo()
+}
+
+jar {
+  dependsOn(":schema:build")
+  dependsOn(":database:build")
+  dependsOn(":logic:build")
+  dependsOn(":webserver-logic:build")
+
+  manifest {
+    attributes "Main-Class": "${driverClass}"
+  }
+
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+
+  //exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
