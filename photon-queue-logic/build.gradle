@@ -1,0 +1,25 @@
+plugins {
+  id 'java'
+}
+
+group = 'de.hdm'
+version = '1.0.0'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(":photon-schema")
+  implementation project(":photon-database")
+  implementation project(":photon-logic")
+
+  implementation libs.rabbitmq
+
+  testImplementation project(":photon-schema")
+  testImplementation project(":photon-database")
+}
+
+test {
+  useJUnitPlatform()
+}
