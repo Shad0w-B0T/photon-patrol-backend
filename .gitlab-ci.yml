@@ -11,6 +11,9 @@
 
 image: gradle:jdk17-alpine
 
+services:
+  - docker:dind
+
 stages:
   - build
   - test
