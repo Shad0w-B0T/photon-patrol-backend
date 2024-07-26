@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
-
-
   /**
    * Configure openapi.
    */
@@ -32,6 +30,4 @@ public class SwaggerConfig {
             .description(apiDescription)
             .version(apiVersion));
   }
-
-
 }

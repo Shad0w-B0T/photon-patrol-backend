@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Map;
 
-
 /**
  * Represents a message payload that includes hardware address and token information.
  * This interface extends both {@link IHardwareAddress} and {@link IHardwareToken}.
@@ -14,7 +13,7 @@ import java.util.Map;
  */
 public interface IMessagePayload extends IHardwareAddress, IHardwareToken {
 
-  @org.jetbrains.annotations.NotNull String address();
+  @NotNull String address();
 
   int bitResolution();
 
