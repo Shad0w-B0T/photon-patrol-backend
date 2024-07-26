@@ -32,7 +32,9 @@ allprojects {
 
     //Junit
     testImplementation libs.junit.jupiter.api
+    testImplementation libs.spring.boot.starter.test
     testRuntimeOnly libs.junit.jupiter.engine
+
   }
 
   test {

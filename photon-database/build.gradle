@@ -1,5 +1,5 @@
 plugins {
-  id 'java'
+  id 'java-library'
 }
 
 group = 'de.hdm'
@@ -29,11 +29,11 @@ dependencies {
   testImplementation libs.spring.boot.starter.data.jpa
 
   //Data
+  testImplementation libs.h2
   testImplementation libs.hikari
   testImplementation libs.hibernate
-  testImplementation libs.postgresql
+  testImplementation libs.sqlite
 
-  testImplementation project(":photon-schema")
 }
 
 test {
