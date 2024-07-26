@@ -1,4 +1,4 @@
-package de.hdm.photon.webserver.application.web.v1.logging;
+package de.hdm.photon.webserver.application.v1;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
