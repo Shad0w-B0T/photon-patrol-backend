@@ -19,7 +19,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name="logging_entity",
+@Table(name="PhotonHardwareLog",
     /*
      * The combination of the IP address and the timestamp has to be unique.
      * Otherwise, it's not possible to trace anything back.

@@ -20,7 +20,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="hardware_entity")
+@Table(name="PhotonHardware")
 @Getter
 @Accessors(fluent=true)
 public final class HardwareEntity implements IHardware {
