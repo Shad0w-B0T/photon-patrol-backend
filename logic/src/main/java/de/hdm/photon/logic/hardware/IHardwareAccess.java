@@ -1,10 +1,9 @@
 package de.hdm.photon.logic.hardware;
 
-import de.hdm.photon.schema.exception.auth.FormatMismatchException;
-import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.exception.FormatMismatchException;
+import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
+import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
-import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

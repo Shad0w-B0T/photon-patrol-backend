@@ -1,6 +1,6 @@
 package de.hdm.photon.database.influxdb.connection;
 
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.measurement.ITimePeriod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
