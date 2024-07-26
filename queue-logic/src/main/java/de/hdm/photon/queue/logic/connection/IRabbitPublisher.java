@@ -1,6 +1,6 @@
 package de.hdm.photon.queue.logic.connection;
 
-import de.hdm.photon.schema.exception.connection.RabbitConnectionException;
+import de.hdm.photon.schema.exception.RabbitConnectionException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
