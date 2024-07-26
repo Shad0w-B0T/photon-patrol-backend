@@ -1,4 +1,4 @@
-package de.hdm.photon.webserver.application.web.controller;
+package de.hdm.photon.webserver.application.controller;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

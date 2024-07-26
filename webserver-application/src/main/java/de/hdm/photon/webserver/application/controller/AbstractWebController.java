@@ -1,4 +1,4 @@
-package de.hdm.photon.webserver.application.web.controller;
+package de.hdm.photon.webserver.application.controller;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
@@ -17,7 +17,6 @@ import java.util.Optional;
  */
 @Log4j2
 public abstract class AbstractWebController implements IWebController {
-
   /**
    * Initialize the controller. This method is called after the controller's properties have been set.
    * It logs the initialization of the REST controller with its name and path.

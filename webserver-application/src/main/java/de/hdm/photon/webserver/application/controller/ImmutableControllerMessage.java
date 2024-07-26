@@ -1,4 +1,4 @@
-package de.hdm.photon.webserver.application.web.controller;
+package de.hdm.photon.webserver.application.controller;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.jetbrains.annotations.NotNull;
