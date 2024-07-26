@@ -18,8 +18,7 @@ import java.util.Date;
 
 @DataJpaTest // Only scans for @Entity and @Repository and store it to the context
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD) //Build new context before each test
-@AutoConfigureTestDatabase(connection=EmbeddedDatabaseConnection.H2)
-public class TestHardware {
+public class TestHardware  {
 
   @Autowired
   private HardwareRepository hardwareRepository;

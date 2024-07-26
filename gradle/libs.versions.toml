@@ -11,7 +11,6 @@ spring-boot-starter-security = "org.springframework.boot:spring-boot-starter-sec
 spring-boot-starter-validation = "org.springframework.boot:spring-boot-starter-validation:3.3.2"
 spring-boot-starter-test = "org.springframework.boot:spring-boot-starter-test:3.3.2"
 
-
 database-influxdb = "org.influxdb:influxdb-java:2.24"
 
 hikari = 'com.zaxxer:HikariCP:5.0.1'
@@ -28,7 +27,10 @@ junit-jupiter-engine = "org.junit.jupiter:junit-jupiter-engine:5.8.1"
 junit-bom = "org.junit:junit-bom:5.9.1"
 junit-jupiter = "org.junit.jupiter:junit-jupiter:5.10.0"
 
-reflections = "org.reflections:reflections:0.10.2"
+test-containers = "org.testcontainers:testcontainers:1.20.0"
+test-containers-junit = "org.testcontainers:junit-jupiter:1.20.0"
+test-containers-influxdb = "org.testcontainers:influxdb:1.20.0"
+test-containers-postgres = "org.testcontainers:postgresql:1.20.0"
 
 [plugins]
 lombok = "io.freefair.lombok:8.1.0"

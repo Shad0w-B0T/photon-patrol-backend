@@ -34,6 +34,10 @@ dependencies {
   testImplementation libs.hibernate
   testImplementation libs.sqlite
 
+  testImplementation libs.test.containers
+  testImplementation libs.test.containers.junit
+  testImplementation libs.test.containers.influxdb
+  testImplementation libs.test.containers.postgres
 }
 
 test {
