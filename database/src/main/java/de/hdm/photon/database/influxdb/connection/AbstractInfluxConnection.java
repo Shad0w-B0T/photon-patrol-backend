@@ -1,7 +1,7 @@
 package de.hdm.photon.database.influxdb.connection;
 
 import de.hdm.photon.database.influxdb.mapper.IInfluxMapper;
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.measurement.ITimeMap;
 import de.hdm.photon.schema.measurement.ITimePeriod;
 import de.hdm.photon.schema.measurement.ImmutableTimePeriod;

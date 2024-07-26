@@ -3,7 +3,7 @@ package de.hdm.photon.logic.measurement;
 import de.hdm.photon.database.influxdb.connection.IInfluxConnection;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilter;
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.measurement.ITimePeriod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

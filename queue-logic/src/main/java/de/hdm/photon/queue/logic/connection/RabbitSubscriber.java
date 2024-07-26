@@ -2,7 +2,7 @@ package de.hdm.photon.queue.logic.connection;
 
 import com.rabbitmq.client.Channel;
 import de.hdm.photon.queue.logic.config.IRabbitContext;
-import de.hdm.photon.schema.exception.connection.RabbitConnectionException;
+import de.hdm.photon.schema.exception.RabbitConnectionException;
 import org.jetbrains.annotations.Nullable;
 
 

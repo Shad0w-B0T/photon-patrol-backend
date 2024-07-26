@@ -2,9 +2,9 @@ package de.hdm.photon.webserver.logic.logging;
 
 import de.hdm.photon.database.postgresql.logging.LoggingEntity;
 import de.hdm.photon.database.postgresql.logging.LoggingRepository;
-import de.hdm.photon.schema.exception.auth.FormatMismatchException;
-import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.exception.FormatMismatchException;
+import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
+import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.webserver.logic.check.IAddressVerifier;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;

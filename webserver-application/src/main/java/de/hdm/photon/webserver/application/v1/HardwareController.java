@@ -1,14 +1,14 @@
-package de.hdm.photon.webserver.application.web.v1.hardware;
+package de.hdm.photon.webserver.application.v1;
 
 
 import de.hdm.photon.logic.hardware.HardwareManager;
 import de.hdm.photon.logic.hardware.IHardwareManager;
-import de.hdm.photon.schema.exception.auth.FormatMismatchException;
-import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.exception.FormatMismatchException;
+import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
+import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
-import de.hdm.photon.webserver.application.web.controller.AbstractWebController;
-import de.hdm.photon.webserver.application.web.controller.IControllerMessage;
+import de.hdm.photon.webserver.application.controller.AbstractWebController;
+import de.hdm.photon.webserver.application.controller.IControllerMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -4,7 +4,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import de.hdm.photon.queue.logic.config.IRabbitContext;
-import de.hdm.photon.schema.exception.connection.RabbitConnectionException;
+import de.hdm.photon.schema.exception.RabbitConnectionException;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

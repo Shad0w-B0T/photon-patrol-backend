@@ -8,7 +8,7 @@ import de.hdm.photon.logic.security.io.SecurityRule;
 import de.hdm.photon.queue.logic.connection.IRabbitConnection;
 import de.hdm.photon.queue.logic.connection.IRabbitSubscriber;
 import de.hdm.photon.queue.logic.event.MessageReceiveEvent;
-import de.hdm.photon.schema.exception.connection.RabbitConnectionException;
+import de.hdm.photon.schema.exception.RabbitConnectionException;
 import de.hdm.photon.schema.payload.IMessagePayload;
 import de.hdm.photon.schema.payload.ImmutableMessagePayload;
 import jakarta.annotation.PostConstruct;

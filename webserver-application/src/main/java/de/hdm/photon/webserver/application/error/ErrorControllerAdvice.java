@@ -1,16 +1,15 @@
-package de.hdm.photon.webserver.application.web.error;
+package de.hdm.photon.webserver.application.error;
 
-import de.hdm.photon.schema.exception.auth.FormatMismatchException;
-import de.hdm.photon.schema.exception.entity.EntityAlreadyPresentException;
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
-import de.hdm.photon.webserver.application.web.controller.AbstractWebController;
-import de.hdm.photon.webserver.application.web.controller.IControllerMessage;
+import de.hdm.photon.schema.exception.FormatMismatchException;
+import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
+import de.hdm.photon.schema.exception.EntityNotPresentException;
+import de.hdm.photon.webserver.application.controller.AbstractWebController;
+import de.hdm.photon.webserver.application.controller.IControllerMessage;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

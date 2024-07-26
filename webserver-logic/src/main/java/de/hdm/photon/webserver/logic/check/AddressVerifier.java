@@ -1,7 +1,7 @@
 package de.hdm.photon.webserver.logic.check;
 
 
-import de.hdm.photon.schema.exception.auth.FormatMismatchException;
+import de.hdm.photon.schema.exception.FormatMismatchException;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

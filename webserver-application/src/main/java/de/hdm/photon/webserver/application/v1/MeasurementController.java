@@ -1,10 +1,10 @@
-package de.hdm.photon.webserver.application.web.v1.data;
+package de.hdm.photon.webserver.application.v1;
 
 import de.hdm.photon.logic.measurement.IMeasurementManager;
-import de.hdm.photon.schema.exception.entity.EntityNotPresentException;
+import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.measurement.ITimePeriod;
-import de.hdm.photon.webserver.application.web.controller.AbstractWebController;
-import de.hdm.photon.webserver.application.web.controller.IControllerMessage;
+import de.hdm.photon.webserver.application.controller.AbstractWebController;
+import de.hdm.photon.webserver.application.controller.IControllerMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,7 +30,7 @@ import java.util.List;
 @Log4j2
 @RequestMapping("/api/v1/measurement")
 @Tag(name="Measurements Endpoint", description="Get and delete measurements.")
-public final class DataController extends AbstractWebController {
+public final class MeasurementController extends AbstractWebController {
 
   @Autowired
   private IMeasurementManager measurementManager;
