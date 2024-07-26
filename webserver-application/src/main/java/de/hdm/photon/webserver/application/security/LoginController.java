@@ -94,8 +94,37 @@ public final class LoginController extends AbstractWebController {
   public ResponseEntity<IControllerMessage> login(@RequestBody @NotNull LoginRequest loginRequest,
                                                   @NotNull final HttpServletRequest request,
                                                   @NotNull final HttpServletResponse response) {
+    return this.a(loginRequest.username, loginRequest.password, request, response);
+  }
+
+  @PostMapping("/register")
+  @ResponseBody
+  @Operation(
+      summary="",
+      description="",
+      responses={
+          @ApiResponse(
+              responseCode="200",
+              description="",
+              content={
+                  @Content(
+                      mediaType=MediaType.APPLICATION_JSON_VALUE,
+                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
+                  )
+              })
+      })
+  public ResponseEntity<IControllerMessage> register(@RequestBody @NotNull RegisterRequest registerRequest,
+                                                     @NotNull final HttpServletRequest request,
+                                                     @NotNull final HttpServletResponse response) throws EntityAlreadyPresentException {
+    this.userManager.createPersistentUser(registerRequest.username, registerRequest.password);
+    return this.a(registerRequest.username, registerRequest.password, request, response);
+  }
+
+  private ResponseEntity<IControllerMessage> a(@Nullable final String username,
+                                               @Nullable final String password, @NotNull final HttpServletRequest request,
+                                               @NotNull final HttpServletResponse response) {
     final Authentication authenticationRequest =
-        UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username(), loginRequest.password());
+        UsernamePasswordAuthenticationToken.unauthenticated(username, password);
     try {
       final Authentication authenticationResponse =
           this.authenticationManager.authenticate(authenticationRequest);
@@ -116,28 +145,6 @@ public final class LoginController extends AbstractWebController {
     }
 
     return this.successMessage(401, "Invalid username or password");
-  }
-
-  @PostMapping("/register")
-  @ResponseBody
-  @Operation(
-      summary="",
-      description="",
-      responses={
-          @ApiResponse(
-              responseCode="200",
-              description="",
-              content={
-                  @Content(
-                      mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
-                  )
-              })
-      })
-  public ResponseEntity<IControllerMessage> register(@RequestBody @NotNull RegisterRequest registerRequest) throws EntityAlreadyPresentException {
-    this.userManager.createPersistentUser(registerRequest.username, registerRequest.password);
-
-    return this.successMessage(200, "Register successful");
   }
 
   @PostMapping("/logout")
