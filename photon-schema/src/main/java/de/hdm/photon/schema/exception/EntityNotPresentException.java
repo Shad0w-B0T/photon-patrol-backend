@@ -1,9 +1,5 @@
 package de.hdm.photon.schema.exception;
 
-Here's the Javadoc documentation for the EntityNotPresentException class in Java:
-
-java
-
 /**
  * The {@code EntityNotPresentException} class represents an exception that is thrown
  * when an attempt is made to access or manipulate an entity that does not exist in the system.
