@@ -1,4 +1,4 @@
-package de.hdm.photon.webserver.application.config.interceptor;
+package de.hdm.photon.webserver.application.config;
 
 import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
 import jakarta.servlet.http.HttpServletRequest;

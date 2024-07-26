@@ -1,6 +1,5 @@
 package de.hdm.photon.webserver.application.config;
 
-import de.hdm.photon.webserver.application.config.interceptor.WebInterceptor;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
