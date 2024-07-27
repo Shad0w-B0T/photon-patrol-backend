@@ -11,13 +11,13 @@
 
 image: gradle:jdk17-alpine
 
-variables:
-  # Disable Docker-in-Docker
-  DOCKER_TLS_CERTDIR: ""
-
 services:
-  - name: docker:19.03.12
-    alias: docker
+  - postgres:latest
+
+variables:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: test
 
 stages:
   - build
