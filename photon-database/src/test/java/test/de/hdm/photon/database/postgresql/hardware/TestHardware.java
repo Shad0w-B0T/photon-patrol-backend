@@ -30,13 +30,13 @@ public class TestHardware {
 
   @BeforeEach
   public void setUp() {
-    hardwareRepository.deleteAll();
+    this.hardwareRepository.deleteAll();
 
     this.now = new Date();
-    this.macAddress = "192.168.0.1";
+    this.macAddress = "A1:B4:C5:C1:DD:3E";
     this.token = "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3";
-    this.hardwareAdded = now;
-    this.macAdded = now;
+    this.hardwareAdded = this.now;
+    this.macAdded = this.now;
     this.tokenIsActive = true;
   }
 
@@ -68,7 +68,7 @@ public class TestHardware {
 
 
   @Test
-  @DisplayName("Test integrity of entity.")
+  @DisplayName("Test integrity of hardware entity.")
   public void testIntegrityOfHardwareEntity() {
 
     final HardwareEntity hardwareEntity
@@ -83,14 +83,14 @@ public class TestHardware {
 
     //positive
     Assertions.assertEquals("a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", hardwareEntity.token());
-    Assertions.assertEquals("192.168.0.1", hardwareEntity.macAddress());
+    Assertions.assertEquals("A1:B4:C5:C1:DD:3E", hardwareEntity.macAddress());
     Assertions.assertEquals(this.now, hardwareEntity.hardwareAdded());
     Assertions.assertEquals(this.now, hardwareEntity.macAdded());
     Assertions.assertTrue(hardwareEntity.tokenIsActive());
 
     //negative
     Assertions.assertNotEquals("acf6b7cbeebae8db9ced20bffaf9d52f3ad4cc7c", hardwareEntity.token());
-    Assertions.assertNotEquals("69.42.133.7", hardwareEntity.macAddress());
+    Assertions.assertNotEquals("B1:D1:F5:C3:AA:D3", hardwareEntity.macAddress());
     Assertions.assertNotEquals(new Date(), hardwareEntity.hardwareAdded());
     Assertions.assertNotEquals(new Date(), hardwareEntity.macAdded());
     Assertions.assertNotEquals(false, hardwareEntity.tokenIsActive());
@@ -155,7 +155,7 @@ public class TestHardware {
 
     //negative
     // mac
-    Assertions.assertNotEquals("69.42.133.7", hardwareEntity.macAddress());
+    Assertions.assertNotEquals("B1:D1:F5:C3:AA:D3", hardwareEntity.macAddress());
     Assertions.assertNotEquals(0, this.hardwareRepository.findByMacAddress(hardwareEntity.macAddress()).stream().count());
 
     // mac added
