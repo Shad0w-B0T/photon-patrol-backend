@@ -13,11 +13,21 @@ image: gradle:jdk17-alpine
 
 services:
   - postgres:latest
+  - name: influxdb/influxdb:2.7.1
+    alias: influxdb
+    command: [ "influxd", "--bolt-path=/var/lib/influxdb/influxd.bolt", "--config", "/etc/influxdb/influxdb.conf" ]
 
 variables:
   POSTGRES_DB: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: test
+  INFLUXDB_HOST: "http://influxdb:8086"
+  INFLUXDB_ORG: "my-org"
+  INFLUXDB_BUCKET: "my-bucket"
+  INFLUXDB_USERNAME: "my-user"
+  INFLUXDB_PASSWORD: "my-password"
+  INFLUXDB_ADMIN_TOKEN: "my-super-secret-auth-token"
+
 
 stages:
   - build
