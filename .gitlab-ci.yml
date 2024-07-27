@@ -13,7 +13,7 @@ image: gradle:jdk17-alpine
 
 services:
   - postgres:latest
-  - name: influxdb/influxdb:2.7.1
+  - name: influxdb:2
     alias: influxdb
     command: [ "influxd", "--bolt-path=/var/lib/influxdb/influxd.bolt", "--config", "/etc/influxdb/influxdb.conf" ]
 
