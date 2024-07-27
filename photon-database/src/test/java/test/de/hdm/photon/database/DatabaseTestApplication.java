@@ -32,14 +32,14 @@ public class DatabaseTestApplication {
         .withRetention("1w")
         .withAdminToken("my-super-secret-auth-token");
 
-    INFLUX_CONTAINER.start();
+    //INFLUX_CONTAINER.start();
 
     SQL_CONTAINER = new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest"))
         .withDatabaseName("postgres")
         .withUsername("postgres")
         .withPassword("test");
 
-    SQL_CONTAINER.start();
+  //  SQL_CONTAINER.start();
   }
 
   public static void main(String[] args) {

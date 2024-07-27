@@ -11,6 +11,22 @@
 
 image: gradle:jdk17-alpine
 
+services:
+  - postgres:latest
+  - influxdb:2
+
+variables:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: test
+  DOCKER_INFLUXDB_INIT_MODE: setup
+  DOCKER_INFLUXDB_INIT_USERNAME: my-user
+  DOCKER_INFLUXDB_INIT_PASSWORD: my-password
+  DOCKER_INFLUXDB_INIT_ORG: my-org
+  DOCKER_INFLUXDB_INIT_BUCKET: my-bucket
+  DOCKER_INFLUXDB_INIT_RETENTION: 1w
+  DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-super-secret-auth-token
+
 stages:
   - build
   - test
@@ -18,6 +34,7 @@ stages:
   - security
 
 before_script:
+  - export DOCKER_HOST="unix:///var/run/docker.sock"
   - GRADLE_USER_HOME="$(pwd)/.gradle"
   - export GRADLE_USER_HOME
 

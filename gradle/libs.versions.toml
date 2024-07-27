@@ -34,7 +34,7 @@ test-containers-postgres = "org.testcontainers:postgresql:1.20.0"
 
 [plugins]
 lombok = "io.freefair.lombok:8.1.0"
-spring = "org.springframework.boot:3.2.1"
+spring = "org.springframework.boot:3.3.2"
 dependencymanagement = "io.spring.dependency-management:1.1.2"
 owasp = "org.owasp.dependencycheck:9.0.10"
 # 8.4.3

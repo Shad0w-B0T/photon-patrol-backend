@@ -29,7 +29,6 @@ public abstract class AbstractHardwareHelper implements IHardwareHelper {
     Objects.requireNonNull(hardwareRepository);
 
     this.hardwareRepository = hardwareRepository;
-
     this.macFilter = SecurityFilters.macStringFilter();
   }
 
