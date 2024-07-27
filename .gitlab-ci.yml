@@ -13,9 +13,7 @@ image: gradle:jdk17-alpine
 
 services:
   - postgres:latest
-  - name: influxdb:2
-    alias: influxdb
-    command: [ "influxd", "--bolt-path=/var/lib/influxdb/influxd.bolt", "--config", "/etc/influxdb/influxdb.conf" ]
+  - influxdb:2
 
 variables:
   POSTGRES_DB: postgres
@@ -28,7 +26,6 @@ variables:
   DOCKER_INFLUXDB_INIT_BUCKET: my-bucket
   DOCKER_INFLUXDB_INIT_RETENTION: 1w
   DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-super-secret-auth-token
-
 
 stages:
   - build
