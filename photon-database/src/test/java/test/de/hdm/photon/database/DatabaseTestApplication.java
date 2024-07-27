@@ -12,9 +12,9 @@ import org.testcontainers.utility.DockerImageName;
 
 
 @SpringBootApplication
-@ComponentScan("de.hdm.photon.database")
-@EntityScan("de.hdm.photon.database")
-@EnableJpaRepositories(basePackages="de.hdm.photon.database")
+@ComponentScan("de.hdm.photon.database.postgresql")
+@EntityScan("de.hdm.photon.database.postgresql")
+@EnableJpaRepositories(basePackages="de.hdm.photon.database.postgresql")
 public class DatabaseTestApplication {
 
   @Container
