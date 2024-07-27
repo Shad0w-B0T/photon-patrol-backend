@@ -14,7 +14,6 @@ import java.util.Objects;
 
 
 @Log4j2
-
 /*
  * Abstract class for mapping InfluxDB query results to Java objects.
  */
