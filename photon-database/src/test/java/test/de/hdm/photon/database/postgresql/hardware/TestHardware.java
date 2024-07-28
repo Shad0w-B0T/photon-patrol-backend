@@ -55,11 +55,11 @@ public class TestHardware extends AbstractSpringTest {
     final HardwareEntity hardwareEntity
         = this.hardwareRepository.save(
         new HardwareEntity(
-            token,
-            macAddress,
-            hardwareAdded,
-            macAdded,
-            tokenIsActive)
+            this.token,
+            this.macAddress,
+            this.hardwareAdded,
+            this.macAdded,
+            this.tokenIsActive)
     );
 
     //positive
