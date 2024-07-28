@@ -23,6 +23,6 @@ public record HardwareRecord(long id,
                              @Nullable String macAddress,
                              @Nullable Date hardwareAdded,
                              @Nullable Date macAdded,
-                             @Nullable boolean tokenIsActive
+                             boolean tokenIsActive
 ) implements IHardware{
 }

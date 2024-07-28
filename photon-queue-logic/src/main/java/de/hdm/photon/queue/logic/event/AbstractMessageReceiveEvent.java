@@ -19,7 +19,6 @@ import java.util.Objects;
 @Getter
 @Accessors(fluent = true)
 public abstract class AbstractMessageReceiveEvent extends ApplicationEvent {
-
   /**
    * The payload of the received message.
    */

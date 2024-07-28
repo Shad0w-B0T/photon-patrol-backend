@@ -1,16 +1,19 @@
 package de.hdm.photon.database.postgresql.logging;
 
 
+import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.Optional;
 
-
+@Repository
 public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
 
+  //------------------------------------------ ID -------------------------------------------------
 
   /**
    * Query to check if the id exists.
@@ -38,6 +41,8 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
   int deleteById(long id);
 
 
+  //------------------------------------------ Ip address -------------------------------------------------
+
   /**
    * Query to check if the ip address exists.
    *
@@ -64,6 +69,36 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
   int deleteByIpAddress(@NotNull String ipAddress);
 
 
+  //------------------------------------------ Timestamp of ip -------------------------------------------------
+
+  /**
+   * Query to get a timestamp of the ip.
+   *
+   * @param timestamp date when the ip was added.
+   * @return an Optional if present. Null if no match.
+   */
+  @NotNull
+  Optional<LoggingEntity> findByTimestampOfIp(@NotNull Date timestamp);
+
+  /**
+   * Query to check if the timestamp exists.
+   *
+   * @param timestamp time of a used ip.
+   * @return true if the timestamp exists.
+   */
+  boolean existsByTimestampOfIp(@NotNull Date timestamp);
+
+  /**
+   * Query to delete the entity by timestamp.
+   *
+   * @param timestamp timestamp of the ip.
+   * @return an int value of how many were deleted.
+   */
+  int deleteByTimestampOfIp(@NotNull Date timestamp);
+
+
+  //------------------------------------ Combination of ip and timestamp -------------------------------------
+
   /**
    * Query to check if the combination of the ip and timestamp exists.
    *
@@ -73,7 +108,6 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
    */
   boolean existsByIpAddressAndTimestampOfIp(@NotNull String ipAddress,
                                             @NotNull Date timestamp);
-
 
   /**
    * Query to get an ip with the time stamp.
@@ -87,13 +121,31 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
                                                           @NotNull Date timestamp);
 
   /**
-   * Query to get a timestamp of the ip.
+   * Query to delete the entity by hardware entity, ip and timestamp.
    *
-   * @param timestamp date when the ip was added.
-   * @return an Optional if present. Null if no match.
+   * @param hardwareEntity the hardware entity which it is linked to.
+   * @param ipAddress value of the ip address.
+   * @param timestamp the exact time when the ip was connected.
+   * @return an int value of how many were deleted.
    */
-  @NotNull
-  Optional<LoggingEntity> findByTimestampOfIp(@NotNull Date timestamp);
+  int deleteByHardwareEntityAndIpAddressAndTimestampOfIp(@NotNull HardwareEntity hardwareEntity,
+                                                         @NotNull String ipAddress,
+                                                         @NotNull Date timestamp);
+
+
+  //------------------------------- hardware entity, ip and timestamp --------------------------------------------
+
+  /**
+   * Query to check if the combination of the hardware entity, the ip and timestamp exists.
+   *
+   * @param hardwareEntity hardware.
+   * @param ipAddress value of the ip address.
+   * @param timestamp the exact time when the ip was connected.
+   * @return true if the combination exists.
+   */
+  boolean existsByHardwareEntityAndIpAddressAndTimestampOfIp(@NotNull HardwareEntity hardwareEntity,
+                                                             @NotNull String ipAddress,
+                                                             @NotNull Date timestamp);
 
   /**
    * Get the logging entity by id. If no match throw Exception.

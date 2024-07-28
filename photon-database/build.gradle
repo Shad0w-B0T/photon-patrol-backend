@@ -1,5 +1,5 @@
 plugins {
-  id 'java'
+  id 'java-library'
 }
 
 group = 'de.hdm'
@@ -30,10 +30,10 @@ dependencies {
 
   //Data
   testImplementation libs.hikari
-  testImplementation libs.hibernate
   testImplementation libs.postgresql
+  testImplementation libs.database.influxdb
 
-  testImplementation project(":photon-schema")
+  testImplementation project(":test-photon-environment")
 }
 
 test {

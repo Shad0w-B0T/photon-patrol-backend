@@ -11,6 +11,28 @@
 
 image: gradle:jdk17-alpine
 
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+
+services:
+  - postgres:latest
+  - influxdb:2
+
+variables:
+  PHOTON_TEST_CONTAINERS: true
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: test
+  DOCKER_INFLUXDB_INIT_MODE: setup
+  DOCKER_INFLUXDB_INIT_USERNAME: my-user
+  DOCKER_INFLUXDB_INIT_PASSWORD: my-password
+  DOCKER_INFLUXDB_INIT_ORG: my-org
+  DOCKER_INFLUXDB_INIT_BUCKET: my-bucket
+  DOCKER_INFLUXDB_INIT_RETENTION: 1w
+  DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-super-secret-auth-token
+
 stages:
   - build
   - test
@@ -20,6 +42,7 @@ stages:
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
   - export GRADLE_USER_HOME
+  - chmod +x gradlew
 
 build:
   stage: build
@@ -40,6 +63,10 @@ test:
     paths:
       - build
       - .gradle
+  artifacts:
+    reports:
+      junit: '**/build/test-results/test/*.xml'
+    when: always
 
 # Separater Job zum Aktualisieren der Datenbank
 #update-dependency-check:

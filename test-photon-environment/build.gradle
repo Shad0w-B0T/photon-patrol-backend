@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group = 'de.hdm'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  testImplementation platform('org.junit:junit-bom:5.9.1')
+  testImplementation 'org.junit.jupiter:junit-jupiter'
+
+  implementation libs.junit.jupiter.api
+  implementation libs.spring.boot.starter.test
+
+  implementation libs.test.containers
+  implementation libs.test.containers.junit
+  implementation libs.test.containers.influxdb
+  implementation libs.test.containers.postgres
+}
+
+test {
+  useJUnitPlatform()
+}

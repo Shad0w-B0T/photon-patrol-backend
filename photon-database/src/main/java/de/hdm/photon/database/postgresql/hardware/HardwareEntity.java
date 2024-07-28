@@ -14,6 +14,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
 import java.util.Set;
@@ -63,10 +65,10 @@ public final class HardwareEntity implements IHardware {
   }
 
   //Constructor
-  public HardwareEntity(final String token,
-                        final String macAddress,
-                        final Date hardwareAdded,
-                        final Date macAdded,
+  public HardwareEntity(@NotNull final String token,
+                        @Nullable final String macAddress,
+                        @NotNull final Date hardwareAdded,
+                        @Nullable final Date macAdded,
                         final boolean tokenIsActive) {
     this.token = token;
     this.macAddress = macAddress;

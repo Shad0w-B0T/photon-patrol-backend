@@ -3,11 +3,12 @@ package de.hdm.photon.database.postgresql.hardware;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.Optional;
 
-
+@Repository
 public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> {
 
   //------------------------------------------ Token -------------------------------------------------

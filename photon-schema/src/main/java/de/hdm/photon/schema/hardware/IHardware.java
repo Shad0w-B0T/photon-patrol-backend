@@ -24,6 +24,6 @@ public interface IHardware extends Identifiable, IHardwareAddress, IHardwareToke
    * @return true if the key is currently being used.
    */
   @Schema(example = "true", description = "If the key is not used it should be false. Therefore it is equivalent to the lowest permission level.")
-  @Nullable boolean tokenIsActive();
+  boolean tokenIsActive();
 
 }
