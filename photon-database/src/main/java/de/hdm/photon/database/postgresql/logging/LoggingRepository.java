@@ -110,6 +110,14 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
   Optional<LoggingEntity> findByTimestampOfIp(@NotNull Date timestamp);
 
   /**
+   * Query to check if the timestamp exists.
+   *
+   * @param timestamp time of a used ip.
+   * @return true if the timestamp exists.
+   */
+  boolean existsByTimestampOfIp(@NotNull Date timestamp);
+
+  /**
    * Get the logging entity by id. If no match throw Exception.
    *
    * @param loggingId id of the entity.

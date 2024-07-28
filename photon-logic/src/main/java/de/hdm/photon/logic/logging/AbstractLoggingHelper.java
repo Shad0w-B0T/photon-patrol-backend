@@ -46,7 +46,6 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
 
     this.addressFilter.checkWithException(ipAddress);
 
-    //TODO find after bruch :D
     log.debug("Creating a new hardware object.");
     final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
 
