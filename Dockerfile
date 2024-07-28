@@ -33,7 +33,7 @@ FROM eclipse-temurin:21 as queue-application
 # Define workir for app
 WORKDIR /app
 
-COPY --from=queue-build /app/queue-application/build/libs/*.jar build.jar
+COPY --from=queue-build /app/photon-queue-application/build/libs/*.jar build.jar
 
 ENTRYPOINT ["java", "-jar", "build.jar"]
 
@@ -60,7 +60,7 @@ COPY photon-schema ./photon-schema
 COPY photon-database ./photon-database
 COPY photon-logic ./photon-logic
 COPY photon-webserver-logic ./photon-webserver-logic
-COPY photon-ebserver-application ./photon-webserver-application
+COPY photon-webserver-application ./photon-webserver-application
 
 RUN gradle --build-cache bootJar
 RUN gradle check
@@ -73,6 +73,6 @@ FROM eclipse-temurin:21 as webserver-application
 # Define workir for app
 WORKDIR /app
 
-COPY --from=web-build /app/webserver-application/build/libs/*.jar build.jar
+COPY --from=web-build /app/photon-webserver-application/build/libs/*.jar build.jar
 
 ENTRYPOINT ["java", "-jar", "build.jar"]
