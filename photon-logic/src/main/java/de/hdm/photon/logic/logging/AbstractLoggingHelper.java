@@ -40,20 +40,19 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
   @Transactional
   @SuppressWarnings("all")
   public @NotNull LoggingEntity createLogging(@Nullable String ipAddress,
-                                              long hardwareId) throws EntityNotPresentException,
-      EntityAlreadyPresentException {
+                                              long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException {
     log.info("Attempting to create a new logging object.");
     log.debug("Validating if the ip address is valid.");
 
     this.addressFilter.checkWithException(ipAddress);
 
     //TODO find after bruch :D
+    log.debug("Creating a new hardware object.");
     final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
-    isPresent();
 
     log.debug("Creating a timestamp for the ip.");
     final Date now = new Date();
-    this.isPresent(ipAddress, now);
+    this.isPresent(hardwareEntity, ipAddress, now);
     final LoggingEntity loggingEntity = new LoggingEntity(hardwareEntity, ipAddress, now);
 
     log.info("New logging entity successfully created: {}", loggingEntity.toString());
@@ -128,6 +127,6 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
     if (!this.loggingRepository.existsByHardwareEntityAndIpAddressAndTimestampOfIp(hardwareEntity, ipAddress, timestampOfIp)) {
       return;
     }
-    throw new EntityAlreadyPresentException("Logging entity with this ip and timestamp already exists.");
+    throw new EntityAlreadyPresentException("Logging entity with this hardware entity, ip and timestamp already exists.");
   }
 }
