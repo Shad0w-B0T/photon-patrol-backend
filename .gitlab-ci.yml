@@ -57,6 +57,10 @@ test:
     paths:
       - build
       - .gradle
+  artifacts:
+    reports:
+      junit: '**/build/test-results/test/*.xml'
+    when: always
 
 # Separater Job zum Aktualisieren der Datenbank
 #update-dependency-check:
