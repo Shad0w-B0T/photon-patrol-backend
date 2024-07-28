@@ -56,6 +56,7 @@ public final class LoggingEntity implements ILogging {
   public LoggingEntity(@NotNull final HardwareEntity hardwareEntity,
                        @NotNull final String ipAddress,
                        @NotNull final Date timestampOfIp) {
+    this.hardwareEntity = hardwareEntity;
     this.ipAddress = ipAddress;
     this.timestampOfIp = timestampOfIp;
   }
