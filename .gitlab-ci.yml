@@ -11,6 +11,11 @@
 
 image: gradle:jdk17-alpine
 
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+
 services:
   - postgres:latest
   - influxdb:2
