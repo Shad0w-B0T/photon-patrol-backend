@@ -1,6 +1,7 @@
 package de.hdm.photon.database.postgresql.logging;
 
 
+import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -75,6 +76,18 @@ public interface LoggingRepository extends JpaRepository<LoggingEntity, Long> {
   boolean existsByIpAddressAndTimestampOfIp(@NotNull String ipAddress,
                                             @NotNull Date timestamp);
 
+
+  /**
+   * Query to check if the combination of the hardware entity, the ip and timestamp exists.
+   *
+   * @param hardwareEntity hardware.
+   * @param ipAddress value of the ip address.
+   * @param timestamp the exact time when the ip was connected.
+   * @return true if the combination exists.
+   */
+  boolean existsByHardwareEntityAndIpAddressAndTimestampOfIp(@NotNull HardwareEntity hardwareEntity,
+                                                             @NotNull String ipAddress,
+                                                             @NotNull Date timestamp);
 
   /**
    * Query to get an ip with the time stamp.
