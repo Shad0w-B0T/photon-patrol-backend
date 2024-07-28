@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public final class LoggingHelper extends AbstractLoggingHelper {
+public class LoggingHelper extends AbstractLoggingHelper {
 
   @Autowired
   public LoggingHelper(@Nullable LoggingRepository loggingRepository,
