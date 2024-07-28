@@ -1,13 +1,12 @@
 package de.hdm.photon.logic.logging;
 
-import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
+import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.logging.ILogging;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -26,7 +25,8 @@ public interface ILoggingAccess<LOGGING extends ILogging> {
    * @throws FormatMismatchException       see {@link FormatMismatchException}
    */
   @NotNull
-  LOGGING createLogging(@Nullable String ipAddress) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException;
+  LOGGING createLogging(@Nullable String ipAddress,
+                        long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException;
 
 
   //--------------------------------------------------READ--------------------------------------------------------------

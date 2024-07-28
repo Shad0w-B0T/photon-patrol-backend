@@ -30,8 +30,9 @@ public abstract class AbstractLoggingManager implements ILoggingManager {
    */
   @Override
   @Transactional
-  public @NotNull ILogging createLogging(@Nullable String ipAddress) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
-    return LoggingFactory.convertToRecord(this.loggingHelper.createLogging(ipAddress));
+  public @NotNull ILogging createLogging(@Nullable String ipAddress,
+                                         long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+    return LoggingFactory.convertToRecord(this.loggingHelper.createLogging(ipAddress, hardwareId));
   }
 
   /**

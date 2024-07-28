@@ -14,6 +14,7 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
@@ -52,8 +53,9 @@ public final class LoggingEntity implements ILogging {
   }
 
   //Constructor
-  public LoggingEntity(final String ipAddress,
-                       final Date timestampOfIp) {
+  public LoggingEntity(@NotNull final HardwareEntity hardwareEntity,
+                       @NotNull final String ipAddress,
+                       @NotNull final Date timestampOfIp) {
     this.ipAddress = ipAddress;
     this.timestampOfIp = timestampOfIp;
   }
