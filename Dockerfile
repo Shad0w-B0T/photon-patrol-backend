@@ -16,10 +16,11 @@ COPY gradlew ./gradlew
 COPY gradlew.bat ./gradlew.bat
 COPY settings.gradle ./settings.gradle
 
-COPY schema ./schema
-COPY database ./database
-COPY queue-logic ./queue-logic
-COPY queue-application ./queue-application
+COPY photon-schema ./photon-schema
+COPY photon-database ./photon-database
+COPY photon-logic ./photon-logic
+COPY photon-queue-logic ./photon-queue-logic
+COPY photon-queue-application ./photon-queue-application
 
 RUN gradle --build-cache bootJar
 RUN gradle check
@@ -55,10 +56,11 @@ COPY gradlew ./gradlew
 COPY gradlew.bat ./gradlew.bat
 COPY settings.gradle ./settings.gradle
 
-COPY schema ./schema
-COPY database ./database
-COPY webserver-logic ./webserver-logic
-COPY webserver-application ./webserver-application
+COPY photon-schema ./photon-schema
+COPY photon-database ./photon-database
+COPY photon-logic ./photon-logic
+COPY photon-webserver-logic ./photon-webserver-logic
+COPY photon-ebserver-application ./photon-webserver-application
 
 RUN gradle --build-cache bootJar
 RUN gradle check
