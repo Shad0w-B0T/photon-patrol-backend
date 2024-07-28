@@ -1,6 +1,7 @@
 package test.de.hdm.photon;
 
 import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.containers.InfluxDBContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.lifecycle.Startable;
 import org.testcontainers.utility.DockerImageName;
 
 import java.lang.reflect.Field;
@@ -72,6 +74,12 @@ public abstract class AbstractSpringTest {
       postgreSQLContainer.setPortBindings(List.of("5432:5432"));
       postgreSQLContainer.start();
     }
+  }
+
+  @AfterAll
+  public static void shutdown() {
+    Optional.ofNullable(influxDBContainer).ifPresent(Startable::close);
+    Optional.ofNullable(postgreSQLContainer).ifPresent(Startable::close);
   }
 
   private static boolean ignoreContainers() {
