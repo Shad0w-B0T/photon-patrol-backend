@@ -16,6 +16,7 @@ services:
   - influxdb:2
 
 variables:
+  PHOTON_TEST_CONTAINERS: true
   POSTGRES_DB: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: test
