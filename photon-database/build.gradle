@@ -33,8 +33,6 @@ dependencies {
   testImplementation libs.postgresql
   testImplementation libs.database.influxdb
 
-  implementation libs.test.containers
-  implementation libs.test.containers.junit
   testImplementation project(":test-photon-environment")
 }
 
