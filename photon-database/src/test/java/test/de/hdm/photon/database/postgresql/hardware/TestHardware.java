@@ -119,26 +119,44 @@ public class TestHardware extends AbstractSpringTest {
     //negative
     // token
     Assertions.assertNotEquals("ksdgjwze322kjjwe2kaadsmwe", hardwareEntity.token());
-    Assertions.assertNotEquals(0, this.hardwareRepository.findByToken(hardwareEntity.token()).stream().count());
+    Assertions.assertNotEquals(0, this.hardwareRepository.findByToken(
+        hardwareEntity.token())
+        .stream()
+        .count()
+    );
 
     // active token
     Assertions.assertNotEquals(false, hardwareEntity.token());
-    Assertions.assertNotEquals(0, this.hardwareRepository.findByTokenIsActive(hardwareEntity.tokenIsActive()));
+    Assertions.assertNotEquals(0, this.hardwareRepository.findByTokenIsActive(
+        hardwareEntity.tokenIsActive())
+    );
 
     //positive
     // token
     Assertions.assertNotNull(this.hardwareRepository.findByToken(hardwareEntity.token()));
     Assertions.assertTrue(this.hardwareRepository.existsByToken(hardwareEntity.token()));
-    Assertions.assertEquals(1, this.hardwareRepository.findByToken(hardwareEntity.token()).stream().count());
+    Assertions.assertEquals(1, this.hardwareRepository.findByToken(
+        hardwareEntity.token())
+        .stream()
+        .count()
+    );
     Assertions.assertEquals("a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", hardwareEntity.token());
 
     // active token
     Assertions.assertNotNull(this.hardwareRepository.findByTokenIsActive(hardwareEntity.tokenIsActive()));
-    Assertions.assertEquals(1, this.hardwareRepository.findByTokenIsActive(hardwareEntity.tokenIsActive()).stream().count());
+    Assertions.assertEquals(1, this.hardwareRepository.findByTokenIsActive(
+        hardwareEntity.tokenIsActive())
+        .stream()
+        .count()
+    );
     Assertions.assertTrue(hardwareEntity.tokenIsActive());
 
     this.hardwareRepository.deleteByToken(hardwareEntity.token());
-    Assertions.assertEquals(0, this.hardwareRepository.findByToken(hardwareEntity.token()).stream().count());
+    Assertions.assertEquals(0, this.hardwareRepository.findByToken(
+        hardwareEntity.token())
+        .stream()
+        .count()
+    );
   }
 
 
@@ -171,17 +189,33 @@ public class TestHardware extends AbstractSpringTest {
     // mac
     Assertions.assertNotNull(this.hardwareRepository.findByMacAddress(hardwareEntity.macAddress()));
     Assertions.assertTrue(this.hardwareRepository.existsByMacAddress(hardwareEntity.macAddress()));
-    Assertions.assertEquals(1, this.hardwareRepository.findByMacAddress(hardwareEntity.macAddress()).stream().count());
+    Assertions.assertEquals(1, this.hardwareRepository.findByMacAddress(
+        hardwareEntity.macAddress())
+        .stream()
+        .count()
+    );
 
     // mac added
     Assertions.assertNotNull(this.hardwareRepository.findByMacAdded(hardwareEntity.macAdded()));
     Assertions.assertTrue(this.hardwareRepository.existsByHardwareAdded(hardwareEntity.macAdded()));
-    Assertions.assertEquals(1, this.hardwareRepository.findByMacAdded(hardwareEntity.macAdded()).stream().count());
+    Assertions.assertEquals(1, this.hardwareRepository.findByMacAdded(
+        hardwareEntity.macAdded())
+        .stream()
+        .count()
+    );
 
 
     this.hardwareRepository.deleteByMacAddress(hardwareEntity.macAddress());
-    Assertions.assertEquals(0, this.hardwareRepository.findByMacAddress(hardwareEntity.macAddress()).stream().count());
-    Assertions.assertEquals(0, this.hardwareRepository.findByHardwareAdded(hardwareEntity.macAdded()).stream().count());
+    Assertions.assertEquals(0, this.hardwareRepository.findByMacAddress(
+        hardwareEntity.macAddress())
+        .stream()
+        .count()
+    );
+    Assertions.assertEquals(0, this.hardwareRepository.findByHardwareAdded(
+        hardwareEntity.macAdded())
+        .stream()
+        .count()
+    );
   }
 
 
@@ -202,16 +236,28 @@ public class TestHardware extends AbstractSpringTest {
     //negative
     Assertions.assertNotNull(hardwareEntity.hardwareAdded());
     Assertions.assertNotEquals(new Date(), hardwareEntity.hardwareAdded());
-    Assertions.assertNotEquals(0, this.hardwareRepository.findByHardwareAdded(hardwareEntity.hardwareAdded()).stream().count());
+    Assertions.assertNotEquals(0, this.hardwareRepository.findByHardwareAdded(
+        hardwareEntity.hardwareAdded())
+        .stream()
+        .count()
+    );
 
     //positive
     Assertions.assertNotNull(this.hardwareRepository.findByHardwareAdded(hardwareEntity.hardwareAdded()));
     Assertions.assertTrue(this.hardwareRepository.existsByHardwareAdded(hardwareEntity.hardwareAdded()));
-    Assertions.assertEquals(1, this.hardwareRepository.findByHardwareAdded(hardwareEntity.hardwareAdded()).stream().count());
+    Assertions.assertEquals(1, this.hardwareRepository.findByHardwareAdded
+        (hardwareEntity.hardwareAdded())
+        .stream()
+        .count()
+    );
 
 
     this.hardwareRepository.deleteAllByHardwareAdded(hardwareEntity.hardwareAdded());
-    Assertions.assertEquals(0, this.hardwareRepository.findByHardwareAdded(hardwareEntity.hardwareAdded()).stream().count());
+    Assertions.assertEquals(0, this.hardwareRepository.findByHardwareAdded(
+        hardwareEntity.hardwareAdded())
+        .stream()
+        .count()
+    );
 
   }
 }
