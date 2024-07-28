@@ -178,7 +178,7 @@ public abstract class AbstractHardwareHelper implements IHardwareHelper {
         hardwareAdded,
         macAdded);
 
-    if (!this.hardwareRepository.existsByMacAddress(macAddress)) {
+    if (this.hardwareRepository.existsByMacAddress(macAddress)) {
       throw new EntityAlreadyPresentException("Hardware with this mac already exists.");
     }
 
