@@ -15,8 +15,6 @@ import test.de.hdm.photon.TestContainers;
 public class DatabaseTestApplication {
 
   public static void main(String[] args) {
-    //-> only on local test.
-    TestContainers.startContainers();
     SpringApplication.run(DatabaseTestApplication.class, args);
   }
 }

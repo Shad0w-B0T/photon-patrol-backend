@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import test.de.hdm.photon.AbstractSpringTest;
 
 import java.util.Date;
 
@@ -19,7 +20,7 @@ import java.util.Date;
 @DataJpaTest // Only scans for @Entity and @Repository and store it to the context
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD) //Build new context before each test
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class TestHardware {
+public class TestHardware extends AbstractSpringTest {
 
   @Autowired
   private HardwareRepository hardwareRepository;

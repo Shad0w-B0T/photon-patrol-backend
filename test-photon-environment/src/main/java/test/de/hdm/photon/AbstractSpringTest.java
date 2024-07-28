@@ -2,11 +2,18 @@ package test.de.hdm.photon;
 
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testcontainers.containers.InfluxDBContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.utility.DockerImageName;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Optional;
+
 
 /**
  * The {@code AbstractSpringTest} class provides a base for Spring-based test classes.
@@ -35,6 +42,46 @@ import java.lang.reflect.Field;
  */
 @Log4j2
 public abstract class AbstractSpringTest {
+
+  private static InfluxDBContainer<?> influxDBContainer;
+  private static PostgreSQLContainer<?> postgreSQLContainer;
+
+  @BeforeAll
+  public static void init() {
+    if (ignoreContainers()) {
+      influxDBContainer = null;
+      postgreSQLContainer = null;
+
+    } else {
+      influxDBContainer = new InfluxDBContainer<>(DockerImageName.parse("influxdb:2"))
+          .withUsername("my-user")
+          .withPassword("my-password")
+          .withOrganization("my-org")
+          .withBucket("my-bucket")
+          .withRetention("1w")
+          .withAdminToken("my-super-secret-auth-token");
+
+      influxDBContainer.setPortBindings(List.of("8086:8086"));
+      influxDBContainer.start();
+
+      postgreSQLContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest"))
+          .withDatabaseName("postgres")
+          .withUsername("postgres")
+          .withPassword("test");
+
+      postgreSQLContainer.setPortBindings(List.of("5432:5432"));
+      postgreSQLContainer.start();
+    }
+  }
+
+  private static boolean ignoreContainers() {
+    System.out.println(System.getenv("PHOTON_TEST_CONTAINERS"));
+    return Optional
+        .ofNullable(System.getenv("PHOTON_TEST_CONTAINERS"))
+        .map(Boolean::parseBoolean)
+        .orElse(false);
+  }
+
   /**
    * Test method to verify that all {@code @Autowired} components in the derived class
    * are properly loaded by the Spring context.
