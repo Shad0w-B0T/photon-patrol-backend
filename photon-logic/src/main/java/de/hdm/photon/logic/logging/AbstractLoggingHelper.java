@@ -1,5 +1,7 @@
 package de.hdm.photon.logic.logging;
 
+import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
+import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
 import de.hdm.photon.database.postgresql.logging.LoggingEntity;
 import de.hdm.photon.database.postgresql.logging.LoggingRepository;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
@@ -20,10 +22,13 @@ import java.util.Objects;
 public abstract class AbstractLoggingHelper implements ILoggingHelper {
   private final LoggingRepository loggingRepository;
   private final ISecurityFilter addressFilter;
+  private final HardwareRepository hardwareRepository;
 
-  protected AbstractLoggingHelper(@Nullable final LoggingRepository loggingRepository) {
+  protected AbstractLoggingHelper(@Nullable final LoggingRepository loggingRepository,
+                                  HardwareRepository hardwareRepository) {
     //Null check
     this.loggingRepository = loggingRepository;
+    this.hardwareRepository = hardwareRepository;
     this.addressFilter = SecurityFilters.ipVersion4StringFilter();
   }
 
@@ -34,17 +39,22 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
   @Override
   @Transactional
   @SuppressWarnings("all")
-  public @NotNull LoggingEntity createLogging(@Nullable String ipAddress) throws EntityNotPresentException, EntityAlreadyPresentException {
+  public @NotNull LoggingEntity createLogging(@Nullable String ipAddress,
+                                              long hardwareId) throws EntityNotPresentException,
+      EntityAlreadyPresentException {
     log.info("Attempting to create a new logging object.");
     log.debug("Validating if the ip address is valid.");
 
     this.addressFilter.checkWithException(ipAddress);
 
-    log.debug("Creating a timestamp for the ip.");
+    //TODO find after bruch :D
+    final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
+    isPresent();
 
+    log.debug("Creating a timestamp for the ip.");
     final Date now = new Date();
-    this.ipAndTimestampIsPresent(ipAddress, now);
-    final LoggingEntity loggingEntity = new LoggingEntity(ipAddress, now);
+    this.isPresent(ipAddress, now);
+    final LoggingEntity loggingEntity = new LoggingEntity(hardwareEntity, ipAddress, now);
 
     log.info("New logging entity successfully created: {}", loggingEntity.toString());
     return this.loggingRepository.save(loggingEntity);
@@ -104,13 +114,18 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
    * @throws EntityAlreadyPresentException If the hardware already exists.
    */
   @Transactional
-  private void ipAndTimestampIsPresent(@Nullable final String ipAddress,
-                                       @Nullable final Date timestampOfIp) throws EntityAlreadyPresentException {
+  protected void isPresent(@NotNull final HardwareEntity hardwareEntity,
+                           @Nullable final String ipAddress,
+                           @Nullable final Date timestampOfIp) throws EntityAlreadyPresentException {
+
     Objects.requireNonNull(timestampOfIp);
+    Objects.requireNonNull(hardwareEntity);
+
     if (ipAddress == null || ipAddress.isBlank()) {
       throw new NullPointerException("IP address is null!");
     }
-    if (!this.loggingRepository.existsByIpAddressAndTimestampOfIp(ipAddress, timestampOfIp)) {
+
+    if (!this.loggingRepository.existsByHardwareEntityAndIpAddressAndTimestampOfIp(hardwareEntity, ipAddress, timestampOfIp)) {
       return;
     }
     throw new EntityAlreadyPresentException("Logging entity with this ip and timestamp already exists.");
