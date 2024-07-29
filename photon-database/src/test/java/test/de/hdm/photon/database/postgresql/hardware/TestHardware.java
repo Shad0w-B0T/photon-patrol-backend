@@ -7,12 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import test.de.hdm.photon.AbstractSpringTest;
@@ -80,11 +77,11 @@ public final class TestHardware extends AbstractSpringTest {
     final HardwareEntity hardwareEntity
         = this.hardwareRepository.save(
         new HardwareEntity(
-            token,
-            macAddress,
-            hardwareAdded,
-            macAdded,
-            tokenIsActive)
+            this.token,
+            this.macAddress,
+            this.hardwareAdded,
+            this.macAdded,
+            this.tokenIsActive)
     );
 
     //positive
@@ -110,11 +107,11 @@ public final class TestHardware extends AbstractSpringTest {
     final HardwareEntity hardwareEntity =
         this.hardwareRepository.save(
             new HardwareEntity(
-                token,
-                macAddress,
-                hardwareAdded,
-                macAdded,
-                tokenIsActive)
+                this.token,
+                this.macAddress,
+                this.hardwareAdded,
+                this.macAdded,
+                this.tokenIsActive)
         );
 
 
@@ -169,11 +166,11 @@ public final class TestHardware extends AbstractSpringTest {
     final HardwareEntity hardwareEntity =
         this.hardwareRepository.save(
             new HardwareEntity(
-                token,
-                macAddress,
-                hardwareAdded,
-                macAdded,
-                tokenIsActive)
+                this.token,
+                this.macAddress,
+                this.hardwareAdded,
+                this.macAdded,
+                this.tokenIsActive)
         );
 
 
@@ -228,11 +225,11 @@ public final class TestHardware extends AbstractSpringTest {
     final HardwareEntity hardwareEntity =
         this.hardwareRepository.save(
             new HardwareEntity(
-                token,
-                macAddress,
-                hardwareAdded,
-                macAdded,
-                tokenIsActive)
+                this.token,
+                this.macAddress,
+                this.hardwareAdded,
+                this.macAdded,
+                this.tokenIsActive)
         );
 
     //negative
