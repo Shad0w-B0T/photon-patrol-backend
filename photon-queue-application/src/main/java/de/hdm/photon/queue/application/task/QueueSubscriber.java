@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-
 @Log4j2
 @Component
 public final class QueueSubscriber {
