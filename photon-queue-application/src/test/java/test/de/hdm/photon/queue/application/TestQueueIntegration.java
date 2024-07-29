@@ -24,9 +24,9 @@ import test.de.hdm.photon.AbstractSpringTest;
 import java.util.Map;
 
 @SpringBootApplication(scanBasePackages="de.hdm.photon")
+@ComponentScan(basePackages="de.hdm.photon")
 @DirtiesContext(classMode=DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest(classes=TestQueueIntegration.class)
-@ComponentScan(basePackages="de.hdm.photon")
 public class TestQueueIntegration extends AbstractSpringTest {
 
   @Autowired

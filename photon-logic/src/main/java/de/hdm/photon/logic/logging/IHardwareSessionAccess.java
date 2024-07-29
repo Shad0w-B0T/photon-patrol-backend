@@ -3,14 +3,14 @@ package de.hdm.photon.logic.logging;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.exception.FormatMismatchException;
-import de.hdm.photon.schema.logging.ILogging;
+import de.hdm.photon.schema.hardware.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 
-public interface ILoggingAccess<LOGGING extends ILogging> {
+public interface IHardwareSessionAccess<LOGGING extends IHardwareSession> {
 
 
   //------------------------------------------------CREATE--------------------------------------------------------------

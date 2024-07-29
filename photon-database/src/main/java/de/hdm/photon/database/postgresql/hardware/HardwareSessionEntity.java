@@ -1,7 +1,6 @@
-package de.hdm.photon.database.postgresql.logging;
+package de.hdm.photon.database.postgresql.hardware;
 
-import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
-import de.hdm.photon.schema.logging.ILogging;
+import de.hdm.photon.schema.hardware.IHardwareSession;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
-
 @Entity
 @Table(name="PhotonHardwareLog",
     /*
@@ -28,9 +26,7 @@ import java.util.Date;
     uniqueConstraints={@UniqueConstraint(columnNames={"ip_address", "ip_timestamp"})})
 @Getter
 @Accessors(fluent=true)
-public final class LoggingEntity implements ILogging {
-
-
+public final class HardwareSessionEntity implements IHardwareSession {
   @Id
   @Column(name = "logging_id", nullable=false)
   @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -42,22 +38,22 @@ public final class LoggingEntity implements ILogging {
 
   @Column(nullable=false, name="ip_timestamp")
   @Setter
-  private Date timestampOfIp;
+  private Date timestamp;
 
   @ManyToOne
   @JoinColumn(name = "hardware_id", nullable = false)
   public HardwareEntity hardwareEntity;
 
   //Empty Constructor
-  public LoggingEntity() {
+  public HardwareSessionEntity() {
   }
 
   //Constructor
-  public LoggingEntity(@NotNull final HardwareEntity hardwareEntity,
-                       @NotNull final String ipAddress,
-                       @NotNull final Date timestampOfIp) {
+  public HardwareSessionEntity(@NotNull final HardwareEntity hardwareEntity,
+                               @NotNull final String ipAddress,
+                               @NotNull final Date timestamp) {
     this.hardwareEntity = hardwareEntity;
     this.ipAddress = ipAddress;
-    this.timestampOfIp = timestampOfIp;
+    this.timestamp = timestamp;
   }
 }

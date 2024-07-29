@@ -2,8 +2,8 @@ package de.hdm.photon.logic.logging;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.logging.LoggingEntity;
-import de.hdm.photon.database.postgresql.logging.LoggingRepository;
+import de.hdm.photon.database.postgresql.hardware.HardwareSessionEntity;
+import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilters;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
@@ -19,28 +19,28 @@ import java.util.Objects;
 
 
 @Log4j2
-public abstract class AbstractLoggingHelper implements ILoggingHelper {
-  private final LoggingRepository loggingRepository;
+public abstract class AbstractHardwareSessionHelper implements IHardwareSessionHelper {
+  private final HardwareSessionRepository hardwareSessionRepository;
   private final ISecurityFilter addressFilter;
   private final HardwareRepository hardwareRepository;
 
-  protected AbstractLoggingHelper(@Nullable final LoggingRepository loggingRepository,
-                                  HardwareRepository hardwareRepository) {
+  protected AbstractHardwareSessionHelper(@Nullable final HardwareSessionRepository hardwareSessionRepository,
+                                          HardwareRepository hardwareRepository) {
     //Null check
-    this.loggingRepository = loggingRepository;
+    this.hardwareSessionRepository = hardwareSessionRepository;
     this.hardwareRepository = hardwareRepository;
     this.addressFilter = SecurityFilters.ipVersion4StringFilter();
   }
 
 
   /**
-   * see {@link ILoggingAccess#createLogging(String)}
+   * see {@link IHardwareSessionAccess#createLogging(String)}
    */
   @Override
   @Transactional
   @SuppressWarnings("all")
-  public @NotNull LoggingEntity createLogging(@Nullable String ipAddress,
-                                              long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException {
+  public @NotNull HardwareSessionEntity createLogging(@Nullable String ipAddress,
+                                                      long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException {
     log.info("Attempting to create a new logging object.");
     log.debug("Validating if the ip address is valid.");
 
@@ -52,37 +52,37 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
     log.debug("Creating a timestamp for the ip.");
     final Date now = new Date();
     this.isPresent(hardwareEntity, ipAddress, now);
-    final LoggingEntity loggingEntity = new LoggingEntity(hardwareEntity, ipAddress, now);
+    final HardwareSessionEntity loggingEntity = new HardwareSessionEntity(hardwareEntity, ipAddress, now);
 
     log.info("New logging entity successfully created: {}", loggingEntity.toString());
-    return this.loggingRepository.save(loggingEntity);
+    return this.hardwareSessionRepository.save(loggingEntity);
   }
 
   /**
-   * see {@link ILoggingAccess#getLogging(long)}
+   * see {@link IHardwareSessionAccess#getLogging(long)}
    */
   @Override
   @Transactional
-  public @NotNull LoggingEntity getLogging(long loggingId) throws EntityNotPresentException {
-    return this.loggingRepository.loggingElseThrow(loggingId);
+  public @NotNull HardwareSessionEntity getLogging(long loggingId) throws EntityNotPresentException {
+    return this.hardwareSessionRepository.loggingElseThrow(loggingId);
   }
 
   /**
-   * see {@link ILoggingAccess#getLoggingList()}
+   * see {@link IHardwareSessionAccess#getLoggingList()}
    */
   @Override
   @Transactional
-  public @NotNull List<LoggingEntity> getLoggingList() {
-    return this.loggingRepository.findAll();
+  public @NotNull List<HardwareSessionEntity> getLoggingList() {
+    return this.hardwareSessionRepository.findAll();
   }
 
   /**
-   * see {@link ILoggingAccess#getIpAddress(String)}
+   * see {@link IHardwareSessionAccess#getIpAddress(String)}
    */
   @Override
   @Transactional
-  public @NotNull LoggingEntity getIpAddress(String ipAddress) throws EntityNotPresentException {
-    return this.loggingRepository
+  public @NotNull HardwareSessionEntity getIpAddress(String ipAddress) throws EntityNotPresentException {
+    return this.hardwareSessionRepository
         .findByIpAddress(ipAddress)
         .orElseThrow(
             () -> new EntityNotPresentException("No logging entity with the ip address = "+ipAddress+" available.")
@@ -90,7 +90,7 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
   }
 
   /**
-   * see {@link ILoggingAccess#deleteLogging(long)}
+   * see {@link IHardwareSessionAccess#deleteLogging(long)}
    */
   @Override
   @Transactional
@@ -99,10 +99,10 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
     //Check if present.
     this.getLogging(loggingId);
 
-    this.loggingRepository.deleteById(loggingId);
+    this.hardwareSessionRepository.deleteById(loggingId);
     log.info("Logging entity with id {} was successfully deleted.", loggingId);
 
-    return this.loggingRepository.findById(loggingId).isEmpty();
+    return this.hardwareSessionRepository.findById(loggingId).isEmpty();
   }
 
   /**
@@ -123,7 +123,7 @@ public abstract class AbstractLoggingHelper implements ILoggingHelper {
       throw new NullPointerException("IP address is null!");
     }
 
-    if (!this.loggingRepository.existsByHardwareEntityAndIpAddressAndTimestampOfIp(hardwareEntity, ipAddress, timestampOfIp)) {
+    if (!this.hardwareSessionRepository.existsByHardwareEntityAndIpAddressAndTimestamp(hardwareEntity, ipAddress, timestampOfIp)) {
       return;
     }
     throw new EntityAlreadyPresentException("Logging entity with this hardware entity, ip and timestamp already exists.");

@@ -1,4 +1,4 @@
-package de.hdm.photon.schema.logging;
+package de.hdm.photon.schema.hardware;
 
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
@@ -8,7 +8,7 @@ import java.util.Objects;
 
 
 @Log4j2
-public final class LoggingFactory {
+public final class HardwareSessionFactory {
 
   /**
    * This method creates a new logging object with the given parameters.
@@ -18,13 +18,13 @@ public final class LoggingFactory {
    * @param timestampOfIp date when the ip address was used.
    * @return new logging interface.
    */
-  public static @NotNull ILogging createHardware(final long id,
-                                                 @Nullable String ipAddress,
-                                                 @Nullable Date timestampOfIp) {
+  public static @NotNull IHardwareSession createHardware(final long id,
+                                                         @Nullable String ipAddress,
+                                                         @Nullable Date timestampOfIp) {
     Objects.requireNonNull(ipAddress);
     Objects.requireNonNull(timestampOfIp);
 
-    final ILogging logging = new LoggingRecord(id, ipAddress, timestampOfIp);
+    final IHardwareSession logging = new ImmutableHardwareSession(id, ipAddress, timestampOfIp);
     log.debug("The logging object with the id: {} was successfully created.", logging.id());
     return logging;
   }
@@ -35,13 +35,13 @@ public final class LoggingFactory {
    * @param logging interface
    * @return new logging record.
    */
-  public static @NotNull ILogging convertToRecord(@Nullable final ILogging logging) {
+  public static @NotNull IHardwareSession convertToRecord(@Nullable final IHardwareSession logging) {
     Objects.requireNonNull(logging);
     log.debug("The logging interface {} was successfully converted to a record.", logging);
-    return LoggingFactory.createHardware(
+    return HardwareSessionFactory.createHardware(
         logging.id(),
         logging.ipAddress(),
-        logging.timestampOfIp()
+        logging.timestamp()
     );
   }
 

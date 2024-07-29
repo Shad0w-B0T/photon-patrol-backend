@@ -3,8 +3,8 @@ package de.hdm.photon.logic.logging;
 import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
-import de.hdm.photon.schema.logging.ILogging;
-import de.hdm.photon.schema.logging.LoggingFactory;
+import de.hdm.photon.schema.hardware.IHardwareSession;
+import de.hdm.photon.schema.hardware.HardwareSessionFactory;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,10 +15,10 @@ import java.util.Objects;
 
 
 @Log4j2
-public abstract class AbstractLoggingManager implements ILoggingManager {
-  private final @NotNull ILoggingHelper loggingHelper;
+public abstract class AbstractHardwareSessionManager implements IHardwareSessionManager {
+  private final @NotNull IHardwareSessionHelper loggingHelper;
 
-  protected AbstractLoggingManager(@Nullable final ILoggingHelper loggingHelper) {
+  protected AbstractHardwareSessionManager(@Nullable final IHardwareSessionHelper loggingHelper) {
     //Null check
     Objects.requireNonNull(loggingHelper);
 
@@ -30,9 +30,9 @@ public abstract class AbstractLoggingManager implements ILoggingManager {
    */
   @Override
   @Transactional
-  public @NotNull ILogging createLogging(@Nullable String ipAddress,
-                                         long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
-    return LoggingFactory.convertToRecord(this.loggingHelper.createLogging(ipAddress, hardwareId));
+  public @NotNull IHardwareSession createLogging(@Nullable String ipAddress,
+                                                 long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+    return HardwareSessionFactory.convertToRecord(this.loggingHelper.createLogging(ipAddress, hardwareId));
   }
 
   /**
@@ -40,8 +40,8 @@ public abstract class AbstractLoggingManager implements ILoggingManager {
    */
   @Override
   @Transactional
-  public @NotNull ILogging getLogging(long loggingId) throws EntityNotPresentException {
-    return LoggingFactory.convertToRecord(this.loggingHelper.getLogging(loggingId));
+  public @NotNull IHardwareSession getLogging(long loggingId) throws EntityNotPresentException {
+    return HardwareSessionFactory.convertToRecord(this.loggingHelper.getLogging(loggingId));
   }
 
   /**
@@ -49,11 +49,11 @@ public abstract class AbstractLoggingManager implements ILoggingManager {
    */
   @Override
   @Transactional
-  public @NotNull List<ILogging> getLoggingList() {
+  public @NotNull List<IHardwareSession> getLoggingList() {
     return this.loggingHelper
         .getLoggingList()
         .stream()
-        .map(LoggingFactory::convertToRecord)
+        .map(HardwareSessionFactory::convertToRecord)
         .toList();
   }
 
@@ -62,7 +62,7 @@ public abstract class AbstractLoggingManager implements ILoggingManager {
    */
   @Override
   @Transactional
-  public @NotNull ILogging getIpAddress(String ipAddress) throws EntityNotPresentException {
+  public @NotNull IHardwareSession getIpAddress(String ipAddress) throws EntityNotPresentException {
     return this.loggingHelper.getIpAddress(ipAddress);
   }
 

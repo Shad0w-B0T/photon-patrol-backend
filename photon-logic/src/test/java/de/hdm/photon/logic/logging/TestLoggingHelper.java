@@ -11,5 +11,5 @@ import test.de.hdm.photon.AbstractSpringTest;
 @DataJpaTest
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class TestLogginghelper extends AbstractSpringTest {
+public class TestLoggingHelper extends AbstractSpringTest {
 }

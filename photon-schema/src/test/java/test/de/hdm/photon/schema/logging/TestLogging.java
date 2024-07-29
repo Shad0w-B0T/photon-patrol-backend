@@ -1,8 +1,8 @@
 package test.de.hdm.photon.schema.logging;
 
-import de.hdm.photon.schema.logging.ILogging;
-import de.hdm.photon.schema.logging.LoggingFactory;
-import de.hdm.photon.schema.logging.LoggingRecord;
+import de.hdm.photon.schema.hardware.IHardwareSession;
+import de.hdm.photon.schema.hardware.HardwareSessionFactory;
+import de.hdm.photon.schema.hardware.ImmutableHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +15,7 @@ public final class TestLogging {
   @Test
   @DisplayName("Testing Logging")
   public void testLogging() {
-    final ILogging logging = this.createLogging();
+    final IHardwareSession logging = this.createLogging();
     this.checkLoggingIntegrity(logging);
   }
 
@@ -23,13 +23,13 @@ public final class TestLogging {
   @DisplayName("Testing LoggingFactory negative")
   public void testHardwareFactoryNegative() {
     Assertions.assertThrows(NullPointerException.class, () -> {
-      LoggingFactory.createHardware(0, null, null);
+      HardwareSessionFactory.createHardware(0, null, null);
     });
     Assertions.assertThrows(NullPointerException.class, () -> {
-      LoggingFactory.createHardware(0, TestField.HARDWARE_IP, null);
+      HardwareSessionFactory.createHardware(0, TestField.HARDWARE_IP, null);
     });
     Assertions.assertThrows(NullPointerException.class, () -> {
-      LoggingFactory.convertToRecord(null);
+      HardwareSessionFactory.convertToRecord(null);
     });
   }
 
@@ -37,25 +37,25 @@ public final class TestLogging {
   @DisplayName("Testing LoggingFactory to-record")
   public void testHardwareFactoryToRecord() {
     // Create hardware instance
-    final ILogging logging = this.createLogging();
+    final IHardwareSession logging = this.createLogging();
     this.checkLoggingIntegrity(logging);
 
     // Convert to record and check integrity
-    final ILogging recordLogging = LoggingFactory.convertToRecord(logging);
+    final IHardwareSession recordLogging = HardwareSessionFactory.convertToRecord(logging);
     this.checkLoggingIntegrity(recordLogging);
   }
 
-  private @NotNull ILogging createLogging() {
-    return new LoggingRecord(TestField.HARDWARE_ID,
+  private @NotNull IHardwareSession createLogging() {
+    return new ImmutableHardwareSession(TestField.HARDWARE_ID,
         TestField.HARDWARE_IP,
         TestField.TIMESTAMP_1);
   }
 
-  private void checkLoggingIntegrity(@Nullable final ILogging hardware) {
+  private void checkLoggingIntegrity(@Nullable final IHardwareSession hardware) {
     Assertions.assertNotNull(hardware, "");
     Assertions.assertEquals(hardware.id(), TestField.HARDWARE_ID, "");
     Assertions.assertEquals(hardware.ipAddress(), TestField.HARDWARE_IP, "");
-    Assertions.assertEquals(hardware.timestampOfIp(), TestField.TIMESTAMP_1, "");
+    Assertions.assertEquals(hardware.timestamp(), TestField.TIMESTAMP_1, "");
   }
 
 }

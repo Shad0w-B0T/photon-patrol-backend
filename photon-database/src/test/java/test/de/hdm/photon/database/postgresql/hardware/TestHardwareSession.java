@@ -1,9 +1,9 @@
-package test.de.hdm.photon.database.postgresql.logging;
+package test.de.hdm.photon.database.postgresql.hardware;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.logging.LoggingEntity;
-import de.hdm.photon.database.postgresql.logging.LoggingRepository;
+import de.hdm.photon.database.postgresql.hardware.HardwareSessionEntity;
+import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,9 +22,9 @@ import java.util.Date;
 @DataJpaTest // Only scans for @Entity and @Repository and store it to the context
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD) //Build new context before each test
 @AutoConfigureTestDatabase(replace=Replace.NONE)
-public final class TestLogging extends AbstractSpringTest {
+public final class TestHardwareSession extends AbstractSpringTest {
   @Autowired
-  private LoggingRepository loggingRepository;
+  private HardwareSessionRepository hardwareSessionRepository;
   @Autowired
   private HardwareRepository hardwareRepository;
 
@@ -40,7 +40,7 @@ public final class TestLogging extends AbstractSpringTest {
 
   @BeforeEach
   public void setUp() {
-    this.loggingRepository.deleteAll();
+    this.hardwareSessionRepository.deleteAll();
     this.hardwareRepository.deleteAll();
 
     this.now = new Date();
@@ -62,7 +62,7 @@ public final class TestLogging extends AbstractSpringTest {
   public void testDBEmpty() {
 
     //Start -> empty DB
-    Assertions.assertEquals(this.loggingRepository.count(), 0);
+    Assertions.assertEquals(this.hardwareSessionRepository.count(), 0);
 
     final HardwareEntity hardwareEntity
         = this.hardwareRepository.save(
@@ -74,9 +74,9 @@ public final class TestLogging extends AbstractSpringTest {
             tokenIsActive)
     );
 
-    final LoggingEntity loggingEntity =
-        this.loggingRepository.save(
-            new LoggingEntity(
+    final HardwareSessionEntity loggingEntity =
+        this.hardwareSessionRepository.save(
+            new HardwareSessionEntity(
                 hardwareEntity,
                 this.ipAddress,
                 this.timestampOfIp
@@ -84,11 +84,11 @@ public final class TestLogging extends AbstractSpringTest {
         );
 
     //positive
-    Assertions.assertEquals(1, this.loggingRepository.findAll().size());
+    Assertions.assertEquals(1, this.hardwareSessionRepository.findAll().size());
     Assertions.assertNotNull(loggingEntity);
 
     //negative
-    Assertions.assertNotEquals(2, this.loggingRepository.findAll().size());
+    Assertions.assertNotEquals(2, this.hardwareSessionRepository.findAll().size());
   }
 
 
@@ -106,9 +106,9 @@ public final class TestLogging extends AbstractSpringTest {
             tokenIsActive)
     );
 
-    final LoggingEntity loggingEntity =
-        this.loggingRepository.save(
-            new LoggingEntity(
+    final HardwareSessionEntity loggingEntity =
+        this.hardwareSessionRepository.save(
+            new HardwareSessionEntity(
                 hardwareEntity,
                 this.ipAddress,
                 this.timestampOfIp
@@ -117,12 +117,12 @@ public final class TestLogging extends AbstractSpringTest {
 
     //positive
     Assertions.assertEquals("192.168.0.1", loggingEntity.ipAddress());
-    Assertions.assertEquals(this.now, loggingEntity.timestampOfIp());
+    Assertions.assertEquals(this.now, loggingEntity.timestamp());
 
 
     //negative
     Assertions.assertNotEquals("133.7.42.69", loggingEntity.ipAddress());
-    Assertions.assertNotEquals(new Date(), loggingEntity.timestampOfIp());
+    Assertions.assertNotEquals(new Date(), loggingEntity.timestamp());
   }
 
 
@@ -140,9 +140,9 @@ public final class TestLogging extends AbstractSpringTest {
             tokenIsActive)
     );
 
-    final LoggingEntity loggingEntity =
-        this.loggingRepository.save(
-            new LoggingEntity(
+    final HardwareSessionEntity loggingEntity =
+        this.hardwareSessionRepository.save(
+            new HardwareSessionEntity(
                 hardwareEntity,
                 this.ipAddress,
                 this.timestampOfIp
@@ -151,31 +151,31 @@ public final class TestLogging extends AbstractSpringTest {
 
     //negative
     Assertions.assertNotEquals("133.7.42.69", loggingEntity.ipAddress());
-    Assertions.assertNotEquals(0, this.loggingRepository.findByIpAddress(
-        loggingEntity.ipAddress())
+    Assertions.assertNotEquals(0, this.hardwareSessionRepository.findByIpAddress(
+            loggingEntity.ipAddress())
         .stream()
         .count()
     );
 
     //positive
-    Assertions.assertNotNull(this.loggingRepository.findByIpAddress(loggingEntity.ipAddress()));
-    Assertions.assertTrue(this.loggingRepository.existsByIpAddress(loggingEntity.ipAddress()));
-    Assertions.assertEquals(1, this.loggingRepository.findByIpAddress(
-        loggingEntity.ipAddress())
+    Assertions.assertNotNull(this.hardwareSessionRepository.findByIpAddress(loggingEntity.ipAddress()));
+    Assertions.assertTrue(this.hardwareSessionRepository.existsByIpAddress(loggingEntity.ipAddress()));
+    Assertions.assertEquals(1, this.hardwareSessionRepository.findByIpAddress(
+            loggingEntity.ipAddress())
         .stream()
         .count()
     );
-    Assertions.assertEquals("192.168.0.1", this.loggingRepository.findByIpAddress(
-        loggingEntity.ipAddress())
+    Assertions.assertEquals("192.168.0.1", this.hardwareSessionRepository.findByIpAddress(
+            loggingEntity.ipAddress())
         .stream()
         .findFirst()
         .get()
         .ipAddress()
     );
 
-    this.loggingRepository.deleteByIpAddress(loggingEntity.ipAddress());
-    Assertions.assertEquals(0, this.loggingRepository.findByIpAddress(
-        loggingEntity.ipAddress())
+    this.hardwareSessionRepository.deleteByIpAddress(loggingEntity.ipAddress());
+    Assertions.assertEquals(0, this.hardwareSessionRepository.findByIpAddress(
+            loggingEntity.ipAddress())
         .stream()
         .count()
     );
@@ -197,9 +197,9 @@ public final class TestLogging extends AbstractSpringTest {
             tokenIsActive)
     );
 
-    final LoggingEntity loggingEntity =
-        this.loggingRepository.save(
-            new LoggingEntity(
+    final HardwareSessionEntity loggingEntity =
+        this.hardwareSessionRepository.save(
+            new HardwareSessionEntity(
                 hardwareEntity,
                 this.ipAddress,
                 this.timestampOfIp
@@ -208,38 +208,38 @@ public final class TestLogging extends AbstractSpringTest {
 
 
     //negative
-    Assertions.assertNotEquals(new Date(), loggingEntity.timestampOfIp());
-    Assertions.assertNotEquals(0, this.loggingRepository.findByTimestampOfIp(
-        loggingEntity.timestampOfIp())
+    Assertions.assertNotEquals(new Date(), loggingEntity.timestamp());
+    Assertions.assertNotEquals(0, this.hardwareSessionRepository.findByTimestamp(
+            loggingEntity.timestamp())
         .stream()
         .count()
     );
 
     //positive
     Assertions.assertNotNull(
-        this.loggingRepository.findByTimestampOfIp(
-            loggingEntity.timestampOfIp())
+        this.hardwareSessionRepository.findByTimestamp(
+            loggingEntity.timestamp())
     );
     Assertions.assertTrue(
-        this.loggingRepository.existsByTimestampOfIp(
-            loggingEntity.timestampOfIp())
+        this.hardwareSessionRepository.existsByTimestamp(
+            loggingEntity.timestamp())
     );
     Assertions.assertEquals(1,
-        this.loggingRepository.findByTimestampOfIp(
-            loggingEntity.timestampOfIp())
+        this.hardwareSessionRepository.findByTimestamp(
+                loggingEntity.timestamp())
             .stream()
             .count())
     ;
     Assertions.assertEquals(
         this.now,
-        loggingEntity.timestampOfIp()
+        loggingEntity.timestamp()
     );
 
-    this.loggingRepository.deleteByTimestampOfIp(
-        loggingEntity.timestampOfIp()
+    this.hardwareSessionRepository.deleteByTimestamp(
+        loggingEntity.timestamp()
     );
-    Assertions.assertEquals(0, this.loggingRepository.findByTimestampOfIp(
-        loggingEntity.timestampOfIp())
+    Assertions.assertEquals(0, this.hardwareSessionRepository.findByTimestamp(
+            loggingEntity.timestamp())
         .stream()
         .count()
     );
@@ -260,9 +260,9 @@ public final class TestLogging extends AbstractSpringTest {
             tokenIsActive)
     );
 
-    final LoggingEntity loggingEntity =
-        this.loggingRepository.save(
-            new LoggingEntity(
+    final HardwareSessionEntity loggingEntity =
+        this.hardwareSessionRepository.save(
+            new HardwareSessionEntity(
                 hardwareEntity,
                 this.ipAddress,
                 this.timestampOfIp
@@ -270,49 +270,49 @@ public final class TestLogging extends AbstractSpringTest {
         );
 
     //negative
-    Assertions.assertNotEquals(new Date(), loggingEntity.timestampOfIp());
+    Assertions.assertNotEquals(new Date(), loggingEntity.timestamp());
     Assertions.assertNotEquals(0,
-        this.loggingRepository.findByTimestampOfIp(
-            loggingEntity.timestampOfIp())
+        this.hardwareSessionRepository.findByTimestamp(
+                loggingEntity.timestamp())
             .stream()
             .count()
     );
 
     //positive
     Assertions.assertNotNull(
-        this.loggingRepository.findByIpAddressAndTimestampOfIp(
+        this.hardwareSessionRepository.findByIpAddressAndTimestamp(
             loggingEntity.ipAddress(),
-            loggingEntity.timestampOfIp())
+            loggingEntity.timestamp())
     );
     Assertions.assertTrue(
-        this.loggingRepository.existsByHardwareEntityAndIpAddressAndTimestampOfIp(
+        this.hardwareSessionRepository.existsByHardwareEntityAndIpAddressAndTimestamp(
             loggingEntity.hardwareEntity(),
             loggingEntity.ipAddress(),
-            loggingEntity.timestampOfIp())
+            loggingEntity.timestamp())
     );
     Assertions.assertTrue(
-        this.loggingRepository.existsByIpAddressAndTimestampOfIp(
+        this.hardwareSessionRepository.existsByIpAddressAndTimestamp(
             loggingEntity.ipAddress(),
-            loggingEntity.timestampOfIp())
+            loggingEntity.timestamp())
     );
     Assertions.assertEquals(1,
-        this.loggingRepository.findByIpAddressAndTimestampOfIp(
-            loggingEntity.ipAddress(),
-            loggingEntity.timestampOfIp())
+        this.hardwareSessionRepository.findByIpAddressAndTimestamp(
+                loggingEntity.ipAddress(),
+                loggingEntity.timestamp())
             .stream()
             .count()
     );
 
 
     //delete
-    this.loggingRepository.deleteByHardwareEntityAndIpAddressAndTimestampOfIp(
+    this.hardwareSessionRepository.deleteByHardwareEntityAndIpAddressAndTimestamp(
         loggingEntity.hardwareEntity(),
         loggingEntity.ipAddress(),
-        loggingEntity.timestampOfIp()
+        loggingEntity.timestamp()
     );
-    Assertions.assertEquals(0, this.loggingRepository.findByIpAddressAndTimestampOfIp(
-        loggingEntity.ipAddress(),
-        loggingEntity.timestampOfIp())
+    Assertions.assertEquals(0, this.hardwareSessionRepository.findByIpAddressAndTimestamp(
+            loggingEntity.ipAddress(),
+            loggingEntity.timestamp())
         .stream()
         .count()
     );

@@ -1,4 +1,4 @@
-package de.hdm.photon.schema.logging;
+package de.hdm.photon.schema.hardware;
 
 import de.hdm.photon.schema.entity.Identifiable;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Date;
 
 
-@Schema(implementation = LoggingRecord.class)
-public interface ILogging extends Identifiable {
+@Schema(implementation = ImmutableHardwareSession.class)
+public interface IHardwareSession extends Identifiable {
 
   /**
    * @return the id of the object.
@@ -25,6 +25,6 @@ public interface ILogging extends Identifiable {
    * @return the time stamp when the IP was used/connected.
    */
   @Schema(example = "2024-04-20T13:37:00", description = "The exact time when the ip was connected.")
-  @NotNull Date timestampOfIp();
+  @NotNull Date timestamp();
 
 }

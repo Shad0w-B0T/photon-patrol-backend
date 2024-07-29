@@ -1,6 +1,5 @@
 package de.hdm.photon.database.postgresql.hardware;
 
-import de.hdm.photon.database.postgresql.logging.LoggingEntity;
 import de.hdm.photon.schema.hardware.IHardware;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -58,7 +57,7 @@ public final class HardwareEntity implements IHardware {
    */
   @OneToMany(cascade=CascadeType.DETACH)
   @JoinColumn(name = "hardware_id")
-  private Set<LoggingEntity> loggingEntity;
+  private Set<HardwareSessionEntity> loggingEntity;
 
   //Empty Constructor
   public HardwareEntity() {
