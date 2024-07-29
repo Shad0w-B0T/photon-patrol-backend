@@ -9,7 +9,6 @@ HARDWARE customer
   - LOGGING                             LONG              NOT NULL  FOREIGN KEY
 
 
-
 LOGGING Order
   - ID                    LONG              NOT NULL    AUTO-INCREMENT  PRIMARY KEY
   - IP-Adresse            VARCHAR(255)      NOT NULL

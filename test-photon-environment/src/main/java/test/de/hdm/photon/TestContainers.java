@@ -2,6 +2,7 @@ package test.de.hdm.photon;
 
 import org.testcontainers.containers.InfluxDBContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import java.util.List;
@@ -51,11 +52,11 @@ public final class TestContainers {
       return;
     }
 
-    try (final PostgreSQLContainer<?> postgresContainer =
-             new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest"))) {
-      postgresContainer.withDatabaseName("postgres")
-          .withUsername("postgres")
-          .withPassword("test")
+    try (final RabbitMQContainer rabbitMQContainer =
+             new RabbitMQContainer(DockerImageName.parse("postgres:latest"))) {
+      rabbitMQContainer
+          .withEnv("RABBITMQ_DEFAULT_USER", "admin")
+          .withEnv("RABBITMQ_DEFAULT_PASS", "instar")
           .start();
     }
   }

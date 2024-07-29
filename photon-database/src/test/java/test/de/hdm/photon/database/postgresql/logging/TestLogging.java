@@ -22,25 +22,21 @@ import java.util.Date;
 @DataJpaTest // Only scans for @Entity and @Repository and store it to the context
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD) //Build new context before each test
 @AutoConfigureTestDatabase(replace=Replace.NONE)
-public class TestLogging extends AbstractSpringTest {
-
+public final class TestLogging extends AbstractSpringTest {
   @Autowired
   private LoggingRepository loggingRepository;
+  @Autowired
+  private HardwareRepository hardwareRepository;
 
   private Date now;
   private String ipAddress;
   private Date timestampOfIp;
-
-
-  @Autowired
-  private HardwareRepository hardwareRepository;
 
   private String macAddress;
   private String token;
   private Date hardwareAdded;
   private Date macAdded;
   private boolean tokenIsActive;
-
 
   @BeforeEach
   public void setUp() {
