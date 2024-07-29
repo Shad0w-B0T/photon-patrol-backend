@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 /**
  * A test class for {@code PasswordRequirementFactory} and {@code ImmutablePasswordRequirement}.
  */
-public final class PasswordRequirementTest {
+public final class TestPasswordRequirement {
 
   /**
    * Tests the positive scenarios of {@code PasswordRequirementFactory}.

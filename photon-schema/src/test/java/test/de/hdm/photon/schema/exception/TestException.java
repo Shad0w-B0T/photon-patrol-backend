@@ -34,7 +34,7 @@ import java.util.stream.Stream;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Log4j2
-public final class ExceptionTest {
+public final class TestException {
 
   /**
    * Parameterized test method that verifies the behavior of various exception classes.
