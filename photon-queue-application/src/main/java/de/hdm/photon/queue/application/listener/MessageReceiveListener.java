@@ -18,17 +18,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-
+/**
+ * MessageReceiveListener listens for message receive events and processes the message payload.
+ * It validates the token and MAC address, updates the hardware information, and adds measurements.
+ */
 @Component
 @Log4j2
 public final class MessageReceiveListener {
-
   @Autowired
   private IHardwareManager hardwareManager;
 
   @Autowired
   private IMeasurementManager measurementManager;
 
+  /**
+   * Handles the MessageReceiveEvent and processes the message payload.
+   *
+   * @param event the message receive event containing the payload.
+   */
   @EventListener
   public void handle(@NotNull final MessageReceiveEvent event) {
     final IMessagePayload messagePayload = event.messagePayload();
@@ -39,11 +46,13 @@ public final class MessageReceiveListener {
     try {
       final IHardware hardware = this.hardwareManager.getHardware(token);
 
+      //No mac address given or does not match for token.
       if (hardware.macAddress() != null && !hardware.macAddress().equals(mac)) {
         log.warn("Mismatch of mac address for token={}.", token);
         return;
       }
 
+      //Update mac address of hardware -> first connect
       if (hardware.macAddress() == null) {
         this.hardwareManager.updateMacAddress(hardware.id(), mac);
         log.info("Set mac address for token={}.", token);
@@ -57,43 +66,66 @@ public final class MessageReceiveListener {
       final Map<String, Object> influxValues = new HashMap<>(valueMap);
       final int resolution = (int) Math.pow(2., messagePayload.bitResolution());
 
+      //Map voltage
       Optional
           .ofNullable(influxValues.get("v"))
           .map(object -> (int) object)
           .map(integer -> voltage(integer, resolution, 25.0))
           .ifPresent(aDouble -> influxValues.put("v", aDouble));
 
+      //Map current
       Optional
           .ofNullable(influxValues.get("c"))
           .map(object -> (int) object)
           .map(integer -> current(integer, resolution, 5.0))
           .ifPresent(aDouble -> influxValues.put("c", aDouble));
 
-      //P = U*I
+      //Calculate power P = U*I
       if (influxValues.get("v") instanceof Double voltage && influxValues.get("c") instanceof Double current) {
-        influxValues.put("p", voltage*(current/1000));
+        influxValues.put("p", voltage * (current / 1000));
       }
 
       this.measurementManager.addMeasurements(token, influxValues);
-      log.info("Added data for token={} with a amount of key={}.", token, valueMap.size());
+      log.info("Added data for token={} with an amount of key={}.", token, valueMap.size());
     } catch (final EntityNotPresentException | FormatMismatchException exception) {
       System.out.println(exception.getMessage());
     }
   }
 
+  /**
+   * Calculates the percentage value from the given value and resolution.
+   *
+   * @param value      the input value.
+   * @param resolution the resolution of the measurement.
+   * @return the percentage value.
+   */
   private double percentage(int value, int resolution) {
-    return ((double) value)/ (resolution-1);
+    return ((double) value) / (resolution - 1);
   }
 
+  /**
+   * Calculates the voltage from the given value, resolution, and reference voltage.
+   *
+   * @param value            the input value.
+   * @param resolution       the resolution of the measurement.
+   * @param referenceVoltage the reference voltage.
+   * @return the calculated voltage.
+   */
   private double voltage(int value, int resolution, double referenceVoltage) {
-    return ((double) value/(resolution-1))*referenceVoltage;
+    return ((double) value / (resolution - 1)) * referenceVoltage;
   }
 
-  //185mV/A
+  /**
+   * Calculates the current from the given value, resolution, and reference voltage.
+   * Assumes 185mV/A.
+   *
+   * @param value            the input value.
+   * @param resolution       the resolution of the measurement.
+   * @param referenceVoltage the reference voltage.
+   * @return the calculated current.
+   */
   private double current(int value, int resolution, double referenceVoltage) {
     final double voltage = this.voltage(value, resolution, referenceVoltage);
-
-    return (voltage-(referenceVoltage/2.))/0.185;
+    return (voltage - (referenceVoltage / 2.)) / 0.185;
   }
-
 }
