@@ -171,8 +171,8 @@ public final class HardwareController extends AbstractWebController {
   @PutMapping("/{id}/toggle")
   @ResponseBody
   @Operation(
-      summary="",
-      description="",
+      summary="update a whole hardwareobject",
+      description="Method to update a whole hardwareobject with the given parameters",
       responses={
           @ApiResponse(
               responseCode="200",
