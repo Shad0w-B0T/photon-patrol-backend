@@ -14,6 +14,7 @@ public final class TestContainers {
   public static void startContainers() {
     startInfluxContainer();
     startPostgresContainer();
+    startRabbitContainer();
   }
 
   public static void startInfluxContainer() {
@@ -53,7 +54,7 @@ public final class TestContainers {
     }
 
     try (final RabbitMQContainer rabbitMQContainer =
-             new RabbitMQContainer(DockerImageName.parse("postgres:latest"))) {
+             new RabbitMQContainer(DockerImageName.parse("rabbitmq:management-alpine"))) {
       rabbitMQContainer
           .withEnv("RABBITMQ_DEFAULT_USER", "admin")
           .withEnv("RABBITMQ_DEFAULT_PASS", "instar")

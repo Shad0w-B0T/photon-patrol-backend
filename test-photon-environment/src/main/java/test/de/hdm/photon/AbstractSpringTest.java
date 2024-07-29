@@ -80,7 +80,8 @@ public abstract class AbstractSpringTest {
       rabbitMQContainer = new RabbitMQContainer(DockerImageName.parse("rabbitmq:management-alpine"));
       rabbitMQContainer
           .withEnv("RABBITMQ_DEFAULT_USER", "admin")
-          .withEnv("RABBITMQ_DEFAULT_PASS", "instar");
+          .withEnv("RABBITMQ_DEFAULT_PASS", "instar")
+          .withAdminPassword("instar");
 
       rabbitMQContainer.setPortBindings(List.of("1883:1883", "5672:5672"));
       rabbitMQContainer.start();

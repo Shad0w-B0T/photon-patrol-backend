@@ -16,8 +16,19 @@ dependencies {
 
   implementation libs.rabbitmq
 
+//#-------- Tests
   testImplementation project(":photon-schema")
   testImplementation project(":photon-database")
+  testImplementation project(":test-photon-environment")
+
+  //Spring
+  testImplementation libs.spring.boot.autoconfigure
+  testImplementation libs.spring.boot.starter.data.jpa
+
+  //Data
+  testImplementation libs.hikari
+  testImplementation libs.postgresql
+  testImplementation libs.database.influxdb
 }
 
 test {

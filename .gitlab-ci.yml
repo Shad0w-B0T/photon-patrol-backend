@@ -19,6 +19,7 @@ include:
 services:
   - postgres:latest
   - influxdb:2
+  - rabbitmq:management-alpine
 
 variables:
   PHOTON_TEST_CONTAINERS: true
@@ -32,6 +33,8 @@ variables:
   DOCKER_INFLUXDB_INIT_BUCKET: my-bucket
   DOCKER_INFLUXDB_INIT_RETENTION: 1w
   DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-super-secret-auth-token
+  RABBITMQ_DEFAULT_USER: admin
+  RABBITMQ_DEFAULT_PASS: instar
 
 stages:
   - build
