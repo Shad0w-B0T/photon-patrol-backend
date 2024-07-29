@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,12 +27,15 @@ public final class UserEntity implements IUser {
   private long id;
 
   @Column(name="username", nullable=false)
+  @Setter
   private String username;
 
   @Column(name="password", nullable=false, length=2048)
+  @Setter
   private String password;
 
   @Column(name="salt", nullable=false, length=1024)
+  @Setter
   private String salt;
 
   public UserEntity(@Nullable final String username,
