@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 
-@Schema(implementation = HardwareRecord.class)
+@Schema(implementation = ImmutableHardware.class)
 public interface IHardware extends Identifiable, IHardwareAddress, IHardwareToken {
 
   /**

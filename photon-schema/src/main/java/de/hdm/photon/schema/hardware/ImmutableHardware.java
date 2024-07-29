@@ -18,11 +18,11 @@ import java.util.Date;
  */
 @Schema(name = "Hardware",
         description = "Object to store the parameters for the hardware.")
-public record HardwareRecord(long id,
-                             @NotNull String token,
-                             @Nullable String macAddress,
-                             @Nullable Date hardwareAdded,
-                             @Nullable Date macAdded,
-                             boolean tokenIsActive
+public record ImmutableHardware(long id,
+                                @NotNull String token,
+                                @Nullable String macAddress,
+                                @Nullable Date hardwareAdded,
+                                @Nullable Date macAdded,
+                                boolean tokenIsActive
 ) implements IHardware{
 }

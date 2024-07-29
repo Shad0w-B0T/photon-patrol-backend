@@ -1,7 +1,7 @@
 package test.de.hdm.photon.schema.hardware;
 
 import de.hdm.photon.schema.hardware.HardwareFactory;
-import de.hdm.photon.schema.hardware.HardwareRecord;
+import de.hdm.photon.schema.hardware.ImmutableHardware;
 import de.hdm.photon.schema.hardware.IHardware;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -84,12 +84,12 @@ public final class TestHardware {
   /**
    * Creates a hardware instance with predefined test data.
    * <p>
-   * This method returns an instance of {@link HardwareRecord} initialized with test fields.
+   * This method returns an instance of {@link ImmutableHardware} initialized with test fields.
    *
-   * @return An instance of {@link HardwareRecord} with predefined test data.
+   * @return An instance of {@link ImmutableHardware} with predefined test data.
    */
   private @NotNull IHardware createHardware() {
-    return new HardwareRecord(TestField.HARDWARE_ID,
+    return new ImmutableHardware(TestField.HARDWARE_ID,
         TestField.HARDWARE_TOKEN,
         TestField.HARDWARE_MAC,
         TestField.TIMESTAMP_1,

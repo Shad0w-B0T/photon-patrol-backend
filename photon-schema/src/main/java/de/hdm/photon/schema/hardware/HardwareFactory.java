@@ -29,7 +29,7 @@ public final class HardwareFactory {
     Objects.requireNonNull(token);
     Objects.requireNonNull(hardwareAdded);
 
-    final IHardware hardware = new HardwareRecord(id, token, macAddress, hardwareAdded, macAdded, tokenIsActive);
+    final IHardware hardware = new ImmutableHardware(id, token, macAddress, hardwareAdded, macAdded, tokenIsActive);
     log.debug("The hardware object with the id: {} was successfully created.", hardware.id());
     return hardware;
   }
