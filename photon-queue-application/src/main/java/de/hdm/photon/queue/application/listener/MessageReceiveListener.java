@@ -107,12 +107,6 @@ public final class MessageReceiveListener {
         influxValues.put("p", voltage*(current/1000));
       }
 
-      System.out.println(influxValues);
-      System.out.println(influxValues);
-      System.out.println(influxValues);
-      System.out.println(influxValues);
-      System.out.println(influxValues);
-
       this.measurementManager.addMeasurements(token, influxValues);
       log.info("Added data for token={} with an amount of key={}.", token, valueMap.size());
     } catch (final EntityNotPresentException | FormatMismatchException e) {

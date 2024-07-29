@@ -85,11 +85,6 @@ public final class QueueSubscriber {
         // Sanitize
         this.securityFilter.checkObject(messagePayload);
 
-        System.out.println(messagePayload);
-        System.out.println(messagePayload);
-        System.out.println(messagePayload);
-        System.out.println(messagePayload);
-
         final  MessageReceiveEvent event = new MessageReceiveEvent(this, messagePayload);
 
         // Execute event
