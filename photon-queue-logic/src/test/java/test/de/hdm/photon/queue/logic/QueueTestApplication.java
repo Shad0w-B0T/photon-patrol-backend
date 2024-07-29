@@ -15,7 +15,6 @@ import test.de.hdm.photon.TestContainers;
 public class QueueTestApplication {
 
   public static void main(String[] args) {
-    TestContainers.startContainers();
     SpringApplication.run(QueueTestApplication.class, args);
   }
 }
