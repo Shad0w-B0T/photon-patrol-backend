@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.containers.InfluxDBContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.RabbitMQContainer;
@@ -50,6 +51,9 @@ public abstract class AbstractSpringTest {
   private static PostgreSQLContainer<?> postgreSQLContainer;
   private static RabbitMQContainer rabbitMQContainer;
 
+  @Autowired
+  protected ConfigurableApplicationContext springContext;
+
   @BeforeAll
   @SuppressWarnings("all")
   public static void init() {
@@ -80,7 +84,8 @@ public abstract class AbstractSpringTest {
       rabbitMQContainer = new RabbitMQContainer(DockerImageName.parse("rabbitmq:management-alpine"));
       rabbitMQContainer
           .withEnv("RABBITMQ_DEFAULT_USER", "admin")
-          .withEnv("RABBITMQ_DEFAULT_PASS", "instar");
+          .withEnv("RABBITMQ_DEFAULT_PASS", "instar")
+          .withAdminPassword("instar");
 
       rabbitMQContainer.setPortBindings(List.of("1883:1883", "5672:5672"));
       rabbitMQContainer.start();
