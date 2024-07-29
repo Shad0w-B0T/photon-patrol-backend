@@ -11,7 +11,6 @@ import de.hdm.photon.schema.payload.IMessagePayload;
 import de.hdm.photon.schema.payload.ImmutableMessagePayload;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -99,14 +98,32 @@ public class TestQueueIntegration extends AbstractSpringTest {
   @Timeout(value=5)
   @DisplayName("Testing Queue Integration with wrong token")
   public void testQueueIntegrationWithWrongToken() {
+    //Create
+    final IHardware hardware = this.prepareHardware();
 
+    this.publish(new ImmutableMessagePayload(
+        TestField.HARDWARE_MAC,
+        "",
+        "127.0.0.1",
+        12,
+        Map.of("v", 5)
+    ));
   }
 
   @Test
   @Timeout(value=5)
   @DisplayName("Testing Queue Integration with wrong ip")
   public void testQueueIntegrationWithWrongIP() {
+    //Create
+    final IHardware hardware = this.prepareHardware();
 
+    this.publish(new ImmutableMessagePayload(
+        TestField.HARDWARE_MAC,
+        "",
+        "aaa.bbb.ccc.ddd",
+        12,
+        Map.of("v", 5)
+    ));
   }
 }
 
