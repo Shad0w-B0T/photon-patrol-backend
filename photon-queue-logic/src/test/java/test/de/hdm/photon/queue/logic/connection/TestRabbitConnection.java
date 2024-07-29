@@ -1,16 +1,12 @@
 package test.de.hdm.photon.queue.logic.connection;
 
-import de.hdm.photon.queue.logic.config.IRabbitContext;
-import de.hdm.photon.queue.logic.config.ImmutableRabbitContext;
 import de.hdm.photon.queue.logic.connection.IRabbitConnection;
 import de.hdm.photon.queue.logic.connection.RabbitConnection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
 import test.de.hdm.photon.AbstractSpringTest;
 
