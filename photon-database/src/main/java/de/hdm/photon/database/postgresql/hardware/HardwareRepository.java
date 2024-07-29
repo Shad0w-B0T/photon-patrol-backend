@@ -140,6 +140,6 @@ public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> 
    * @throws EntityNotPresentException if entity not present.
    */
   default @NotNull HardwareEntity hardwareElseThrow(final long hardwareId) throws EntityNotPresentException {
-    return this.findById(hardwareId).orElseThrow(() -> new EntityNotPresentException("No hardware entity with id ="+hardwareId+"present!"));
+    return this.findById(hardwareId).orElseThrow(() -> new EntityNotPresentException("No hardware entity with id = "+hardwareId+" present!"));
   }
 }
