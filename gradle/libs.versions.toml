@@ -31,6 +31,7 @@ test-containers = "org.testcontainers:testcontainers:1.20.0"
 test-containers-junit = "org.testcontainers:junit-jupiter:1.20.0"
 test-containers-influxdb = "org.testcontainers:influxdb:1.20.0"
 test-containers-postgres = "org.testcontainers:postgresql:1.20.0"
+test-containers-rabbitmq = "org.testcontainers:rabbitmq:1.20.0"
 
 [plugins]
 lombok = "io.freefair.lombok:8.1.0"

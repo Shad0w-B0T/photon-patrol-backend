@@ -24,6 +24,7 @@ dependencies {
   implementation libs.test.containers.junit
   implementation libs.test.containers.influxdb
   implementation libs.test.containers.postgres
+  implementation libs.test.containers.rabbitmq
 }
 
 test {

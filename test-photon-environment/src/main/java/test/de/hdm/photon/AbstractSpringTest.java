@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.containers.InfluxDBContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.lifecycle.Startable;
 import org.testcontainers.utility.DockerImageName;
 
@@ -47,8 +48,10 @@ public abstract class AbstractSpringTest {
 
   private static InfluxDBContainer<?> influxDBContainer;
   private static PostgreSQLContainer<?> postgreSQLContainer;
+  private static RabbitMQContainer rabbitMQContainer;
 
   @BeforeAll
+  @SuppressWarnings("all")
   public static void init() {
     if (ignoreContainers()) {
       influxDBContainer = null;
@@ -73,6 +76,14 @@ public abstract class AbstractSpringTest {
 
       postgreSQLContainer.setPortBindings(List.of("5432:5432"));
       postgreSQLContainer.start();
+
+      rabbitMQContainer = new RabbitMQContainer(DockerImageName.parse("rabbitmq:management-alpine"));
+      rabbitMQContainer
+          .withEnv("RABBITMQ_DEFAULT_USER", "admin")
+          .withEnv("RABBITMQ_DEFAULT_PASS", "instar");
+
+      rabbitMQContainer.setPortBindings(List.of("1883:1883", "5672:5672"));
+      rabbitMQContainer.start();
     }
   }
 
@@ -80,6 +91,7 @@ public abstract class AbstractSpringTest {
   public static void shutdown() {
     Optional.ofNullable(influxDBContainer).ifPresent(Startable::close);
     Optional.ofNullable(postgreSQLContainer).ifPresent(Startable::close);
+    Optional.ofNullable(rabbitMQContainer).ifPresent(Startable::close);
   }
 
   private static boolean ignoreContainers() {
