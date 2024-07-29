@@ -23,22 +23,27 @@ import test.de.hdm.photon.TestField;
 
 import java.util.Map;
 
-
+/**
+ * Integration tests for queue-based messaging in the system.
+ */
 @SpringBootApplication(scanBasePackages="de.hdm.photon")
 @SpringBootTest(classes=TestQueueIntegration.class)
 @ComponentScan(basePackages="de.hdm.photon")
 public class TestQueueIntegration extends AbstractSpringTest {
-
   @Autowired
   private IHardwareManager hardwareManager;
   @Autowired
   private IMeasurementManager measurementManager;
-
   @Autowired
   private IRabbitConnection rabbitConnection;
   @Autowired
   private ObjectMapper objectMapper;
 
+  /**
+   * Prepares a new hardware instance and verifies its creation.
+   *
+   * @return The created hardware instance.
+   */
   private @NotNull IHardware prepareHardware() {
     final IHardware hardware = this.hardwareManager.createHardware();
     Assertions.assertDoesNotThrow(() -> {
@@ -47,8 +52,12 @@ public class TestQueueIntegration extends AbstractSpringTest {
     return hardware;
   }
 
+  /**
+   * Publishes a message payload to the queue.
+   *
+   * @param messagePayload The message payload to be published.
+   */
   private void publish(@NotNull final IMessagePayload messagePayload) {
-    //Publish message
     Assertions.assertDoesNotThrow(() -> {
       final IRabbitPublisher publisher = this.rabbitConnection.publisher();
       Assertions.assertNotNull(publisher);
@@ -57,11 +66,14 @@ public class TestQueueIntegration extends AbstractSpringTest {
     });
   }
 
+  /**
+   * Tests the integration of the queue by creating a hardware instance,
+   * publishing a message, and verifying the processing of the message.
+   */
   @Test
   @Timeout(value=5)
   @DisplayName("Testing Queue Integration")
   public void testQueueIntegration() {
-    //Create
     final IHardware hardware = this.prepareHardware();
 
     this.publish(new ImmutableMessagePayload(
@@ -72,9 +84,7 @@ public class TestQueueIntegration extends AbstractSpringTest {
         Map.of("v", 5)
     ));
 
-    //Publish message
     Assertions.assertDoesNotThrow(() -> {
-      //Dirty way to wait for response.
       while (true) {
         try {
           if (!this.measurementManager.getMeasurementsOfKey(hardware.token(), "v").values().isEmpty()) {
@@ -88,17 +98,18 @@ public class TestQueueIntegration extends AbstractSpringTest {
     Assertions.assertDoesNotThrow(() -> {
       final IHardware presentHardware = this.hardwareManager.getHardware(hardware.id());
 
-      //Published valid
       Assertions.assertNotNull(presentHardware);
       Assertions.assertEquals(presentHardware.macAddress(), TestField.HARDWARE_MAC);
     });
   }
 
+  /**
+   * Tests the queue integration with an invalid token.
+   */
   @Test
   @Timeout(value=5)
   @DisplayName("Testing Queue Integration with wrong token")
   public void testQueueIntegrationWithWrongToken() {
-    //Create
     final IHardware hardware = this.prepareHardware();
 
     this.publish(new ImmutableMessagePayload(
@@ -110,11 +121,13 @@ public class TestQueueIntegration extends AbstractSpringTest {
     ));
   }
 
+  /**
+   * Tests the queue integration with an invalid IP address.
+   */
   @Test
   @Timeout(value=5)
-  @DisplayName("Testing Queue Integration with wrong ip")
+  @DisplayName("Testing Queue Integration with wrong IP")
   public void testQueueIntegrationWithWrongIP() {
-    //Create
     final IHardware hardware = this.prepareHardware();
 
     this.publish(new ImmutableMessagePayload(
