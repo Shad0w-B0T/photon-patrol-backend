@@ -16,6 +16,8 @@ public interface TestField {
   @NotNull
   String HARDWARE_MAC = "A1:B4:C5:C1:DD:3E";
   @NotNull
+  String HARDWARE_IP = "127.0.0.1";
+  @NotNull
   String HARDWARE_TOKEN = "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3";
 
 }

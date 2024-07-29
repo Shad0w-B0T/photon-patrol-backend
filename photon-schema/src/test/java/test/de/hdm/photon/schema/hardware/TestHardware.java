@@ -21,7 +21,6 @@ import java.util.Date;
  * null inputs properly and that the integrity of hardware records is maintained.
  */
 public final class TestHardware {
-
   /**
    * Tests the creation and integrity of hardware.
    * <p>
@@ -43,7 +42,7 @@ public final class TestHardware {
    * properly throws {@link NullPointerException} when any required argument is null.
    */
   @Test
-  @DisplayName("Testing HardwareFactory Negative")
+  @DisplayName("Testing HardwareFactory negative")
   public void testHardwareFactoryNegative() {
     Assertions.assertThrows(NullPointerException.class, () -> {
       HardwareFactory.createHardware(0, null, null, null, null, true);
@@ -70,7 +69,7 @@ public final class TestHardware {
    * and checks the integrity of the resulting record.
    */
   @Test
-  @DisplayName("Testing HardwareFactory Record")
+  @DisplayName("Testing HardwareFactory to-record")
   public void testHardwareFactoryToRecord() {
     // Create hardware instance
     final IHardware hardware = this.createHardware();
