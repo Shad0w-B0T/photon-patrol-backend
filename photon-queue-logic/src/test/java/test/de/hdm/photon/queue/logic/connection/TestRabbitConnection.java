@@ -33,9 +33,6 @@ import test.de.hdm.photon.AbstractSpringTest;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public final class TestRabbitConnection extends AbstractSpringTest {
 
-  @Autowired
-  private ConfigurableApplicationContext springContext;
-
   /**
    * Tests the {@link RabbitConnection} for negative scenarios where null or empty values are passed.
    *

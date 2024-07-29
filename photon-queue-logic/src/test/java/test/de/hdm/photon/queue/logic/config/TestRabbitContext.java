@@ -38,9 +38,6 @@ import test.de.hdm.photon.AbstractSpringTest;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public final class TestRabbitContext extends AbstractSpringTest {
 
-  @Autowired
-  private ConfigurableApplicationContext springContext;
-
   /**
    * Tests the {@link ImmutableRabbitContext} for negative scenarios where null values are passed.
    *
