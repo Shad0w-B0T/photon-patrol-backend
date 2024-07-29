@@ -5,6 +5,7 @@ import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityRule;
+import de.hdm.photon.queue.application.listener.MessageReceiveListener;
 import de.hdm.photon.queue.logic.connection.IRabbitConnection;
 import de.hdm.photon.queue.logic.connection.IRabbitSubscriber;
 import de.hdm.photon.queue.logic.event.MessageReceiveEvent;
@@ -31,6 +32,9 @@ public final class QueueSubscriber {
   private IHeartbeatInfo heartbeatInfo;
   @Autowired
   private IRabbitConnection rabbitConnection;
+  @Autowired
+  private MessageReceiveListener messageReceiveListener;
+
   @Autowired
   private ObjectMapper objectMapper;
 
@@ -81,9 +85,16 @@ public final class QueueSubscriber {
         // Sanitize
         this.securityFilter.checkObject(messagePayload);
 
+        System.out.println(messagePayload);
+        System.out.println(messagePayload);
+        System.out.println(messagePayload);
+        System.out.println(messagePayload);
+
+        final  MessageReceiveEvent event = new MessageReceiveEvent(this, messagePayload);
+
         // Execute event
-        this.eventPublisher.publishEvent(new MessageReceiveEvent(this, messagePayload));
-        log.debug("Parsed message and passed to backend.");
+        this.eventPublisher.publishEvent(event);
+        log.info("Parsed message and passed to backend.");
       } catch (final IOException exception) {
         log.warn("Error while mapping payload: {}.", new String(bytes));
       }

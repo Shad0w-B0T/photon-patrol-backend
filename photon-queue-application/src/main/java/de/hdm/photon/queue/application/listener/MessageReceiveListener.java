@@ -7,6 +7,7 @@ import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.schema.payload.IMessagePayload;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.InterruptedIOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 
 /**
  * MessageReceiveListener listens for message receive events and processes the message payload.
@@ -31,12 +34,31 @@ public final class MessageReceiveListener {
   @Autowired
   private IMeasurementManager measurementManager;
 
+  @PostConstruct
+  public void init() {
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+    System.out.println("a");
+  }
+
   /**
    * Handles the MessageReceiveEvent and processes the message payload.
    *
    * @param event the message receive event containing the payload.
    */
-  @EventListener
+  @EventListener(MessageReceiveEvent.class)
   public void handle(@NotNull final MessageReceiveEvent event) {
     final IMessagePayload messagePayload = event.messagePayload();
     final String token = messagePayload.token();
@@ -82,13 +104,21 @@ public final class MessageReceiveListener {
 
       //Calculate power P = U*I
       if (influxValues.get("v") instanceof Double voltage && influxValues.get("c") instanceof Double current) {
-        influxValues.put("p", voltage * (current / 1000));
+        influxValues.put("p", voltage*(current/1000));
       }
+
+      System.out.println(influxValues);
+      System.out.println(influxValues);
+      System.out.println(influxValues);
+      System.out.println(influxValues);
+      System.out.println(influxValues);
 
       this.measurementManager.addMeasurements(token, influxValues);
       log.info("Added data for token={} with an amount of key={}.", token, valueMap.size());
-    } catch (final EntityNotPresentException | FormatMismatchException exception) {
-      System.out.println(exception.getMessage());
+    } catch (final EntityNotPresentException | FormatMismatchException e) {
+      log.error("Error processing message payload: {}", e.getMessage(), e);
+    } catch (final Exception e) {
+      log.error("Unexpected error: {}", e.getMessage(), e);
     }
   }
 
@@ -100,7 +130,7 @@ public final class MessageReceiveListener {
    * @return the percentage value.
    */
   private double percentage(int value, int resolution) {
-    return ((double) value) / (resolution - 1);
+    return ((double) value)/(resolution-1);
   }
 
   /**
@@ -112,7 +142,7 @@ public final class MessageReceiveListener {
    * @return the calculated voltage.
    */
   private double voltage(int value, int resolution, double referenceVoltage) {
-    return ((double) value / (resolution - 1)) * referenceVoltage;
+    return ((double) value/(resolution-1))*referenceVoltage;
   }
 
   /**
@@ -126,6 +156,6 @@ public final class MessageReceiveListener {
    */
   private double current(int value, int resolution, double referenceVoltage) {
     final double voltage = this.voltage(value, resolution, referenceVoltage);
-    return (voltage - (referenceVoltage / 2.)) / 0.185;
+    return (voltage-(referenceVoltage/2.))/0.185;
   }
 }

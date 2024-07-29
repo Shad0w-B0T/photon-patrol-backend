@@ -16,9 +16,10 @@ dependencies {
 
   implementation libs.rabbitmq
 
-//#-------- Tests
+  //#-------- Tests
   testImplementation project(":photon-schema")
   testImplementation project(":photon-database")
+  testImplementation project(":photon-logic")
   testImplementation project(":test-photon-environment")
 
   //Spring
