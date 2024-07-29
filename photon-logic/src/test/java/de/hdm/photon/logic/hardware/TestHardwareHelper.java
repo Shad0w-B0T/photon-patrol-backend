@@ -1,25 +1,26 @@
 package de.hdm.photon.logic.hardware;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import test.de.hdm.photon.AbstractSpringTest;
 
 
-@DataJpaTest
+@SpringBootTest
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class TestHardwareHelper extends AbstractSpringTest {
+public class TestHardwareHelper extends TestAbstractHardware<HardwareEntity> {
 
-  @Test
-  @DisplayName("test")
-  public void test() {
-    Assertions.assertTrue(true);
+  @Autowired
+  private IHardwareHelper hardwareHelper;
+
+
+  @Override
+  protected @NotNull IHardwareAccess<HardwareEntity> hardwareAccess() {
+    return this.hardwareHelper;
   }
-
 }
