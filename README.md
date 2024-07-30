@@ -80,6 +80,43 @@ flowchart TD
   database == utilised ==> schema
 ```
 
+---
+
+## Start Spring Java Application
+
+### Version
+
+Java Version: ``Java 17 (Temurin)`` was used for the development. I chose this version because of the lts support. It is
+strongly recommended to use this version when setting up the project.
+
+Check the java version, whether it is greater than or equal to Java 17. The Version can be checked with the
+command `java -version`.
+
+### Execute
+
+By setting the parameter `--spring.config.location`, the location of the configuration can be defined, i.e. where the
+file is stored. In this way, a config can be used outside the jar file.
+
+```
+java -jar <application-jar-name>.jar [--spring.config.location=<path_to_configuration>.properties]
+```
+
+**Example for startup:**
+
+File structure
+
+```
+.
+├── application.jar             # Spring application.
+└── config                      # File with multiple configs.
+    └── application.properties  # Unit tests
+```
+
+Command will look like:
+
+> java -jar application.jar --spring.config.location=./config/application.properties
+
+
 
 ## Queue Application
 
