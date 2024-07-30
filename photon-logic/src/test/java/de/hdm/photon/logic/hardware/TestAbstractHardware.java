@@ -5,43 +5,36 @@ import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.hardware.IHardware;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import test.de.hdm.photon.AbstractSpringTest;
 import test.de.hdm.photon.TestNameSpace;
 
 
 @Disabled
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD, methodMode = MethodMode.AFTER_METHOD)
-@AutoConfigureTestDatabase(replace=Replace.NONE)
+/* @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD, methodMode = MethodMode.AFTER_METHOD)
+@AutoConfigureTestDatabase(replace=Replace.NONE) */
 public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends AbstractSpringTest {
 
   protected abstract @NotNull IHardwareAccess<HARDWARE> hardwareAccess();
 
 
-  @BeforeEach
-  void setUp() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
-    this.createTestHardware();
-  }
+  /* @BeforeEach
+  void setUp() {
+    //this.createTestHardware();
+  } */
 
 
-  @AfterEach
+  /* @AfterEach
   public void deleteHardwareAfter() {
     try {
       this.hardwareAccess().deleteHardware(TestNameSpace.HARDWARE_ID);
     } catch (Exception ignored) {
       //will be ignored
     }
-  }
+  } */
 
 
   /**
@@ -51,22 +44,15 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
    * @throws EntityNotPresentException     {@inheritDoc}
    * @throws EntityAlreadyPresentException {@inheritDoc}
    */
-  private void createTestHardware() throws FormatMismatchException, EntityNotPresentException, EntityAlreadyPresentException {
+  private void createTestHardware() {
     TestHardwareUtils.createHardware(this.hardwareAccess());
-    this.hardwareAccess().updateHardware(
-        TestNameSpace.HARDWARE_ID,
-        TestNameSpace.HARDWARE_MAC_ADDRESS,
-        TestNameSpace.HARDWARE_HW_ADDED_CREATED,
-        TestNameSpace.HARDWARE_MAC_ADDED_CREATED,
-        TestNameSpace.HARDWARE_TOKEN_ACTIVE
-    );
   }
 
 
   @Test
   @DisplayName("Test create hardware.")
   public void testCreateHardware() throws EntityNotPresentException {
-
+    this.createTestHardware();
     //positive
     Assertions.assertEquals(TestNameSpace.HARDWARE_ID, this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).id());
 
@@ -77,7 +63,28 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
 
   @Test
   @DisplayName("Test retrieve hardware.")
-  public void testRetrieveHardware() {
+  public void testRetrieveHardware() throws EntityNotPresentException {
+
+    this.createTestHardware();
+    System.out.println("*".repeat(100));
+    System.out.println("BEFORE CREATE HARDWARE in testRetrieveHardware");
+    System.out.println("ID: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).id());
+    System.out.println("MAC address: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).macAddress());
+    System.out.println("HW added: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).hardwareAdded());
+    System.out.println("MAC added: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).macAdded());
+    System.out.println("Token active: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).tokenIsActive());
+    System.out.println("*".repeat(100));
+
+    this.createTestHardware();
+
+    System.out.println("*".repeat(100));
+    System.out.println("AFTER CREATE HARDWARE in testRetrieveHardware");
+    System.out.println("ID: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).id());
+    System.out.println("MAC address: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).macAddress());
+    System.out.println("HW added: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).hardwareAdded());
+    System.out.println("MAC added: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).macAdded());
+    System.out.println("Token active: " + this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).tokenIsActive());
+    System.out.println("*".repeat(100));
 
     //positive
     Assertions.assertDoesNotThrow(() -> this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID));
@@ -94,6 +101,7 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
   @DisplayName("Test update hardware.")
   public void testUpdateHardware() throws FormatMismatchException, EntityNotPresentException, EntityAlreadyPresentException {
 
+    this.createTestHardware();
     //positive
     this.hardwareAccess().updateHardware(
         TestNameSpace.HARDWARE_ID,
@@ -154,6 +162,7 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
   @DisplayName("Test delete hardware.")
   public void testDeleteHardware() throws EntityNotPresentException {
 
+    this.createTestHardware();
     //positive
     Assertions.assertTrue(this.hardwareAccess().deleteHardware(TestNameSpace.HARDWARE_ID));
     Assertions.assertTrue(this.hardwareAccess().getHardwareList().isEmpty());
