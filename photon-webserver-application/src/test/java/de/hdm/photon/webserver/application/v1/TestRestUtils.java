@@ -1,8 +1,8 @@
 package de.hdm.photon.webserver.application.v1;
 
-/*
+
 import de.hdm.photon.schema.hardware.HardwareFactory;
-import de.hdm.photon.schema.hardware.HardwareRecord;
+// import de.hdm.photon.schema.hardware.HardwareRecord;
 import de.hdm.photon.webserver.application.connection.RestHandler;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -19,12 +19,12 @@ final class TestRestUtils {
   private final static AtomicLong counter = new AtomicLong();
 
    public static void createHardware() {
-     hardwareHandler.post("", HardwareRecord.class, HardwareFactory.createHardware(
+/*      hardwareHandler.post("", HardwareRecord.class, HardwareFactory.createHardware(
         TestNameSpace.USER_NAME+counter.incrementAndGet(),
         TestNameSpace.USER_MAIL+counter.incrementAndGet(),
-        TestNameSpace.USER_PASSWORD+counter.incrementAndGet()));
+        TestNameSpace.USER_PASSWORD+counter.incrementAndGet())); */
   }
 
 }
-*/
+
 
