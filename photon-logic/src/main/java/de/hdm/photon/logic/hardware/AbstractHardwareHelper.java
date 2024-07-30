@@ -186,6 +186,7 @@ public abstract class AbstractHardwareHelper implements IHardwareHelper {
 
     hardwareEntity.macAddress(macAddress);
     hardwareEntity.hardwareAdded(hardwareAdded);
+    hardwareEntity.macAdded(macAdded);
     hardwareEntity.tokenIsActive(tokenIsActive);
 
     final HardwareEntity updatedHardware = this.hardwareRepository.save(hardwareEntity);
