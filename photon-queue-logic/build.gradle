@@ -1,0 +1,37 @@
+plugins {
+  id 'java'
+}
+
+group = 'de.hdm'
+version = '1.0.0'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(":photon-schema")
+  implementation project(":photon-database")
+  implementation project(":photon-logic")
+
+  implementation libs.rabbitmq
+
+  //#-------- Tests
+  testImplementation project(":photon-schema")
+  testImplementation project(":photon-database")
+  testImplementation project(":photon-logic")
+  testImplementation project(":test-photon-environment")
+
+  //Spring
+  testImplementation libs.spring.boot.autoconfigure
+  testImplementation libs.spring.boot.starter.data.jpa
+
+  //Data
+  testImplementation libs.hikari
+  testImplementation libs.postgresql
+  testImplementation libs.database.influxdb
+}
+
+test {
+  useJUnitPlatform()
+}

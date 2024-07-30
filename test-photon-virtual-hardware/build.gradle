@@ -1,0 +1,18 @@
+plugins {
+  id 'java'
+}
+group = 'de.hdm'
+version = '1.0.0'
+
+dependencies {
+  implementation project(":photon-schema")
+
+  //Spring
+  implementation libs.spring.boot.starter.parent
+  implementation libs.spring.boot.autoconfigure
+  implementation libs.mqtt
+}
+
+test {
+  useJUnitPlatform()
+}

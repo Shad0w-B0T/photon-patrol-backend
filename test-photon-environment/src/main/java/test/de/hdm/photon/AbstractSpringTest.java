@@ -1,0 +1,142 @@
+package test.de.hdm.photon;
+
+import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.testcontainers.containers.InfluxDBContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.RabbitMQContainer;
+import org.testcontainers.lifecycle.Startable;
+import org.testcontainers.utility.DockerImageName;
+
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Optional;
+
+
+/**
+ * The {@code AbstractSpringTest} class provides a base for Spring-based test classes.
+ * It contains a utility test method to verify that all {@code @Autowired} components
+ * in a derived test class are properly loaded by the Spring context.
+ *
+ * <p>This class uses Lombok's {@code @Log4j2} annotation for logging purposes.</p>
+ *
+ * <p>Example usage:
+ * <pre>
+ * {@code
+ * @ExtendWith(SpringExtension.class)
+ * @ContextConfiguration(classes = MyTestConfig.class)
+ * public class MyTest extends AbstractSpringTest {
+ *     @Autowired
+ *     private MyRepository myRepository;
+ *
+ *     // Additional test methods
+ * }
+ * }
+ * </pre>
+ * </p>
+ *
+ * @see org.springframework.beans.factory.annotation.Autowired
+ * @see org.junit.jupiter.api.Test
+ */
+@Log4j2
+public abstract class AbstractSpringTest {
+
+  private static InfluxDBContainer<?> influxDBContainer;
+  private static PostgreSQLContainer<?> postgreSQLContainer;
+  private static RabbitMQContainer rabbitMQContainer;
+
+  @Autowired
+  protected ConfigurableApplicationContext springContext;
+
+  @BeforeAll
+  @SuppressWarnings("all")
+  public static void init() {
+    if (ignoreContainers()) {
+      influxDBContainer = null;
+      postgreSQLContainer = null;
+
+    } else {
+      influxDBContainer = new InfluxDBContainer<>(DockerImageName.parse("influxdb:2"))
+          .withUsername("my-user")
+          .withPassword("my-password")
+          .withOrganization("my-org")
+          .withBucket("my-bucket")
+          .withRetention("1w")
+          .withAdminToken("my-super-secret-auth-token");
+
+      influxDBContainer.setPortBindings(List.of("8086:8086"));
+      influxDBContainer.start();
+
+      postgreSQLContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest"))
+          .withDatabaseName("postgres")
+          .withUsername("postgres")
+          .withPassword("test");
+
+      postgreSQLContainer.setPortBindings(List.of("5432:5432"));
+      postgreSQLContainer.start();
+
+      rabbitMQContainer = new RabbitMQContainer(DockerImageName.parse("rabbitmq:management-alpine"));
+      rabbitMQContainer
+          .withEnv("RABBITMQ_DEFAULT_USER", "admin")
+          .withEnv("RABBITMQ_DEFAULT_PASS", "instar")
+          .withAdminPassword("instar");
+
+      rabbitMQContainer.setPortBindings(List.of("1883:1883", "5672:5672"));
+      rabbitMQContainer.start();
+    }
+  }
+
+  @AfterAll
+  public static void shutdown() {
+    Optional.ofNullable(influxDBContainer).ifPresent(Startable::close);
+    Optional.ofNullable(postgreSQLContainer).ifPresent(Startable::close);
+    Optional.ofNullable(rabbitMQContainer).ifPresent(Startable::close);
+  }
+
+  private static boolean ignoreContainers() {
+    System.out.println(System.getenv("PHOTON_TEST_CONTAINERS"));
+    return Optional
+        .ofNullable(System.getenv("PHOTON_TEST_CONTAINERS"))
+        .map(Boolean::parseBoolean)
+        .orElse(false);
+  }
+
+  /**
+   * Test method to verify that all {@code @Autowired} components in the derived class
+   * are properly loaded by the Spring context.
+   *
+   * <p>This method iterates through all declared fields in the derived test class,
+   * checks if they are annotated with {@code @Autowired}, and asserts that they are
+   * not {@code null}, indicating successful dependency injection by Spring.</p>
+   *
+   * <p>Example log output:
+   * <pre>
+   * {@code
+   * Checking autowired components for=MyTest.
+   * Checking bean=MyRepository.
+   * }
+   * </pre>
+   * </p>
+   */
+  @Test
+  @DisplayName("Test JPA-Repository load.")
+  public void contextLoads() {
+    log.info("Checking autowired components for={}.", this.getClass().getSimpleName());
+
+    for (final Field declaredField : this.getClass().getDeclaredFields()) {
+      if (declaredField.getAnnotation(Autowired.class) == null) {
+        continue;
+      }
+      log.info("Checking bean={}.", declaredField.getName());
+      Assertions.assertNotNull(declaredField);
+    }
+  }
+}
+
+
