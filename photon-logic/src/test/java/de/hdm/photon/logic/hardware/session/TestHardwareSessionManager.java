@@ -14,8 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 
-@SpringBootTest(classes = TestHardwareSessionManager.class)
-@ComponentScan(basePackages = "de.hdm.photon")
+@SpringBootTest
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class TestHardwareSessionManager extends TestAbstractHardwareSession<IHardware, IHardwareSession> {
