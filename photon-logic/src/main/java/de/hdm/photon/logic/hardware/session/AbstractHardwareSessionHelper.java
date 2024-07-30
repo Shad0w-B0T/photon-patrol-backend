@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.logging;
+package de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
@@ -34,14 +34,14 @@ public abstract class AbstractHardwareSessionHelper implements IHardwareSessionH
 
 
   /**
-   * see {@link IHardwareSessionAccess#createLogging(String)}
+   * see {@link IHardwareSessionAccess#createHardwareSession(String, long)}}
    */
   @Override
   @Transactional
   @SuppressWarnings("all")
-  public @NotNull HardwareSessionEntity createLogging(@Nullable String ipAddress,
-                                                      long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException {
-    log.info("Attempting to create a new logging object.");
+  public @NotNull HardwareSessionEntity createHardwareSession(@Nullable String ipAddress,
+                                                              long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException {
+    log.info("Attempting to create a new hardware session object.");
     log.debug("Validating if the ip address is valid.");
 
     this.addressFilter.checkWithException(ipAddress);
@@ -52,27 +52,27 @@ public abstract class AbstractHardwareSessionHelper implements IHardwareSessionH
     log.debug("Creating a timestamp for the ip.");
     final Date now = new Date();
     this.isPresent(hardwareEntity, ipAddress, now);
-    final HardwareSessionEntity loggingEntity = new HardwareSessionEntity(hardwareEntity, ipAddress, now);
+    final HardwareSessionEntity hardwareSessionEntity = new HardwareSessionEntity(hardwareEntity, ipAddress, now);
 
-    log.info("New logging entity successfully created: {}", loggingEntity.toString());
-    return this.hardwareSessionRepository.save(loggingEntity);
+    log.info("New hardware session entity successfully created: {}", hardwareSessionEntity.toString());
+    return this.hardwareSessionRepository.save(hardwareSessionEntity);
   }
 
   /**
-   * see {@link IHardwareSessionAccess#getLogging(long)}
+   * see {@link IHardwareSessionAccess#getHardwareSession(long)}
    */
   @Override
   @Transactional
-  public @NotNull HardwareSessionEntity getLogging(long loggingId) throws EntityNotPresentException {
-    return this.hardwareSessionRepository.loggingElseThrow(loggingId);
+  public @NotNull HardwareSessionEntity getHardwareSession(long hardwareSessionId) throws EntityNotPresentException {
+    return this.hardwareSessionRepository.hardwareSessionElseThrow(hardwareSessionId);
   }
 
   /**
-   * see {@link IHardwareSessionAccess#getLoggingList()}
+   * see {@link IHardwareSessionAccess#getHardwareSessionList()}
    */
   @Override
   @Transactional
-  public @NotNull List<HardwareSessionEntity> getLoggingList() {
+  public @NotNull List<HardwareSessionEntity> getHardwareSessionList() {
     return this.hardwareSessionRepository.findAll();
   }
 
@@ -85,24 +85,24 @@ public abstract class AbstractHardwareSessionHelper implements IHardwareSessionH
     return this.hardwareSessionRepository
         .findByIpAddress(ipAddress)
         .orElseThrow(
-            () -> new EntityNotPresentException("No logging entity with the ip address = "+ipAddress+" available.")
+            () -> new EntityNotPresentException("No hardware session entity with the ip address = "+ipAddress+" available.")
         );
   }
 
   /**
-   * see {@link IHardwareSessionAccess#deleteLogging(long)}
+   * see {@link IHardwareSessionAccess#deleteHardwareSession(long)}
    */
   @Override
   @Transactional
-  public boolean deleteLogging(long loggingId) throws EntityNotPresentException {
-    log.info("Attempting to delete logging entity with id: {}", loggingId);
+  public boolean deleteHardwareSession(long hardwareSessionId) throws EntityNotPresentException {
+    log.info("Attempting to delete hardware session entity with id: {}", hardwareSessionId);
     //Check if present.
-    this.getLogging(loggingId);
+    this.getHardwareSession(hardwareSessionId);
 
-    this.hardwareSessionRepository.deleteById(loggingId);
-    log.info("Logging entity with id {} was successfully deleted.", loggingId);
+    this.hardwareSessionRepository.deleteById(hardwareSessionId);
+    log.info("Hardware session entity with id {} was successfully deleted.", hardwareSessionId);
 
-    return this.hardwareSessionRepository.findById(loggingId).isEmpty();
+    return this.hardwareSessionRepository.findById(hardwareSessionId).isEmpty();
   }
 
   /**
@@ -126,6 +126,6 @@ public abstract class AbstractHardwareSessionHelper implements IHardwareSessionH
     if (!this.hardwareSessionRepository.existsByHardwareEntityAndIpAddressAndTimestamp(hardwareEntity, ipAddress, timestampOfIp)) {
       return;
     }
-    throw new EntityAlreadyPresentException("Logging entity with this hardware entity, ip and timestamp already exists.");
+    throw new EntityAlreadyPresentException("Hardware session entity with this hardware entity, ip and timestamp already exists.");
   }
 }

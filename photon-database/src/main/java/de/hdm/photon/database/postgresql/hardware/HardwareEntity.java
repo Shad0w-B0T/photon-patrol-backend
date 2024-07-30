@@ -27,9 +27,8 @@ import java.util.Set;
 public final class HardwareEntity implements IHardware {
 
   @Id
-  @Column(name = "hardware_id", nullable=false)
   @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
   @Column(nullable=false, name="token", length=512)
   private String token;
@@ -74,5 +73,10 @@ public final class HardwareEntity implements IHardware {
     this.hardwareAdded = hardwareAdded;
     this.macAdded = macAdded;
     this.tokenIsActive = tokenIsActive;
+  }
+
+  @Override
+  public long id() {
+    return this.id;
   }
 }

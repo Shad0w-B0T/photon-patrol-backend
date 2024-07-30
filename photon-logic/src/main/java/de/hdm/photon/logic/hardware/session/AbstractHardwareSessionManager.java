@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.logging;
+package de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
@@ -30,9 +30,9 @@ public abstract class AbstractHardwareSessionManager implements IHardwareSession
    */
   @Override
   @Transactional
-  public @NotNull IHardwareSession createLogging(@Nullable String ipAddress,
-                                                 long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
-    return HardwareSessionFactory.convertToRecord(this.loggingHelper.createLogging(ipAddress, hardwareId));
+  public @NotNull IHardwareSession createHardwareSession(@Nullable String ipAddress,
+                                                         long hardwareId) throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+    return HardwareSessionFactory.convertToRecord(this.loggingHelper.createHardwareSession(ipAddress, hardwareId));
   }
 
   /**
@@ -40,8 +40,8 @@ public abstract class AbstractHardwareSessionManager implements IHardwareSession
    */
   @Override
   @Transactional
-  public @NotNull IHardwareSession getLogging(long loggingId) throws EntityNotPresentException {
-    return HardwareSessionFactory.convertToRecord(this.loggingHelper.getLogging(loggingId));
+  public @NotNull IHardwareSession getHardwareSession(long hardwareSessionId) throws EntityNotPresentException {
+    return HardwareSessionFactory.convertToRecord(this.loggingHelper.getHardwareSession(hardwareSessionId));
   }
 
   /**
@@ -49,9 +49,9 @@ public abstract class AbstractHardwareSessionManager implements IHardwareSession
    */
   @Override
   @Transactional
-  public @NotNull List<IHardwareSession> getLoggingList() {
+  public @NotNull List<IHardwareSession> getHardwareSessionList() {
     return this.loggingHelper
-        .getLoggingList()
+        .getHardwareSessionList()
         .stream()
         .map(HardwareSessionFactory::convertToRecord)
         .toList();
@@ -71,7 +71,7 @@ public abstract class AbstractHardwareSessionManager implements IHardwareSession
    */
   @Override
   @Transactional
-  public boolean deleteLogging(long loggingId) throws EntityNotPresentException {
-    return this.loggingHelper.deleteLogging(loggingId);
+  public boolean deleteHardwareSession(long hardwareSessionId) throws EntityNotPresentException {
+    return this.loggingHelper.deleteHardwareSession(hardwareSessionId);
   }
 }

@@ -12,34 +12,6 @@ import java.util.Optional;
 @Repository
 public interface HardwareSessionRepository extends JpaRepository<HardwareSessionEntity, Long> {
 
-  //------------------------------------------ ID -------------------------------------------------
-
-  /**
-   * Query to check if the id exists.
-   *
-   * @param id unique id of the entity.
-   * @return true if the entity with the id exists.
-   */
-  boolean existsById(long id);
-
-  /**
-   * Query to get an entity via id.
-   *
-   * @param id value of the id.
-   * @return an Optional if present. Null if no match.
-   */
-  @NotNull
-  Optional<HardwareSessionEntity> findById(long id);
-
-  /**
-   * Query to delete the entity via id.
-   *
-   * @param id value of the id.
-   * @return an int value of how many were deleted.
-   */
-  int deleteById(long id);
-
-
   //------------------------------------------ Ip address -------------------------------------------------
 
   /**
@@ -147,13 +119,13 @@ public interface HardwareSessionRepository extends JpaRepository<HardwareSession
                                                          @NotNull Date timestamp);
 
   /**
-   * Get the logging entity by id. If no match throw Exception.
+   * Get the hardware session entity by id. If no match throw Exception.
    *
-   * @param loggingId id of the entity.
-   * @return logging entity.
+   * @param hardwareSessionId id of the entity.
+   * @return hardware session entity.
    * @throws EntityNotPresentException if entity not present.
    */
-  default @NotNull HardwareSessionEntity loggingElseThrow(final long loggingId) throws EntityNotPresentException {
-    return this.findById(loggingId).orElseThrow(() -> new EntityNotPresentException("No logging entity with id ="+loggingId+"present!"));
+  default @NotNull HardwareSessionEntity hardwareSessionElseThrow(final long hardwareSessionId) throws EntityNotPresentException {
+    return this.findById(hardwareSessionId).orElseThrow(() -> new EntityNotPresentException("No hardware session entity with id ="+hardwareSessionId+"present!"));
   }
 }

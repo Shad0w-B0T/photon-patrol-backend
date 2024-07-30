@@ -28,9 +28,8 @@ import java.util.Date;
 @Accessors(fluent=true)
 public final class HardwareSessionEntity implements IHardwareSession {
   @Id
-  @Column(name = "logging_id", nullable=false)
   @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
   @Column(nullable=false, name="ip_address", length=100)
   @Setter
@@ -55,5 +54,10 @@ public final class HardwareSessionEntity implements IHardwareSession {
     this.hardwareEntity = hardwareEntity;
     this.ipAddress = ipAddress;
     this.timestamp = timestamp;
+  }
+
+  @Override
+  public long id() {
+    return this.id;
   }
 }

@@ -3,9 +3,9 @@
 #
 FROM gradle:jdk17-alpine as queue-build
 
-LABEL authors="Photon Group"
-LABEL project="photon-queue"
-LABEL tag="0.0.1"
+LABEL authors="photonteam"
+LABEL project="photon/photon-backend"
+LABEL tag="1.0.0"
 
 WORKDIR /app
 
@@ -28,7 +28,7 @@ RUN gradle check
 #
 # Deploy queue application
 #
-FROM eclipse-temurin:21 as queue-application
+FROM eclipse-temurin:17 as queue-application
 
 # Define workir for app
 WORKDIR /app
@@ -43,9 +43,9 @@ ENTRYPOINT ["java", "-jar", "build.jar"]
 #
 FROM gradle:jdk17-alpine as web-build
 
-LABEL authors="Photon Group"
-LABEL project="photon-web"
-LABEL tag="0.0.1"
+LABEL authors="photonteam"
+LABEL project="photon/photon-backend"
+LABEL tag="1.0.0"
 
 WORKDIR /app
 
@@ -68,7 +68,7 @@ RUN gradle check
 #
 # Deploy queue application
 #
-FROM eclipse-temurin:21 as webserver-application
+FROM eclipse-temurin:17 as webserver-application
 
 # Define workir for app
 WORKDIR /app
