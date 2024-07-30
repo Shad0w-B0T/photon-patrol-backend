@@ -97,3 +97,9 @@ The web application provides the web interface for the frontend.
 ``app.security.hash`` store hash
 
 ``app.security.passwordStorage`` position of password.
+
+
+## Testing
+__Important__
+Before testing the Docker Engine must be started.
+The reason for this is that a new Docker container is started before each test to create a clean test environment that works smoothly in exchange with the database.
