@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.hardwareSession;
+package de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;

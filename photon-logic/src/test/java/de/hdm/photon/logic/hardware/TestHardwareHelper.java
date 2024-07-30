@@ -18,7 +18,9 @@ public class TestHardwareHelper extends TestAbstractHardware<HardwareEntity> {
   @Autowired
   private IHardwareHelper hardwareHelper;
 
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected @NotNull IHardwareAccess<HardwareEntity> hardwareAccess() {
     return this.hardwareHelper;

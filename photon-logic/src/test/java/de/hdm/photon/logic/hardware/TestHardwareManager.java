@@ -18,6 +18,9 @@ public class TestHardwareManager extends TestAbstractHardware<IHardware> {
   @Autowired
   private IHardwareManager hardwareManager;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected @NotNull IHardwareAccess<IHardware> hardwareAccess() {
     return this.hardwareManager;

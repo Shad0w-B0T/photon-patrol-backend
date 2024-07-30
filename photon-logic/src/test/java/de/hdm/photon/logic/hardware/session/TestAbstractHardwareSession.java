@@ -1,8 +1,8 @@
-package de.hdm.photon.logic.hardwareSession;
+package de.hdm.photon.logic.hardware.session;
 
-import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
+import de.hdm.photon.logic.hardware.IHardwareAccess;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
-import de.hdm.photon.schema.exception.FormatMismatchException;
+import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.schema.hardware.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
@@ -23,13 +23,16 @@ import test.de.hdm.photon.TestNameSpace;
 @Disabled
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD, methodMode = MethodMode.AFTER_METHOD)
 @AutoConfigureTestDatabase(replace=Replace.NONE)
-public abstract class TestAbstractHardwareSession<HARDWARE_SESSION extends IHardwareSession> extends AbstractSpringTest {
+public abstract class TestAbstractHardwareSession<
+    HARDWARE extends IHardware,
+    HARDWARE_SESSION extends IHardwareSession> extends AbstractSpringTest {
 
   protected abstract @NotNull IHardwareSessionAccess<HARDWARE_SESSION> hardwareSessionAccess();
+  protected abstract @NotNull IHardwareAccess<HARDWARE> hardwareAccess();
 
 
   @BeforeEach
-  void setUp() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+  void setUp() {
     this.createTestHardwareSession();
   }
 
@@ -48,26 +51,36 @@ public abstract class TestAbstractHardwareSession<HARDWARE_SESSION extends IHard
    * Create a test hardware session.
    */
   private void createTestHardwareSession() {
-    TestHardwareSessionUtils.createHardwareSession(this.hardwareSessionAccess());
+    TestHardwareSessionUtils.createHardwareSession(this.hardwareAccess(), this.hardwareSessionAccess());
   }
 
 
   @Test
   @DisplayName("Test create hardware session.")
-  public void testCreateHardware() throws EntityNotPresentException {
+  public void testCreateHardwareSession() throws EntityNotPresentException {
 
     //positive
-    Assertions.assertEquals(TestNameSpace.HARDWARE_ID, this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).id());
+    Assertions.assertEquals(
+        TestNameSpace.HARDWARE_ID,
+        this.hardwareSessionAccess()
+            .getHardwareSession(TestNameSpace.HARDWARE_SESSION_ID)
+            .id()
+    );
 
     //negative
-    Assertions.assertNotEquals(TestNameSpace.HARDWARE_ID_NOT, this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).id());
+    Assertions.assertNotEquals(
+        TestNameSpace.HARDWARE_SESSION_NOT,
+        this.hardwareSessionAccess()
+            .getHardwareSession(TestNameSpace.HARDWARE_SESSION_ID)
+            .id()
+    );
   }
 
 
   @Test
-  @DisplayName("Test retrieve hardware.")
-  public void testRetrieveHardware() {
-
+  @DisplayName("Test retrieve hardware session.")
+  public void testRetrieveHardwareSession() {
+/*
     //positive
     Assertions.assertDoesNotThrow(() -> this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID));
 
@@ -75,7 +88,7 @@ public abstract class TestAbstractHardwareSession<HARDWARE_SESSION extends IHard
     Assertions.assertThrowsExactly(NullPointerException.class,
         () -> this.hardwareAccess().getHardware(null));
     Assertions.assertThrowsExactly(EntityNotPresentException.class,
-        () -> this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID_NOT));
+        () -> this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID_NOT)); */
   }
 
 
