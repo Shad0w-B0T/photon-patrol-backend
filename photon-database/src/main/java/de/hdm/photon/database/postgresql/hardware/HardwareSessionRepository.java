@@ -147,13 +147,13 @@ public interface HardwareSessionRepository extends JpaRepository<HardwareSession
                                                          @NotNull Date timestamp);
 
   /**
-   * Get the logging entity by id. If no match throw Exception.
+   * Get the hardware session entity by id. If no match throw Exception.
    *
-   * @param loggingId id of the entity.
-   * @return logging entity.
+   * @param hardwareSessionId id of the entity.
+   * @return hardware session entity.
    * @throws EntityNotPresentException if entity not present.
    */
-  default @NotNull HardwareSessionEntity loggingElseThrow(final long loggingId) throws EntityNotPresentException {
-    return this.findById(loggingId).orElseThrow(() -> new EntityNotPresentException("No logging entity with id ="+loggingId+"present!"));
+  default @NotNull HardwareSessionEntity hardwareSessionElseThrow(final long hardwareSessionId) throws EntityNotPresentException {
+    return this.findById(hardwareSessionId).orElseThrow(() -> new EntityNotPresentException("No hardware session entity with id ="+hardwareSessionId+"present!"));
   }
 }
