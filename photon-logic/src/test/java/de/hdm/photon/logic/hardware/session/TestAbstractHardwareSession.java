@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.data.util.Pair;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.annotation.DirtiesContext.MethodMode;
@@ -48,13 +49,13 @@ public abstract class TestAbstractHardwareSession<
   @Test
   @DisplayName("Test create hardware session.")
   public void testCreateHardwareSession() throws EntityNotPresentException {
-    final HARDWARE_SESSION session = TestHardwareSessionUtils
+    final Pair<HARDWARE_SESSION, HARDWARE> sessionPair = TestHardwareSessionUtils
         .createHardwareSession(this.hardwareAccess(), this.hardwareSessionAccess());
 
     //positive
     Assertions.assertEquals(
-        session.id(),
-        this.hardwareSessionAccess().getHardwareSession(session.id()).id()
+        sessionPair.getFirst().id(),
+        this.hardwareSessionAccess().getHardwareSession(sessionPair.getFirst().id()).id()
     );
   }
 
@@ -62,11 +63,11 @@ public abstract class TestAbstractHardwareSession<
   @Test
   @DisplayName("Test retrieve hardware session.")
   public void testRetrieveHardwareSession() {
-    final HARDWARE_SESSION session = TestHardwareSessionUtils
+    final Pair<HARDWARE_SESSION, HARDWARE> sessionPair = TestHardwareSessionUtils
         .createHardwareSession(this.hardwareAccess(), this.hardwareSessionAccess());
 
     //positive
-    Assertions.assertDoesNotThrow(() -> this.hardwareAccess().getHardware(session.id()));
+    Assertions.assertDoesNotThrow(() -> this.hardwareAccess().getHardware(sessionPair.getSecond().id()));
 
     //negative
     Assertions.assertThrowsExactly(NullPointerException.class,
