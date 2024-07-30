@@ -1,13 +1,14 @@
 package de.hdm.photon.webserver.application.connection;
 
 
-import de.hdm.photon.webserver.application.environment.AbstractSpringTest;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import test.de.hdm.photon.AbstractSpringTest;
 
 
 /**

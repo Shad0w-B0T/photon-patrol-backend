@@ -43,6 +43,7 @@ dependencies {
   testImplementation project(":photon-database")
   testImplementation project(":photon-logic")
   testImplementation project(":photon-webserver-logic")
+  testImplementation project(":test-photon-environment")
 }
 
 test {
