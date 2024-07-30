@@ -24,9 +24,9 @@ public final class UserFactory {
    * @throws NullPointerException if any of the non-null parameters are null.
    */
   public static @NotNull IUser createUser(final long id,
-                                          @Nullable String username,
-                                          @Nullable String password,
-                                          @Nullable String salt) {
+                                          @Nullable final String username,
+                                          @Nullable final String password,
+                                          @Nullable final String salt) {
     // Null check
     Objects.requireNonNull(username);
     Objects.requireNonNull(password);

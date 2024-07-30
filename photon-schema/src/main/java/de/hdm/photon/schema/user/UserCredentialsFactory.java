@@ -21,8 +21,8 @@ public final class UserCredentialsFactory {
    * @return The created IUserCredentials instance.
    * @throws NullPointerException if either the username or password is null.
    */
-  public static @NotNull IUserCredentials createUserCredentials(@Nullable String username,
-                                                                @Nullable String password) {
+  public static @NotNull IUserCredentials createUserCredentials(@Nullable final String username,
+                                                                @Nullable final String password) {
     // Null check
     Objects.requireNonNull(username);
     Objects.requireNonNull(password);
