@@ -20,4 +20,12 @@ public interface TestField {
   @NotNull
   String HARDWARE_TOKEN = "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3";
 
+  long USER_ID = 1;
+  @NotNull
+  String USERNAME = "username";
+  @NotNull
+  String PASSWORD = "password";
+  @NotNull
+  String SALT = "1234";
+
 }
