@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.logging;
+package de.hdm.photon.logic.hardwareSession;
 
 import org.jetbrains.annotations.Nullable;
 
