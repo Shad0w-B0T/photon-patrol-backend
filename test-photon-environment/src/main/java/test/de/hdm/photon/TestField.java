@@ -3,6 +3,8 @@ package test.de.hdm.photon;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public interface TestField {
@@ -28,4 +30,9 @@ public interface TestField {
   @NotNull
   String SALT = "1234";
 
+  int TIME_PERIOD_MIN = 5;
+  int TIME_PERIOD_MAX = 10;
+  int TIME_PERIOD_AVERAGE = 7;
+  @NotNull
+  Map<Long, Map<String, Object>> TIME_PERIOD_VALUES = new HashMap<>();
 }
