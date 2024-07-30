@@ -2,6 +2,7 @@ package de.hdm.photon.webserver.application.v1;
 
 
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
+import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
 import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.schema.hardware.ImmutableHardware;
 import de.hdm.photon.webserver.application.connection.AbstractSpringRestTest;
@@ -25,6 +26,8 @@ public final class TestHardwareController extends AbstractSpringRestTest {
 
   @Autowired
   private HardwareRepository hardwareRepository;
+  @Autowired
+  private HardwareSessionRepository hardwareSessionRepository;
 
   public TestHardwareController() {
     super("/api/v1/hardware");
@@ -32,6 +35,7 @@ public final class TestHardwareController extends AbstractSpringRestTest {
 
   @BeforeEach
   public void cleanUp() {
+    this.hardwareSessionRepository.deleteAll();
     this.hardwareRepository.deleteAll();
   }
 

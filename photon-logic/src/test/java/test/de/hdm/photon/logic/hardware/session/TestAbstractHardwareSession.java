@@ -26,7 +26,6 @@ public abstract class TestAbstractHardwareSession<
 
   @Autowired
   private HardwareRepository hardwareRepository;
-
   @Autowired
   private HardwareSessionRepository hardwareSessionRepository;
 

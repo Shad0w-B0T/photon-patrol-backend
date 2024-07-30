@@ -24,9 +24,9 @@ import java.util.Date;
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 public final class TestHardwareSession extends AbstractSpringTest {
   @Autowired
-  private HardwareSessionRepository hardwareSessionRepository;
-  @Autowired
   private HardwareRepository hardwareRepository;
+  @Autowired
+  private HardwareSessionRepository hardwareSessionRepository;
 
   private Date now;
   private String ipAddress;
