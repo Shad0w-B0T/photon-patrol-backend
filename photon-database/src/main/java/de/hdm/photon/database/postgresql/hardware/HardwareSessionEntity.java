@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -41,8 +42,8 @@ public final class HardwareSessionEntity implements IHardwareSession {
   @Setter
   private Date timestamp;
 
-  @ManyToOne(cascade=CascadeType.REMOVE)
-  @JoinColumn(name="hardware_id", nullable=false)
+  @ManyToOne(cascade={CascadeType.REMOVE, CascadeType.DETACH})
+  @JoinColumn(name="hardware_id")
   public HardwareEntity hardwareEntity;
 
   //Empty Constructor
