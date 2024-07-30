@@ -17,7 +17,7 @@ import test.de.hdm.photon.AbstractSpringTest;
 import java.util.Date;
 
 @DataJpaTest // Only scans for @Entity and @Repository and store it to the context
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD) //Build new context before each test
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 public final class TestHardware extends AbstractSpringTest {
 
