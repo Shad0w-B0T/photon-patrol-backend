@@ -25,7 +25,7 @@ public final class TestHardwareUtils {
           TestNameSpace.HARDWARE_TOKEN_ACTIVE
       );
 
-      reference.set(hardware);
+      reference.set(updated);
     });
 
     return reference.get();

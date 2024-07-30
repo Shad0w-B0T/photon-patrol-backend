@@ -22,7 +22,6 @@ public final class TestHardwareSessionUtils {
     final AtomicReference<HARDWARE_SESSION> reference = new AtomicReference<>();
 
     Assertions.assertDoesNotThrow(() -> {
-
       final HARDWARE hardware = TestHardwareUtils.createHardware(hardwareAccess);
       Assertions.assertNotNull(hardware);
 
