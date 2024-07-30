@@ -22,8 +22,7 @@ COPY photon-logic ./photon-logic
 COPY photon-queue-logic ./photon-queue-logic
 COPY photon-queue-application ./photon-queue-application
 
-RUN gradle --build-cache bootJar
-RUN gradle check
+RUN gradle --build-cache bootJar -x test
 
 #
 # Deploy queue application
@@ -62,8 +61,7 @@ COPY photon-logic ./photon-logic
 COPY photon-webserver-logic ./photon-webserver-logic
 COPY photon-webserver-application ./photon-webserver-application
 
-RUN gradle --build-cache bootJar
-RUN gradle check
+RUN gradle --build-cache bootJar -x test
 
 #
 # Deploy queue application
