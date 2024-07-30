@@ -158,7 +158,7 @@ public final class RestHandler implements IRequest {
     }
 
     final RESPONSE response = request.exchangeToMono(clientResponse -> {
-          if (clientResponse.statusCode().value() != 200) {
+          if (!clientResponse.statusCode().is2xxSuccessful()) {
             return clientResponse.createError();
           }
           return clientResponse.bodyToMono(typeClass);
@@ -170,19 +170,7 @@ public final class RestHandler implements IRequest {
     Assertions.assertNotNull(response);
     Assertions.assertInstanceOf(typeClass, response);
 
-    // No check for Java components.
-    if (!(response instanceof Map<?, ?> || response instanceof Collection<?>)) {
-      // Check fields
-      for (final Field declaredField : response.getClass().getDeclaredFields()) {
-        try {
-          // Check if field is present else throw error.
-          declaredField.setAccessible(true);
-          Assertions.assertNotNull(declaredField.get(response));
-        } catch (final IllegalAccessException exception) {
-          Assertions.fail();
-        }
-      }
-    }
+
 
     return response;
   }

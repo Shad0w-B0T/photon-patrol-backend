@@ -144,8 +144,8 @@ public final class HardwareController extends AbstractWebController {
   @PutMapping("/{id}")
   @ResponseBody
   @Operation(
-      summary="update hardware stats.",
-      description="Method to change the stats of a specific hardware.",
+      summary="update hardware tokenIsActive state.",
+      description="Method to change the state tokenIsActive of hardware.",
       responses={
           @ApiResponse(
               responseCode="200",
