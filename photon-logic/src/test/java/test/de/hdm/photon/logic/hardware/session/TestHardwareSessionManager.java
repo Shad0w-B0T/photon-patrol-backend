@@ -1,16 +1,16 @@
-package de.hdm.photon.logic.hardware.session;
+package test.de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.logic.hardware.IHardwareAccess;
 import de.hdm.photon.logic.hardware.IHardwareManager;
+import de.hdm.photon.logic.hardware.session.IHardwareSessionAccess;
+import de.hdm.photon.logic.hardware.session.IHardwareSessionManager;
 import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.schema.hardware.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 

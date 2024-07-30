@@ -1,7 +1,7 @@
-package de.hdm.photon.logic.hardware.session;
+package test.de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.logic.hardware.IHardwareAccess;
-import de.hdm.photon.logic.hardware.TestHardwareUtils;
+import de.hdm.photon.logic.hardware.session.IHardwareSessionAccess;
 import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.schema.hardware.IHardwareSession;
 import org.jetbrains.annotations.NotNull;

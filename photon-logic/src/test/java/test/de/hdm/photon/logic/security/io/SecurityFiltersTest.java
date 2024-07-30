@@ -1,5 +1,7 @@
-package de.hdm.photon.logic.security.io;
+package test.de.hdm.photon.logic.security.io;
 
+import de.hdm.photon.logic.security.io.ISecurityFilter;
+import de.hdm.photon.logic.security.io.SecurityFilters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

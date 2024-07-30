@@ -1,6 +1,7 @@
-package de.hdm.photon.logic.hardware;
+package test.de.hdm.photon.logic.hardware;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
+import de.hdm.photon.logic.hardware.IHardwareAccess;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.exception.FormatMismatchException;

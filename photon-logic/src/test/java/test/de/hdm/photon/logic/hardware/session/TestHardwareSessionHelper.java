@@ -1,11 +1,12 @@
-package de.hdm.photon.logic.hardware.session;
+package test.de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareSessionEntity;
 import de.hdm.photon.logic.hardware.IHardwareAccess;
 import de.hdm.photon.logic.hardware.IHardwareHelper;
+import de.hdm.photon.logic.hardware.session.IHardwareSessionAccess;
+import de.hdm.photon.logic.hardware.session.IHardwareSessionHelper;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;

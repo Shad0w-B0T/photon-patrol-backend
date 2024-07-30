@@ -1,25 +1,20 @@
-package de.hdm.photon.logic.hardware.session;
+package test.de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
 import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
 import de.hdm.photon.logic.hardware.IHardwareAccess;
+import de.hdm.photon.logic.hardware.session.IHardwareSessionAccess;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.schema.hardware.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.data.util.Pair;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import test.de.hdm.photon.AbstractSpringTest;
 import test.de.hdm.photon.TestNameSpace;
 

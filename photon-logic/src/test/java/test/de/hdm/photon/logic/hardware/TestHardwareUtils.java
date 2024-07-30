@@ -1,5 +1,6 @@
-package de.hdm.photon.logic.hardware;
+package test.de.hdm.photon.logic.hardware;
 
+import de.hdm.photon.logic.hardware.IHardwareAccess;
 import de.hdm.photon.schema.hardware.IHardware;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;

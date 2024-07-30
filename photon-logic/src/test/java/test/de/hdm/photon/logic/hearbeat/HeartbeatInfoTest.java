@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.hearbeat;
+package test.de.hdm.photon.logic.hearbeat;
 
 import de.hdm.photon.logic.heartbeat.HeartbeatInfo;
 import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
