@@ -35,6 +35,8 @@ public interface TestNameSpace {
   /*
    * Static values for logging tests.
    */
+  long HARDWARE_SESSION_ID = 1L;
+  long HARDWARE_SESSION_NOT = 42L;
   @NotNull String LOGGING_IP_ADDRESS = "192.168.0.1";
   @NotNull String LOGGING_IP_ADDRESS_UPDATED = "10.10.10.10";
   @NotNull String LOGGING_IP_ADDRESS_NOT = "133.7.42.69";
