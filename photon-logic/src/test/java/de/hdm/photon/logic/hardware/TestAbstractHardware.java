@@ -11,16 +11,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import test.de.hdm.photon.AbstractSpringTest;
 import test.de.hdm.photon.TestNameSpace;
 
 
 @Disabled
-//@DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD)
-//@AutoConfigureTestDatabase(replace=Replace.NONE)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD, methodMode = MethodMode.AFTER_METHOD)
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends AbstractSpringTest {
 
   protected abstract @NotNull IHardwareAccess<HARDWARE> hardwareAccess();
+
 
   @BeforeEach
   void setUp() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
@@ -140,13 +146,14 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
         TestNameSpace.HARDWARE_TOKEN_ACTIVE_NOT,
         this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID).tokenIsActive()
     );
+    System.out.println("---".repeat(50));
   }
 
 
   @Test
   @DisplayName("Test delete hardware.")
   public void testDeleteHardware() throws EntityNotPresentException {
-    //test
+
     //positive
     Assertions.assertTrue(this.hardwareAccess().deleteHardware(TestNameSpace.HARDWARE_ID));
     Assertions.assertTrue(this.hardwareAccess().getHardwareList().isEmpty());
