@@ -5,6 +5,7 @@ import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.measurement.ITimeMap;
 import de.hdm.photon.schema.measurement.ITimePeriod;
 import de.hdm.photon.schema.measurement.ImmutableTimePeriod;
+import de.hdm.photon.schema.measurement.TimePeriodFactory;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
@@ -17,25 +18,42 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
+/**
+ * Abstract class representing a connection to an InfluxDB database.
+ * Implements the {@link IInfluxConnection} interface.
+ */
 public abstract class AbstractInfluxConnection implements IInfluxConnection {
 
   private final @NotNull InfluxDB influxDB;
   private final @NotNull String database;
   private final @NotNull IInfluxMapper influxMapper;
 
+  /**
+   * Constructs an instance of {@code AbstractInfluxConnection}.
+   *
+   * @param influxDB     The {@link InfluxDB} instance representing the connection to the InfluxDB database.
+   *                     Must not be null.
+   * @param database     The name of the database. Must not be null.
+   * @param influxMapper The {@link IInfluxMapper} for mapping data to/from InfluxDB. Must not be null.
+   *
+   * @throws NullPointerException if any of the parameters are null.
+   */
   protected AbstractInfluxConnection(@Nullable final InfluxDB influxDB,
                                      @Nullable final String database,
                                      @Nullable final IInfluxMapper influxMapper) {
-    //Null check
-    Objects.requireNonNull(influxDB);
-    Objects.requireNonNull(database);
-    Objects.requireNonNull(influxMapper);
+    // Null check
+    Objects.requireNonNull(influxDB, "InfluxDB instance must not be null.");
+    Objects.requireNonNull(database, "Database name must not be null.");
+    Objects.requireNonNull(influxMapper, "InfluxMapper must not be null.");
 
     this.influxDB = influxDB;
     this.database = database;
     this.influxMapper = influxMapper;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public @NotNull List<String> getMeasurements() {
     return this.query("SHOW MEASUREMENTS")
@@ -53,6 +71,9 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
         .collect(Collectors.toList());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public @NotNull List<String> getMeasurementsAfter(long time) {
     final List<String> measurements = this.getMeasurements();
@@ -96,6 +117,9 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public @NotNull ITimePeriod<?> getMeasurementsOfKey(@Nullable final String hardware,
                                                       @Nullable final String key,
@@ -135,9 +159,12 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
           this.query("SELECT mean(\""+escapeKey+"\") as value FROM \""+escapeHardware+"\" "+afterString+" GROUP BY time("+groupBy+"ms)"));
     }
 
-    return new ImmutableTimePeriod<>(values.get("min"), values.get("max"), values.get("mean"), timeMap.asMap());
+    return TimePeriodFactory.createTimePeriod(values.get("min"), values.get("max"), values.get("mean"), timeMap.asMap());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public @NotNull List<String> getMeasurementsNameList(@Nullable String hardware,
                                                        long after) throws EntityNotPresentException {

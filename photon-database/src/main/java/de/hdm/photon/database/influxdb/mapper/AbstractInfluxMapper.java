@@ -19,6 +19,9 @@ import java.util.Objects;
  */
 public abstract class AbstractInfluxMapper implements IInfluxMapper {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ITimeMap toMap(@Nullable QueryResult queryResult) {
     // Null check
@@ -38,28 +41,28 @@ public abstract class AbstractInfluxMapper implements IInfluxMapper {
       // Iterate through all series in the result
       for (final Series series : result.getSeries()) {
 
-          // Iterate through all values in the series
-          for (final List<Object> value : series.getValues()) {
-            int index = 0;
+        // Iterate through all values in the series
+        for (final List<Object> value : series.getValues()) {
+          int index = 0;
 
-            long time = -1;
-            // Iterate through all objects in the value list
-            for (Object object : value) {
-              final int currentValue = index++;
+          long time = -1;
+          // Iterate through all objects in the value list
+          for (Object object : value) {
+            final int currentValue = index++;
 
-              if (object == null) {
-                continue; // Skip if the object is null
-              }
-
-              // Check if the column is "time" and set the time field if present
-              if (series.getColumns().get(0).equals("time") && currentValue == 0 && time < 0) {
-                time = Instant.parse((String) object).toEpochMilli();
-                continue;
-              }
-
-              timeMap.addValue(time, series.getColumns().get(currentValue), object);
+            if (object == null) {
+              continue; // Skip if the object is null
             }
+
+            // Check if the column is "time" and set the time field if present
+            if (series.getColumns().get(0).equals("time") && currentValue == 0 && time<0) {
+              time = Instant.parse((String) object).toEpochMilli();
+              continue;
+            }
+
+            timeMap.addValue(time, series.getColumns().get(currentValue), object);
           }
+        }
       }
     }
 

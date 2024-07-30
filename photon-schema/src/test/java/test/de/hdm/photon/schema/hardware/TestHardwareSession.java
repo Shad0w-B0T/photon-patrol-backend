@@ -1,4 +1,4 @@
-package test.de.hdm.photon.schema.logging;
+package test.de.hdm.photon.schema.hardware;
 
 import de.hdm.photon.schema.hardware.IHardwareSession;
 import de.hdm.photon.schema.hardware.HardwareSessionFactory;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import test.de.hdm.photon.TestField;
 
-public final class TestLogging {
+public final class TestHardwareSession {
 
   @Test
   @DisplayName("Testing Logging")

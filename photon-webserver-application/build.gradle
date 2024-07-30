@@ -28,6 +28,7 @@ dependencies {
   //Spring
   implementation libs.spring.boot.starter.parent
   implementation libs.spring.boot.starter.web
+  testImplementation libs.spring.boot.starter.webflux
   implementation libs.spring.boot.autoconfigure
   implementation libs.spring.boot.starter.data.jpa
   implementation libs.spring.boot.starter.security
@@ -42,6 +43,7 @@ dependencies {
   testImplementation project(":photon-database")
   testImplementation project(":photon-logic")
   testImplementation project(":photon-webserver-logic")
+  testImplementation project(":test-photon-environment")
 }
 
 test {
