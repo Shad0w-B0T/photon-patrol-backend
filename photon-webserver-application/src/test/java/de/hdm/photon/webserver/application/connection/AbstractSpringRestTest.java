@@ -60,7 +60,7 @@ public abstract class AbstractSpringRestTest extends AbstractSpringTest implemen
   @Override
   public <RESPONSE> @NotNull RESPONSE put(@Nullable String apiEndpoint,
                                           @Nullable Class<RESPONSE> responseClass) {
-    return this.restHandler.get(apiEndpoint, responseClass);
+    return this.restHandler.put(apiEndpoint, responseClass);
   }
 
   /**

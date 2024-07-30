@@ -1,6 +1,7 @@
 package de.hdm.photon.webserver.application.security;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,16 +49,30 @@ public class SecurityConfig {
    * @throws Exception if an error occurs during configuration.
    */
   @Bean
-  public SecurityFilterChain securityFilterChain(@NotNull final HttpSecurity httpSecurity) throws Exception {
-    httpSecurity
-        .httpBasic(Customizer.withDefaults())
-        .authorizeHttpRequests((authorize) -> authorize
-   //         .requestMatchers("/api/v1/**")
-    //        .authenticated()
-            .anyRequest()
-            .permitAll()
-        )
-        .csrf(AbstractHttpConfigurer::disable);
+  public SecurityFilterChain securityFilterChain(@NotNull final HttpSecurity httpSecurity,
+                                                 @Value("${application.security.active}") final boolean active) throws Exception {
+    //Use security
+    if (active) {
+      httpSecurity
+          .httpBasic(Customizer.withDefaults())
+          .authorizeHttpRequests((authorize) -> authorize
+              .requestMatchers("/api/v1/**")
+              .authenticated()
+              .anyRequest()
+              .permitAll()
+          )
+          .csrf(AbstractHttpConfigurer::disable);
+
+      //No security
+    } else {
+      httpSecurity
+          .httpBasic(Customizer.withDefaults())
+          .authorizeHttpRequests((authorize) -> authorize
+              .anyRequest()
+              .permitAll()
+          )
+          .csrf(AbstractHttpConfigurer::disable);
+    }
     return httpSecurity.build();
   }
 
