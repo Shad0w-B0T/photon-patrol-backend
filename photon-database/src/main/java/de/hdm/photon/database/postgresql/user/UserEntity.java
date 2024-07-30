@@ -24,7 +24,7 @@ import java.util.Objects;
 public final class UserEntity implements IUser {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
   @Column(name="username", nullable=false)
   @Setter
@@ -49,5 +49,9 @@ public final class UserEntity implements IUser {
     this.username = username;
     this.password = password;
     this.salt = salt;
+  }
+  @Override
+  public long id() {
+    return this.id;
   }
 }

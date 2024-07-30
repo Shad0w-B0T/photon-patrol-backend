@@ -11,7 +11,7 @@ public interface TestNameSpace {
   * Static values for hardware tests.
   */
   long HARDWARE_ID = 1L;
-  long HARDWARE_ID_NOT = 42L;
+  long HARDWARE_ID_NOT = Long.MAX_VALUE;
 
   @NotNull String HARDWARE_TOKEN = "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3";
   @NotNull String HARDWARE_TOKEN_NOT = "acf6b7cbeebae8db9ced20bffaf9d52f3ad4cc7c";
@@ -36,7 +36,7 @@ public interface TestNameSpace {
    * Static values for logging tests.
    */
   long HARDWARE_SESSION_ID = 1L;
-  long HARDWARE_SESSION_NOT = 42L;
+  long HARDWARE_SESSION_NOT =  Long.MAX_VALUE;
   @NotNull String LOGGING_IP_ADDRESS = "192.168.0.1";
   @NotNull String LOGGING_IP_ADDRESS_UPDATED = "10.10.10.10";
   @NotNull String LOGGING_IP_ADDRESS_NOT = "133.7.42.69";
