@@ -41,7 +41,7 @@ ENTRYPOINT ["java", "-jar", "build.jar"]
 #
 # Build web application
 #
-FROM gradle:jdk17-alpine as web-build
+FROM gradle:jdk17-alpine as webserver-build
 
 LABEL authors="photonteam"
 LABEL project="photon/photon-backend"
@@ -73,6 +73,6 @@ FROM eclipse-temurin:17 as webserver-application
 # Define workir for app
 WORKDIR /app
 
-COPY --from=web-build /app/photon-webserver-application/build/libs/*.jar build.jar
+COPY --from=webserver-build /app/photon-webserver-application/build/libs/*.jar build.jar
 
 ENTRYPOINT ["java", "-jar", "build.jar"]
