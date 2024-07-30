@@ -12,34 +12,6 @@ import java.util.Optional;
 @Repository
 public interface HardwareSessionRepository extends JpaRepository<HardwareSessionEntity, Long> {
 
-  //------------------------------------------ ID -------------------------------------------------
-
-  /**
-   * Query to check if the id exists.
-   *
-   * @param id unique id of the entity.
-   * @return true if the entity with the id exists.
-   */
-  boolean existsById(long id);
-
-  /**
-   * Query to get an entity via id.
-   *
-   * @param id value of the id.
-   * @return an Optional if present. Null if no match.
-   */
-  @NotNull
-  Optional<HardwareSessionEntity> findById(long id);
-
-  /**
-   * Query to delete the entity via id.
-   *
-   * @param id value of the id.
-   * @return an int value of how many were deleted.
-   */
-  int deleteById(long id);
-
-
   //------------------------------------------ Ip address -------------------------------------------------
 
   /**
