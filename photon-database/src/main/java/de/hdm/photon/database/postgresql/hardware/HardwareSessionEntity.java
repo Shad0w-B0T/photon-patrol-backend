@@ -1,6 +1,7 @@
 package de.hdm.photon.database.postgresql.hardware;
 
 import de.hdm.photon.schema.hardware.IHardwareSession;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
+
 
 @Entity
 @Table(name="PhotonHardwareLog",
@@ -39,8 +41,8 @@ public final class HardwareSessionEntity implements IHardwareSession {
   @Setter
   private Date timestamp;
 
-  @ManyToOne
-  @JoinColumn(name = "hardware_id", nullable = false)
+  @ManyToOne(cascade=CascadeType.REMOVE)
+  @JoinColumn(name="hardware_id", nullable=false)
   public HardwareEntity hardwareEntity;
 
   //Empty Constructor

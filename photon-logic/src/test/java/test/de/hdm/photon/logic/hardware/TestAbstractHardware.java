@@ -23,8 +23,6 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
 
   @Autowired
   private HardwareRepository hardwareRepository;
-  @Autowired
-  private HardwareSessionRepository hardwareSessionRepository;
 
   protected abstract @NotNull IHardwareAccess<HARDWARE> hardwareAccess();
 
@@ -34,7 +32,6 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
 
   @BeforeEach
   public void cleanUp() {
-    this.hardwareSessionRepository.deleteAll();
     this.hardwareRepository.deleteAll();
   }
 

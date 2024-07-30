@@ -25,8 +25,6 @@ public final class TestHardware extends AbstractSpringTest {
 
   @Autowired
   private HardwareRepository hardwareRepository;
-  @Autowired
-  private HardwareSessionRepository hardwareSessionRepository;
 
   private Date now;
   private String macAddress;
@@ -37,7 +35,6 @@ public final class TestHardware extends AbstractSpringTest {
 
   @BeforeEach
   public void setUp() {
-    this.hardwareSessionRepository.deleteAll();
     this.hardwareRepository.deleteAll();
 
     this.now = new Date();

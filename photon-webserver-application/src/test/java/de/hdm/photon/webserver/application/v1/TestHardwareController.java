@@ -26,8 +26,6 @@ public final class TestHardwareController extends AbstractSpringRestTest {
 
   @Autowired
   private HardwareRepository hardwareRepository;
-  @Autowired
-  private HardwareSessionRepository hardwareSessionRepository;
 
   public TestHardwareController() {
     super("/api/v1/hardware");
@@ -35,7 +33,6 @@ public final class TestHardwareController extends AbstractSpringRestTest {
 
   @BeforeEach
   public void cleanUp() {
-    this.hardwareSessionRepository.deleteAll();
     this.hardwareRepository.deleteAll();
   }
 
