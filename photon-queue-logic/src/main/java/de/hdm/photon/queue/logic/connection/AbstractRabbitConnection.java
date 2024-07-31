@@ -71,6 +71,7 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
   public @NotNull Connection connection() throws RabbitConnectionException {
     //create new if absent
     if (this.connection == null || !this.connection.isOpen()) {
+      log.info("The connection is initialized because it does not yet exist or is closed.");
       //Create
       try {
         this.connection = this.connectionFactory.newConnection();
