@@ -87,7 +87,7 @@ public abstract class AbstractUserManager implements IUserManager {
 
     try {
       this.createPersistentUser(user.getUsername(), user.getPassword());
-    } catch (final EntityAlreadyPresentException exception) {
+    } catch (final EntityAlreadyPresentException | FormatMismatchException exception) {
       throw new RuntimeException(exception);
     }
   }
