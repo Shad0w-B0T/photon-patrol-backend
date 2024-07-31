@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.heartbeat;
+package de.hdm.photon.logic.console;
 
 
 import lombok.extern.log4j.Log4j2;
@@ -15,12 +15,12 @@ import java.util.TimerTask;
  */
 @Component
 @Log4j2
-public final class HeartbeatTask extends TimerTask {
+public final class ConsoleHeartbeatTask extends TimerTask {
   /**
    * The HeartbeatInfo instance used to check the timeout status and reset the heartbeat.
    */
   @Autowired
-  private HeartbeatInfo heartbeatInfo;
+  private ConsoleHeartbeatInfo heartbeatInfo;
 
   /**
    * Executes the scheduled task.

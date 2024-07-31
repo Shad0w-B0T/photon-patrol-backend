@@ -1,11 +1,11 @@
-package de.hdm.photon.logic.heartbeat;
+package de.hdm.photon.logic.console;
 
 /**
  * Interface representing heartbeat information.
  * It provides methods to access and manage the latest action timestamp,
  * reset the heartbeat, and check for timeout conditions.
  */
-public interface IHeartbeatInfo {
+public interface IConsoleHeartbeatInfo {
   /**
    * Gets the Unix timestamp of the latest action.
    *

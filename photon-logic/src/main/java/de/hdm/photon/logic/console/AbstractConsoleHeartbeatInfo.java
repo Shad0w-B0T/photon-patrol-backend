@@ -1,4 +1,4 @@
-package de.hdm.photon.logic.heartbeat;
+package de.hdm.photon.logic.console;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -14,7 +14,7 @@ import java.util.Objects;
 @Getter
 @Accessors(fluent=true)
 @Log4j2
-public abstract class AbstractHeartbeatInfo implements IHeartbeatInfo {
+public abstract class AbstractConsoleHeartbeatInfo implements IConsoleHeartbeatInfo {
   /**
    * The duration after which a timeout is considered, in milliseconds.
    */
@@ -31,7 +31,7 @@ public abstract class AbstractHeartbeatInfo implements IHeartbeatInfo {
    * @param timeoutAfter the duration in milliseconds after which a timeout is considered.
    * @throws IndexOutOfBoundsException if timeoutAfter is negative or exceeds Long.MAX_VALUE.
    */
-  protected AbstractHeartbeatInfo(final long timeoutAfter) {
+  protected AbstractConsoleHeartbeatInfo(final long timeoutAfter) {
     // Check if timeoutAfter is within valid range
     Objects.checkIndex(timeoutAfter, Long.MAX_VALUE);
     this.timeoutAfter = timeoutAfter;

@@ -1,22 +1,22 @@
-package test.de.hdm.photon.logic.hearbeat;
+package test.de.hdm.photon.logic.console;
 
-import de.hdm.photon.logic.heartbeat.HeartbeatInfo;
-import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
+import de.hdm.photon.logic.console.ConsoleHeartbeatInfo;
+import de.hdm.photon.logic.console.IConsoleHeartbeatInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-public final class HeartbeatInfoTest {
+public final class TestConsoleHeartbeatInfo {
 
   @Test
   @DisplayName("Test HeartbeatInfo Positive")
   public void testHeartbeatInfoPositive() throws InterruptedException {
     //Positive Tests
-    Assertions.assertDoesNotThrow(() -> new HeartbeatInfo(0));
+    Assertions.assertDoesNotThrow(() -> new ConsoleHeartbeatInfo(0));
 
     //Test
-    final IHeartbeatInfo heartbeatInfo = new HeartbeatInfo(40);
+    final IConsoleHeartbeatInfo heartbeatInfo = new ConsoleHeartbeatInfo(40);
 
     Assertions.assertTrue(heartbeatInfo.latestAction()>0);
 
@@ -32,6 +32,6 @@ public final class HeartbeatInfoTest {
   @DisplayName("Test HeartbeatInfo Negative")
   public void testHeartbeatInfoNegative() {
     //Negative Tests
-    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> new HeartbeatInfo(-1));
+    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> new ConsoleHeartbeatInfo(-1));
   }
 }

@@ -1,6 +1,6 @@
 package de.hdm.photon.webserver.application.config;
 
-import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
+import de.hdm.photon.logic.console.IConsoleHeartbeatInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
@@ -22,7 +22,7 @@ import java.util.Optional;
 public final class WebInterceptor implements HandlerInterceptor {
 
   @Autowired
-  private IHeartbeatInfo heartbeatInfo;
+  private IConsoleHeartbeatInfo heartbeatInfo;
 
   private final static @NotNull String PROCESS_TIMESTAMP_FIELD = "process-begin";
 

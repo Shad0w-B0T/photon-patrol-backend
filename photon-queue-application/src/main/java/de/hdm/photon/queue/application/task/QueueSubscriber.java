@@ -1,7 +1,7 @@
 package de.hdm.photon.queue.application.task;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
+import de.hdm.photon.logic.console.IConsoleHeartbeatInfo;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityRule;
@@ -29,7 +29,7 @@ public final class QueueSubscriber {
   @Autowired
   private ApplicationEventPublisher eventPublisher;
   @Autowired
-  private IHeartbeatInfo heartbeatInfo;
+  private IConsoleHeartbeatInfo heartbeatInfo;
   @Autowired
   private IRabbitConnection rabbitConnection;
   @Autowired

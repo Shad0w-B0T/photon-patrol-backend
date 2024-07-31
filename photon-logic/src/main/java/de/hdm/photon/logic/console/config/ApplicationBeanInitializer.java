@@ -1,6 +1,6 @@
-package de.hdm.photon.logic.heartbeat.config;
+package de.hdm.photon.logic.console.config;
 
-import de.hdm.photon.logic.heartbeat.HeartbeatTask;
+import de.hdm.photon.logic.console.ConsoleHeartbeatTask;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +15,11 @@ import java.util.Timer;
 @Configuration
 public class ApplicationBeanInitializer {
   @Autowired
-  private HeartbeatTask heartbeatTask;
+  private ConsoleHeartbeatTask consoleHeartbeatTask;
 
   /**
    * Creates and configures a {@link Timer} bean.
-   * The timer is scheduled to execute the {@link HeartbeatTask} every second.
+   * The timer is scheduled to execute the {@link ConsoleHeartbeatTask} every second.
    *
    * @return a configured {@link Timer} instance.
    */
@@ -28,7 +28,7 @@ public class ApplicationBeanInitializer {
     final Timer timer = new Timer();
 
     // Schedule the procurerTimerTask to run every second (1000 milliseconds)
-    timer.schedule(this.heartbeatTask, 1000L, 1000L);
+    timer.schedule(this.consoleHeartbeatTask, 1000L, 1000L);
 
     return timer;
   }
