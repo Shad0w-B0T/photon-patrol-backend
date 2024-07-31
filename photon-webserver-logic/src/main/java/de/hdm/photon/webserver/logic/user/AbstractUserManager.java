@@ -2,6 +2,7 @@ package de.hdm.photon.webserver.logic.user;
 
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
+import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.user.IUser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -63,7 +64,8 @@ public abstract class AbstractUserManager implements IUserManager {
    */
   @Override
   public @NotNull IUser createPersistentUser(@Nullable String username,
-                                             @Nullable String password) throws EntityAlreadyPresentException {
+                                             @Nullable String password)
+      throws EntityAlreadyPresentException, FormatMismatchException {
     return this.userHelper.createPersistentUser(username, password);
   }
 
