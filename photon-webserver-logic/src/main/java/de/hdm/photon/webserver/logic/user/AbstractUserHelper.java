@@ -2,9 +2,12 @@ package de.hdm.photon.webserver.logic.user;
 
 import de.hdm.photon.database.postgresql.user.UserEntity;
 import de.hdm.photon.database.postgresql.user.UserRepository;
+import de.hdm.photon.logic.security.io.ISecurityFilter;
+import de.hdm.photon.logic.security.io.SecurityFilter;
 import de.hdm.photon.logic.utils.TokenGenerator;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
+import de.hdm.photon.schema.exception.FormatMismatchException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +20,7 @@ public abstract class AbstractUserHelper implements IUserHelper {
 
   private final @NotNull UserRepository userRepository;
   private final @NotNull PasswordEncoder passwordEncoder;
+  private final @NotNull ISecurityFilter passwordFilter;
 
   protected AbstractUserHelper(@Nullable final UserRepository userRepository,
                                @Nullable final PasswordEncoder passwordEncoder) {
@@ -26,6 +30,8 @@ public abstract class AbstractUserHelper implements IUserHelper {
 
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+    this.passwordFilter = new SecurityFilter()
+        .rule(String.class, string -> string.length()>=8 && string.length()<=128);
   }
 
   @Override
@@ -48,7 +54,6 @@ public abstract class AbstractUserHelper implements IUserHelper {
     Objects.requireNonNull(password);
 
     final UserEntity userEntity = this.getUser(username);
-
     final String hashedPassword = this.passwordEncoder.encode(password);
 
     return userEntity.password().equals(hashedPassword);
@@ -56,7 +61,8 @@ public abstract class AbstractUserHelper implements IUserHelper {
 
   @Override
   public @NotNull UserEntity createPersistentUser(@Nullable String username,
-                                                  @Nullable String password) throws EntityAlreadyPresentException {
+                                                  @Nullable String password)
+      throws EntityAlreadyPresentException, FormatMismatchException {
     //Null check
     Objects.requireNonNull(username);
     Objects.requireNonNull(password);
@@ -65,10 +71,14 @@ public abstract class AbstractUserHelper implements IUserHelper {
       throw new EntityAlreadyPresentException("User with username="+username+" already present.");
     }
 
-    //Single user servíce
+    //Single user service
     if (!this.getPersistentUsers().isEmpty()) {
-      return null;
-      //Todo;
+      throw new EntityAlreadyPresentException("Application is set as single user service.");
+    }
+
+    //Check passwort
+    if(!this.passwordFilter.check(password)) {
+      throw new FormatMismatchException("Passwort does not match requirements.");
     }
 
     final String salt = TokenGenerator.randomString(128);
