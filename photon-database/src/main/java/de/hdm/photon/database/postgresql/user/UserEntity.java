@@ -1,5 +1,6 @@
 package de.hdm.photon.database.postgresql.user;
 
+import de.hdm.photon.database.postgresql.AbstractEntity;
 import de.hdm.photon.schema.user.IUser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,27 +20,20 @@ import java.util.Objects;
 /**
  * Entity representing a user in the database.
  */
+@Setter
 @Entity
 @Table(name="PhotonUser")
 @NoArgsConstructor
 @Getter
 @Accessors(fluent=true)
-public final class UserEntity implements IUser {
-
-  @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private Long id;
-
+public final class UserEntity extends AbstractEntity implements IUser {
   @Column(name="username", nullable=false)
-  @Setter
   private String username;
 
   @Column(name="password", nullable=false, length=2048)
-  @Setter
   private String password;
 
   @Column(name="salt", nullable=false, length=1024)
-  @Setter
   private String salt;
 
   /**
@@ -60,15 +54,5 @@ public final class UserEntity implements IUser {
     this.username = username;
     this.password = password;
     this.salt = salt;
-  }
-
-  /**
-   * Returns the ID of the user.
-   *
-   * @return the user's ID
-   */
-  @Override
-  public long id() {
-    return this.id;
   }
 }

@@ -1,5 +1,6 @@
 package de.hdm.photon.database.postgresql.hardware.session;
 
+import de.hdm.photon.database.postgresql.AbstractEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.schema.hardware.session.IHardwareSession;
 import jakarta.persistence.CascadeType;
@@ -13,11 +14,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
+
 
 /**
  * Entity representing a hardware session in the database.
@@ -29,13 +32,10 @@ import java.util.Date;
      * Otherwise, it's not possible to trace anything back.
     */
     uniqueConstraints={@UniqueConstraint(columnNames={"ip_address", "ip_timestamp"})})
+@NoArgsConstructor
 @Getter
 @Accessors(fluent=true)
-public final class HardwareSessionEntity implements IHardwareSession {
-  @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private Long id;
-
+public final class HardwareSessionEntity extends AbstractEntity implements IHardwareSession {
   @Column(nullable=false, name="ip_address", length=100)
   @Setter
   private String ipAddress;
@@ -48,9 +48,6 @@ public final class HardwareSessionEntity implements IHardwareSession {
   @JoinColumn(name="hardware_id")
   public HardwareEntity hardwareEntity;
 
-  //Empty Constructor
-  public HardwareSessionEntity() {
-  }
   /**
    * Constructs a HardwareSessionEntity with the specified values.
    *
@@ -65,10 +62,5 @@ public final class HardwareSessionEntity implements IHardwareSession {
     this.hardwareEntity = hardwareEntity;
     this.ipAddress = ipAddress;
     this.timestamp = timestamp;
-  }
-
-  @Override
-  public long id() {
-    return this.id;
   }
 }
