@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 
 
+/**
+ * Concrete implementation of {@link AbstractConsoleHeartbeatInfo} for managing console heartbeat information.
+ * This class utilizes a timeout duration specified by the application configuration to determine when
+ * a heartbeat is considered timed out.
+ */
 @Component
 public final class ConsoleHeartbeatInfo extends AbstractConsoleHeartbeatInfo {
   /**

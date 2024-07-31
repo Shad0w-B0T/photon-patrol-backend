@@ -12,11 +12,10 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
-
-@Log4j2
-/*
+/**
  * Abstract class for mapping InfluxDB query results to Java objects.
  */
+@Log4j2
 public abstract class AbstractInfluxMapper implements IInfluxMapper {
 
   /**

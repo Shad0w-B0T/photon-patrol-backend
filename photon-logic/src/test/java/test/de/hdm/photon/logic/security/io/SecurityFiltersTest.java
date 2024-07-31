@@ -7,8 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
+/**
+ * Unit tests for the {@link SecurityFilters} class, specifically for MAC address filtering.
+ */
 public final class SecurityFiltersTest {
-
+  /**
+   * Tests the MAC address filter from {@link SecurityFilters}.
+   * Verifies correct handling of valid and invalid MAC address formats.
+   */
   @Test
   @DisplayName("Test SecurityFilters MAC")
   public void testSecurityFilterPositive() {

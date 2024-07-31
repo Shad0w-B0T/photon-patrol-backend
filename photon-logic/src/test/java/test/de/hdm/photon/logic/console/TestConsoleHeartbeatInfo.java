@@ -7,6 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
+/**
+ * Unit tests for {@link ConsoleHeartbeatInfo}.
+ */
 public final class TestConsoleHeartbeatInfo {
 
   @Test

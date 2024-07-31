@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.Optional;
 
+
 @Repository
 public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> {
 

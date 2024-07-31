@@ -19,7 +19,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
-
+/**
+ * Entity representing a hardware session in the database.
+ */
 @Entity
 @Table(name="PhotonHardwareSession",
     /*
@@ -49,7 +51,13 @@ public final class HardwareSessionEntity implements IHardwareSession {
   //Empty Constructor
   public HardwareSessionEntity() {
   }
-
+  /**
+   * Constructs a HardwareSessionEntity with the specified values.
+   *
+   * @param hardwareEntity the associated hardware entity
+   * @param ipAddress      the IP address
+   * @param timestamp      the timestamp of the session
+   */
   //Constructor
   public HardwareSessionEntity(@NotNull final HardwareEntity hardwareEntity,
                                @NotNull final String ipAddress,

@@ -35,7 +35,6 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
    *                     Must not be null.
    * @param database     The name of the database. Must not be null.
    * @param influxMapper The {@link IInfluxMapper} for mapping data to/from InfluxDB. Must not be null.
-   *
    * @throws NullPointerException if any of the parameters are null.
    */
   protected AbstractInfluxConnection(@Nullable final InfluxDB influxDB,

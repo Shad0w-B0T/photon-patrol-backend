@@ -20,7 +20,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 import java.util.Set;
 
-
+/**
+ * Entity representing hardware in the database.
+ */
 @Entity
 @Table(name="PhotonHardware")
 @Getter
@@ -63,6 +65,15 @@ public final class HardwareEntity implements IHardware {
   public HardwareEntity() {
   }
 
+  /**
+   * Constructs a HardwareEntity with the specified values.
+   *
+   * @param token          the hardware token
+   * @param macAddress     the MAC address
+   * @param hardwareAdded  the date the hardware was added
+   * @param macAdded       the date the MAC address was added
+   * @param tokenIsActive  whether the token is active
+   */
   //Constructor
   public HardwareEntity(@NotNull final String token,
                         @Nullable final String macAddress,

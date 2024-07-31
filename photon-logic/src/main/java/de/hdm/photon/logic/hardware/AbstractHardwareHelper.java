@@ -18,12 +18,21 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * Abstract base class for hardware helper operations.
+ * Provides common functionality for interacting with hardware entities through a {@link HardwareRepository}.
+ */
 @Log4j2
 public abstract class AbstractHardwareHelper implements IHardwareHelper {
 
   private final @NotNull HardwareRepository hardwareRepository;
   private final @NotNull ISecurityFilter macFilter;
 
+  /**
+   * Constructs an {@link AbstractHardwareHelper} with the specified {@link HardwareRepository}.
+   *
+   * @param hardwareRepository the hardware repository for database operations; must not be null
+   */
   protected AbstractHardwareHelper(@Nullable final HardwareRepository hardwareRepository) {
     //Null check
     Objects.requireNonNull(hardwareRepository);

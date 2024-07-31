@@ -8,6 +8,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import test.de.hdm.photon.TestContainers;
 
 
+/**
+ * Entry point for the Spring Boot application.
+ *
+ * <p>This class is annotated with {@link SpringBootApplication} to mark it as the main
+ * configuration class for the Spring Boot application. It enables component scanning,
+ * JPA repositories, and entity scanning in the specified base packages.</p>
+ *
+ * <p>The {@link #main(String[])} method starts the Spring Boot application by invoking
+ * {@link SpringApplication#run(Class, String...)}.</p>
+ */
 @SpringBootApplication
 @ComponentScan("de.hdm.photon")
 @EntityScan("de.hdm.photon")
