@@ -2,8 +2,8 @@ package de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionEntity;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionEntity;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionRepository;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilters;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;

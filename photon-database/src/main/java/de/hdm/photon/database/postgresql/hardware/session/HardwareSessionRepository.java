@@ -1,6 +1,7 @@
-package de.hdm.photon.database.postgresql.hardware;
+package de.hdm.photon.database.postgresql.hardware.session;
 
 
+import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;

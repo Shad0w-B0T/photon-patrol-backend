@@ -1,4 +1,4 @@
-package de.hdm.photon.schema.hardware;
+package de.hdm.photon.schema.hardware.session;
 
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;

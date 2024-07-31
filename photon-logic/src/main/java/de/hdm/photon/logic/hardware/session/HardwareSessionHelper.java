@@ -1,7 +1,7 @@
 package de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionRepository;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

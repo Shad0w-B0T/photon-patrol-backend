@@ -3,7 +3,7 @@ package de.hdm.photon.logic.hardware.session;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.exception.FormatMismatchException;
-import de.hdm.photon.schema.hardware.IHardwareSession;
+import de.hdm.photon.schema.hardware.session.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

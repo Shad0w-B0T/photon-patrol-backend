@@ -1,12 +1,12 @@
 package test.de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionRepository;
 import de.hdm.photon.logic.hardware.IHardwareAccess;
 import de.hdm.photon.logic.hardware.session.IHardwareSessionAccess;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
-import de.hdm.photon.schema.hardware.IHardwareSession;
+import de.hdm.photon.schema.hardware.session.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
