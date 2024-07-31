@@ -1,8 +1,8 @@
-package test.de.hdm.photon.schema.hardware;
+package test.de.hdm.photon.schema.hardware.session;
 
-import de.hdm.photon.schema.hardware.IHardwareSession;
-import de.hdm.photon.schema.hardware.HardwareSessionFactory;
-import de.hdm.photon.schema.hardware.ImmutableHardwareSession;
+import de.hdm.photon.schema.hardware.session.IHardwareSession;
+import de.hdm.photon.schema.hardware.session.HardwareSessionFactory;
+import de.hdm.photon.schema.hardware.session.ImmutableHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;

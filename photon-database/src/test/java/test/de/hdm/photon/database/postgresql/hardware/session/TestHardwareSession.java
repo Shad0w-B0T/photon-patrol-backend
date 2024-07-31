@@ -1,9 +1,9 @@
-package test.de.hdm.photon.database.postgresql.hardware;
+package test.de.hdm.photon.database.postgresql.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionEntity;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionEntity;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

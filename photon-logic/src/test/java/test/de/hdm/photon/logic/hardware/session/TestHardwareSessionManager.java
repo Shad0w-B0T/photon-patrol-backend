@@ -5,7 +5,7 @@ import de.hdm.photon.logic.hardware.IHardwareManager;
 import de.hdm.photon.logic.hardware.session.IHardwareSessionAccess;
 import de.hdm.photon.logic.hardware.session.IHardwareSessionManager;
 import de.hdm.photon.schema.hardware.IHardware;
-import de.hdm.photon.schema.hardware.IHardwareSession;
+import de.hdm.photon.schema.hardware.session.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

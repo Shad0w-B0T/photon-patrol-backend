@@ -73,9 +73,8 @@ public abstract class AbstractUserHelper implements IUserHelper {
     Objects.requireNonNull(password);
 
     final UserEntity userEntity = this.userRepository.userOrElseThrow(username);
-    final String hashedPassword = this.passwordEncoder.encode(password);
 
-    return userEntity.password().equals(hashedPassword);
+    return this.passwordEncoder.matches(password, userEntity.password());
   }
 
   /**

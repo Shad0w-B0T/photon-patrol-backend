@@ -1,7 +1,7 @@
 package test.de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionEntity;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionEntity;
 import de.hdm.photon.logic.hardware.IHardwareAccess;
 import de.hdm.photon.logic.hardware.IHardwareHelper;
 import de.hdm.photon.logic.hardware.session.IHardwareSessionAccess;

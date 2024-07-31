@@ -1,5 +1,6 @@
 package de.hdm.photon.database.postgresql.hardware;
 
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionEntity;
 import de.hdm.photon.schema.hardware.IHardware;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

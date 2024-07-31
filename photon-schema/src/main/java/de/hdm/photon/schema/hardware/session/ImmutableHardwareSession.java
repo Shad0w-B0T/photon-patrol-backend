@@ -1,4 +1,4 @@
-package de.hdm.photon.schema.hardware;
+package de.hdm.photon.schema.hardware.session;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.jetbrains.annotations.NotNull;
