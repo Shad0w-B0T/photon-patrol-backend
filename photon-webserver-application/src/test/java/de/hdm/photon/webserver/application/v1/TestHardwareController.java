@@ -106,7 +106,7 @@ public final class TestHardwareController extends AbstractSpringRestTest {
 
   @Test
   @DisplayName("Test delete specific hardware.")
-  public void testDeleteSpecificHardware() {
+  public void testDeleteHardware() {
     //Positive
     Assertions.assertTrue(this.get("", HardwareList.class).isEmpty());
     final IHardware hardware = this.post("", ImmutableHardware.class);

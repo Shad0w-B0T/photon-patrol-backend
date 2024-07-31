@@ -55,7 +55,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    */
   @NotNull
-  HARDWARE getMacAddress(@Nullable final  String macAddress) throws EntityNotPresentException;
+  HARDWARE getMacAddress(@Nullable final String macAddress) throws EntityNotPresentException;
 
   /**
    * Get a list of all hardware objects which were added at the given date.
@@ -64,7 +64,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @return a list of hardware objects.
    */
   @NotNull
-  List<HARDWARE> getHardwareAddedList(@Nullable final  Date hardwareAdded);
+  List<HARDWARE> getHardwareAddedList(@Nullable final Date hardwareAdded);
 
   /**
    * Get a list of all hardware objects when the mac was added.
@@ -73,7 +73,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @return a list of hardware objects.
    */
   @NotNull
-  List<HARDWARE> getMacAddedList(@Nullable final  Date macAdded);
+  List<HARDWARE> getMacAddedList(@Nullable final Date macAdded);
 
   /**
    * Get a list of all hardware objects which have an active/inactive token.
@@ -107,7 +107,8 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
                           @Nullable final String macAddress,
                           @Nullable final Date hardwareAdded,
                           @Nullable final Date macAdded,
-                          final boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException;
+                          @Nullable final Boolean tokenIsActive)
+      throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException;
 
   /**
    * This method updates the MAC address with the given parameter.

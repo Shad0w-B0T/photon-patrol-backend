@@ -120,7 +120,8 @@ public abstract class AbstractHardwareManager implements IHardwareManager {
                                            @Nullable String macAddress,
                                            @Nullable Date hardwareAdded,
                                            @Nullable Date macAdded,
-                                           boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException {
+                                           @Nullable Boolean tokenIsActive) throws EntityNotPresentException,
+      FormatMismatchException, EntityAlreadyPresentException {
     return HardwareFactory.convertToRecord(this.hardwareHelper.updateHardware(hardwareId, macAddress, hardwareAdded, macAdded, tokenIsActive));
   }
 

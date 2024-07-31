@@ -47,7 +47,7 @@ public final class HardwareEntity implements IHardware {
 
   @Column(name="token_is_active")
   @Setter
-  private boolean tokenIsActive;
+  private Boolean tokenIsActive;
 
   /**
    * "@ManyToOne / @OneToMany"

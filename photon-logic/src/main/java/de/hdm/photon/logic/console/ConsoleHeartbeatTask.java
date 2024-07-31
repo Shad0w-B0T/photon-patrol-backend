@@ -3,6 +3,7 @@ package de.hdm.photon.logic.console;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -28,6 +29,7 @@ public final class ConsoleHeartbeatTask extends TimerTask {
    * Otherwise, it logs the time since the last action and resets the heartbeat.
    */
   @Override
+  @Scheduled(fixedDelay = 1000, initialDelay = 1000)
   public void run() {
     if (this.heartbeatInfo.timeout()) {
       return;
@@ -41,7 +43,7 @@ public final class ConsoleHeartbeatTask extends TimerTask {
     final long minutes = duration.toMinutes() % 60;
     final long seconds = duration.getSeconds() % 60;
 
-    log.info("Heartbeat, the system is still active. Last action was {} hours {} minutes and {} seconds ago.",
+    log.info("Console Heartbeat, the system is still active. Last action was {} hours {} minutes and {} seconds ago.",
         hours,
         minutes,
         seconds);

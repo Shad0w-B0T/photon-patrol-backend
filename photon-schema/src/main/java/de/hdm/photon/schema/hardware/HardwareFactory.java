@@ -3,6 +3,7 @@ package de.hdm.photon.schema.hardware;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -13,11 +14,11 @@ public final class HardwareFactory {
    * This method creates a new hardware object with the given parameters.
    *
    * @param id            unique id of the hardware object.
-   * @param token           value to verify permissions.
+   * @param token         value to verify permissions.
    * @param macAddress    value of the mac address.
    * @param hardwareAdded date when the hardware was added.
    * @param macAdded      date when the mac address first was added.
-   * @param tokenIsActive   value whether the token is active or not.
+   * @param tokenIsActive value whether the token is active or not.
    * @return new hardware interface.
    */
   public static @NotNull IHardware createHardware(final long id,
@@ -25,7 +26,7 @@ public final class HardwareFactory {
                                                   @Nullable String macAddress,
                                                   @Nullable Date hardwareAdded,
                                                   @Nullable Date macAdded,
-                                                  boolean tokenIsActive) {
+                                                  @Nullable Boolean tokenIsActive) {
     Objects.requireNonNull(token);
     Objects.requireNonNull(hardwareAdded);
 

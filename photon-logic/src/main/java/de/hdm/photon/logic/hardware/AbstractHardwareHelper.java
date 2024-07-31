@@ -161,15 +161,8 @@ public abstract class AbstractHardwareHelper implements IHardwareHelper {
                                                 @Nullable String macAddress,
                                                 @Nullable Date hardwareAdded,
                                                 @Nullable Date macAdded,
-                                                boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException {
-    //Null check
-    Objects.requireNonNull(macAddress);
-    Objects.requireNonNull(hardwareAdded);
-    Objects.requireNonNull(macAdded);
-
-    if (!this.macFilter.check(macAdded)) {
-      throw new FormatMismatchException("Can't update hardware, given mac address is illegal.");
-    }
+                                                @Nullable Boolean tokenIsActive) throws EntityNotPresentException,
+      FormatMismatchException, EntityAlreadyPresentException {
 
     log.info("Attempting to update hardware with id: '{}'. New mac address: '{}'. New date when the "+
             "hardware was added: '{}'. New date when the mac was added: '{}'",
@@ -178,16 +171,31 @@ public abstract class AbstractHardwareHelper implements IHardwareHelper {
         hardwareAdded,
         macAdded);
 
-    if (this.hardwareRepository.existsByMacAddress(macAddress)) {
-      throw new EntityAlreadyPresentException("Hardware with this mac already exists.");
-    }
 
     final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
 
-    hardwareEntity.macAddress(macAddress);
-    hardwareEntity.hardwareAdded(hardwareAdded);
-    hardwareEntity.macAdded(macAdded);
-    hardwareEntity.tokenIsActive(tokenIsActive);
+    if (macAddress != null) {
+      if (!this.macFilter.check(macAdded)) {
+        throw new FormatMismatchException("Can't update hardware, given mac address is illegal.");
+      }
+
+      if (this.hardwareRepository.existsByMacAddress(macAddress)) {
+        throw new EntityAlreadyPresentException("Hardware with this mac already exists.");
+      }
+      hardwareEntity.macAddress(macAddress);
+    }
+
+    if (hardwareAdded != null) {
+      hardwareEntity.hardwareAdded(hardwareAdded);
+    }
+
+    if (macAddress != null) {
+      hardwareEntity.macAdded(macAdded);
+    }
+
+    if (tokenIsActive != null) {
+      hardwareEntity.tokenIsActive(tokenIsActive);
+    }
 
     final HardwareEntity updatedHardware = this.hardwareRepository.save(hardwareEntity);
     log.info("Hardware with id: {} updated successfully.", hardwareId);
