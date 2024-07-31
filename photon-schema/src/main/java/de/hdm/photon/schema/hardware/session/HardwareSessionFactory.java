@@ -3,10 +3,16 @@ package de.hdm.photon.schema.hardware.session;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.Date;
 import java.util.Objects;
 
 
+/**
+ * Factory class for creating and converting hardware session objects.
+ * This class provides methods to create new hardware session instances and
+ * to convert an existing logging interface into a record.
+ */
 @Log4j2
 public final class HardwareSessionFactory {
 
