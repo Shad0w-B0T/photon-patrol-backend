@@ -73,7 +73,7 @@ flowchart TD
   web-logic == utilised ==> logic
   queue-logic == utilised ==> logic
   logic == utilised ==> database
-  database == utilised ==> schema
+  schema
 ```
 
 ---
