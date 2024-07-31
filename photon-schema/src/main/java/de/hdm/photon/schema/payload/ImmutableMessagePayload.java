@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+
 /**
  * Represents an immutable message payload that includes a token, a MAC address, and a map of values.
  * This class is a record, providing a compact syntax for immutable data carriers.
@@ -16,11 +17,11 @@ import java.util.Map;
  * <p>This record is designed to be used in contexts where immutability and thread-safety are required.
  * The use of {@code @JsonProperty} annotations facilitates JSON serialization and deserialization.</p>
  *
- * @param token        the token associated with the message payload, must not be null
- * @param macAddress   the MAC address associated with the hardware, must not be null
- * @param address      the hardware address associated with the message payload, must not be null
+ * @param token         the token associated with the message payload, must not be null
+ * @param macAddress    the MAC address associated with the hardware, must not be null
+ * @param address       the hardware address associated with the message payload, must not be null
  * @param bitResolution the bit resolution associated with the message payload
- * @param values       a map of additional values associated with the message payload, must not be null
+ * @param values        a map of additional values associated with the message payload, must not be null
  */
 public record ImmutableMessagePayload(
     @JsonProperty("ma") @NotNull String macAddress,

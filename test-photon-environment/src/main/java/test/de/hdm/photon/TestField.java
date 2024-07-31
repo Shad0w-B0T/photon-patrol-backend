@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * This interface defines a set of constants for testing purposes,
+ * including timestamps, hardware details, user details, and time period values.
+ */
 public interface TestField {
 
   @NotNull
@@ -33,6 +37,12 @@ public interface TestField {
   int TIME_PERIOD_MIN = 5;
   int TIME_PERIOD_MAX = 10;
   int TIME_PERIOD_AVERAGE = 7;
+
+  /**
+   * Map representing time period values, where the key is a Long representing
+   * a timestamp and the value is another map with String keys and Object values
+   * representing various time period details.
+   */
   @NotNull
   Map<Long, Map<String, Object>> TIME_PERIOD_VALUES = new HashMap<>();
 }

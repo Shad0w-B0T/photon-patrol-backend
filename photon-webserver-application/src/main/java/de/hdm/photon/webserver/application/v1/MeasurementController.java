@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 @RestController
 @Log4j2
 @RequestMapping("/api/v1/measurement")
@@ -63,7 +64,7 @@ public final class MeasurementController extends AbstractWebController {
   )
   public ResponseEntity<List<String>> getMeasurements(@RequestParam(name="after", defaultValue="-1") final long unixAfter) {
     //Get with param
-    if (unixAfter > 0) {
+    if (unixAfter>0) {
       return this.body(200, this.measurementManager.getMeasurements(unixAfter));
     }
 
@@ -74,7 +75,7 @@ public final class MeasurementController extends AbstractWebController {
    * Get all measurement names for a specific hardware after a specific Unix timestamp.
    *
    * @param hardware the hardware identifier
-   * @param after Unix timestamp in milliseconds
+   * @param after    Unix timestamp in milliseconds
    * @return ResponseEntity containing a list of measurement names
    * @throws EntityNotPresentException if the hardware is not present
    */
@@ -105,10 +106,10 @@ public final class MeasurementController extends AbstractWebController {
   /**
    * Get specific measurement data for a specific hardware after a specific Unix timestamp, grouped by a specific interval.
    *
-   * @param hardware the hardware identifier
+   * @param hardware    the hardware identifier
    * @param measurement the measurement name
-   * @param groupBy grouping interval in milliseconds
-   * @param after Unix timestamp in milliseconds
+   * @param groupBy     grouping interval in milliseconds
+   * @param after       Unix timestamp in milliseconds
    * @return ResponseEntity containing the measurement data
    * @throws EntityNotPresentException if the hardware or measurement is not present
    */
@@ -167,17 +168,17 @@ public final class MeasurementController extends AbstractWebController {
   )
   public ResponseEntity<IControllerMessage> deleteMeasurements(@PathVariable @NotNull String hardware) throws EntityNotPresentException {
     //Get with param
-    if(this.measurementManager.deleteMeasurements(hardware)) {
-      return this.successMessage(200, "Successfully deleted hardware=" + hardware + ".");
+    if (this.measurementManager.deleteMeasurements(hardware)) {
+      return this.successMessage(200, "Successfully deleted hardware="+hardware+".");
     }
 
-    return this.errorMessage(500, "Something went wrong while deleting hardware=" + hardware + ".");
+    return this.errorMessage(500, "Something went wrong while deleting hardware="+hardware+".");
   }
 
   /**
    * Delete specific measurement data for a specific hardware.
    *
-   * @param hardware the hardware identifier
+   * @param hardware    the hardware identifier
    * @param measurement the measurement name
    * @return ResponseEntity containing a success or error message
    * @throws EntityNotPresentException if the hardware or measurement is not present
@@ -203,10 +204,10 @@ public final class MeasurementController extends AbstractWebController {
   public ResponseEntity<IControllerMessage> deleteMeasurements(@PathVariable @NotNull String hardware,
                                                                @PathVariable @NotNull String measurement) throws EntityNotPresentException {
     //Get with param
-    if(this.measurementManager.deleteMeasurements(hardware, measurement)) {
-      return this.successMessage(200, "Successfully deleted points=" + measurement + " from hardware=" + hardware + ".");
+    if (this.measurementManager.deleteMeasurements(hardware, measurement)) {
+      return this.successMessage(200, "Successfully deleted points="+measurement+" from hardware="+hardware+".");
     }
 
-    return this.errorMessage(500, "Something went wrong while deleting points=" + measurement + " from hardware=" + hardware + ".");
+    return this.errorMessage(500, "Something went wrong while deleting points="+measurement+" from hardware="+hardware+".");
   }
 }

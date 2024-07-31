@@ -7,9 +7,9 @@ import java.util.Date;
 
 public interface TestNameSpace {
 
-  /*
-  * Static values for hardware tests.
-  */
+  /**
+   * Static values for hardware tests.
+   */
   long HARDWARE_ID = 1L;
   long HARDWARE_ID_NOT = Long.MAX_VALUE;
 
@@ -32,11 +32,11 @@ public interface TestNameSpace {
   boolean HARDWARE_TOKEN_ACTIVE_NOT = false;
 
 
-  /*
+  /**
    * Static values for logging tests.
    */
   long HARDWARE_SESSION_ID = 1L;
-  long HARDWARE_SESSION_NOT =  Long.MAX_VALUE;
+  long HARDWARE_SESSION_NOT = Long.MAX_VALUE;
   @NotNull String LOGGING_IP_ADDRESS = "192.168.0.1";
   @NotNull String LOGGING_IP_ADDRESS_UPDATED = "10.10.10.10";
   @NotNull String LOGGING_IP_ADDRESS_NOT = "133.7.42.69";

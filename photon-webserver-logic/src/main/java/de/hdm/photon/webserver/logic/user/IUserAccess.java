@@ -53,7 +53,7 @@ public interface IUserAccess<USER extends IUser> {
    * @param password The password of the new user.
    * @return The newly created user.
    * @throws EntityAlreadyPresentException If a user with the specified username already exists.
-   * @throws FormatMismatchException If the username or password format is incorrect.
+   * @throws FormatMismatchException       If the username or password format is incorrect.
    */
   @NotNull
   USER createPersistentUser(@Nullable final String username,
