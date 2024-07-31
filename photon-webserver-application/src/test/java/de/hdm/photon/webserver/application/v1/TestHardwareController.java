@@ -2,7 +2,6 @@ package de.hdm.photon.webserver.application.v1;
 
 
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
 import de.hdm.photon.schema.hardware.IHardware;
 import de.hdm.photon.schema.hardware.ImmutableHardware;
 import de.hdm.photon.webserver.application.connection.AbstractSpringRestTest;
@@ -22,7 +21,10 @@ import java.util.ArrayList;
 
 
 @SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
-@TestPropertySource(properties="application.security.active=false")
+@TestPropertySource(properties={
+    "application.security.active=false",
+    "server.port=80"
+})
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD)
 public final class TestHardwareController extends AbstractSpringRestTest {
 
