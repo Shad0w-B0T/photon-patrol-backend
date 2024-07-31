@@ -68,17 +68,40 @@ flowchart TD
   queue-application("queue-application")
   web-logic("web-logic")
   web-application("web-application")
-
   web-application == utilised ==> web-logic
   queue-application == utilised ==> queue-logic
-
   web-logic == utilised ==> logic
   queue-logic == utilised ==> logic
-
   logic == utilised ==> database
-
   database == utilised ==> schema
 ```
+
+---
+
+## Testing
+
+Due to the complexity of the application and the use of Postgres, InfluxDB and RabbitMQ, individual software components
+are difficult to mock. The functional properties of InfluxDB and RabbitMQ are therefore difficult to replicate. So the
+decision was made to build the applications as a tangible container. Since GitLab does not support Docker in Docker, the
+containers were integrated as an additional service and thus managed by the CI/CD runner. Local containers are started
+for each test, as the environment is rebuilt for each test class, this process takes a lot of time.
+
+### Local
+
+Due to the inertia of rabbitmq, runtime errors can occur when the individual test instances are shut down, but the tests
+still run, the overall construct is then marked as faulty due to the implementation of intellij.
+
+Dependencies:
+
+- https://mvnrepository.com/artifact/org.testcontainers/testcontainers
+- https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter
+- https://mvnrepository.com/artifact/org.testcontainers/postgresql
+- https://mvnrepository.com/artifact/org.testcontainers/influxdb
+- https://mvnrepository.com/artifact/org.testcontainers/rabbitmq
+
+### Remote (GitLab CI/CD)
+
+The environment is started once and runs quickly.
 
 ---
 
@@ -116,13 +139,12 @@ Command will look like:
 
 > java -jar application.jar --spring.config.location=./config/application.properties
 
-
-
 ## Queue Application
 
 The queue application is used to log in as a subscriber in order to access the data of the hardware participants.
 
 ### Configuration Parameters
+
 ``tbd``
 
 ## Web application
