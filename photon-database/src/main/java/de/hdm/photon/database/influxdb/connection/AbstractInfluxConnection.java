@@ -6,6 +6,7 @@ import de.hdm.photon.schema.measurement.ITimeMap;
 import de.hdm.photon.schema.measurement.ITimePeriod;
 import de.hdm.photon.schema.measurement.ImmutableTimePeriod;
 import de.hdm.photon.schema.measurement.TimePeriodFactory;
+import lombok.extern.log4j.Log4j2;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * Abstract class representing a connection to an InfluxDB database.
  * Implements the {@link IInfluxConnection} interface.
  */
+@Log4j2
 public abstract class AbstractInfluxConnection implements IInfluxConnection {
 
   private final @NotNull InfluxDB influxDB;
@@ -35,7 +37,6 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
    *                     Must not be null.
    * @param database     The name of the database. Must not be null.
    * @param influxMapper The {@link IInfluxMapper} for mapping data to/from InfluxDB. Must not be null.
-   *
    * @throws NullPointerException if any of the parameters are null.
    */
   protected AbstractInfluxConnection(@Nullable final InfluxDB influxDB,
@@ -49,6 +50,8 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
     this.influxDB = influxDB;
     this.database = database;
     this.influxMapper = influxMapper;
+
+    log.info("Initialize influxdb connection.");
   }
 
   /**
