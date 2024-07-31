@@ -1,6 +1,7 @@
 package de.hdm.photon.webserver.application.security;
 
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
+import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.user.ImmutableUserCredentials;
 import de.hdm.photon.webserver.application.controller.AbstractWebController;
 import de.hdm.photon.webserver.application.controller.IControllerMessage;
@@ -146,7 +147,8 @@ public final class LoginController extends AbstractWebController {
   )
   public ResponseEntity<IControllerMessage> register(@RequestBody @NotNull ImmutableUserCredentials userCredentials,
                                                      @NotNull final HttpServletRequest request,
-                                                     @NotNull final HttpServletResponse response) throws EntityAlreadyPresentException {
+                                                     @NotNull final HttpServletResponse response)
+      throws EntityAlreadyPresentException, FormatMismatchException {
     this.userManager.createPersistentUser(userCredentials.username(), userCredentials.password());
     return this.validateAuth(userCredentials.username(), userCredentials.password(), request, response);
   }
