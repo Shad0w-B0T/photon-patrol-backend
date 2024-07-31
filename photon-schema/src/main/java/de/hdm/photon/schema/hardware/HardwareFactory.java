@@ -44,7 +44,7 @@ public final class HardwareFactory {
    */
   public static @NotNull IHardware convertToRecord(@Nullable final IHardware hardware) {
     Objects.requireNonNull(hardware);
-    log.debug("The hardware interface {} was successfully converted to a record.", hardware);
+    log.debug("The hardware interface {} was successfully converted to a record.", hardware.id());
     return HardwareFactory.createHardware(
         hardware.id(),
         hardware.token(),

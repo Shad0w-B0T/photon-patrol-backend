@@ -3,6 +3,7 @@ package de.hdm.photon.schema.hardware.session;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -32,16 +33,17 @@ public final class HardwareSessionFactory {
   /**
    * This method takes a logging interface and converts it into a record.
    *
-   * @param logging interface
+   * @param hardwareSession interface
    * @return new logging record.
    */
-  public static @NotNull IHardwareSession convertToRecord(@Nullable final IHardwareSession logging) {
-    Objects.requireNonNull(logging);
-    log.debug("The logging interface {} was successfully converted to a record.", logging);
+  public static @NotNull IHardwareSession convertToRecord(@Nullable final IHardwareSession hardwareSession
+  ) {
+    Objects.requireNonNull(hardwareSession);
+    log.debug("The logging interface {} was successfully converted to a record.", hardwareSession.id());
     return HardwareSessionFactory.createHardware(
-        logging.id(),
-        logging.ipAddress(),
-        logging.timestamp()
+        hardwareSession.id(),
+        hardwareSession.ipAddress(),
+        hardwareSession.timestamp()
     );
   }
 
