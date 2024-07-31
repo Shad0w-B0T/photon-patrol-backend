@@ -13,9 +13,19 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * Abstract base class for managing hardware operations.
+ * Provides common functionality for interacting with hardware through an {@link IHardwareHelper}.
+ */
 public abstract class AbstractHardwareManager implements IHardwareManager {
 
   private final @NotNull IHardwareHelper hardwareHelper;
+
+  /**
+   * Constructs an {@link AbstractHardwareManager} with the specified {@link IHardwareHelper}.
+   *
+   * @param hardwareHelper the hardware helper for hardware operations; cannot be null
+   */
 
   protected AbstractHardwareManager(@Nullable final IHardwareHelper hardwareHelper) {
     //Null check

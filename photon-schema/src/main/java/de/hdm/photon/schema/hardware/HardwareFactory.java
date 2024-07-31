@@ -8,6 +8,11 @@ import java.util.Date;
 import java.util.Objects;
 
 
+/**
+ * Factory class for creating and converting hardware objects.
+ * This class provides methods to create new hardware instances and
+ * to convert an existing logging interface into a record.
+ */
 @Log4j2
 public final class HardwareFactory {
   /**

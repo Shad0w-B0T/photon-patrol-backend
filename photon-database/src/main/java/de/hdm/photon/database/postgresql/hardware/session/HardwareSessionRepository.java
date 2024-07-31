@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.Optional;
 
+
 @Repository
 public interface HardwareSessionRepository extends JpaRepository<HardwareSessionEntity, Long> {
 
@@ -96,8 +97,8 @@ public interface HardwareSessionRepository extends JpaRepository<HardwareSession
    * Query to delete the entity by hardware entity, ip and timestamp.
    *
    * @param hardwareEntity the hardware entity which it is linked to.
-   * @param ipAddress value of the ip address.
-   * @param timestamp the exact time when the ip was connected.
+   * @param ipAddress      value of the ip address.
+   * @param timestamp      the exact time when the ip was connected.
    * @return an int value of how many were deleted.
    */
   int deleteByHardwareEntityAndIpAddressAndTimestamp(@NotNull HardwareEntity hardwareEntity,
@@ -111,8 +112,8 @@ public interface HardwareSessionRepository extends JpaRepository<HardwareSession
    * Query to check if the combination of the hardware entity, the ip and timestamp exists.
    *
    * @param hardwareEntity hardware.
-   * @param ipAddress value of the ip address.
-   * @param timestamp the exact time when the ip was connected.
+   * @param ipAddress      value of the ip address.
+   * @param timestamp      the exact time when the ip was connected.
    * @return true if the combination exists.
    */
   boolean existsByHardwareEntityAndIpAddressAndTimestamp(@NotNull HardwareEntity hardwareEntity,

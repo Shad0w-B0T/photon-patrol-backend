@@ -17,18 +17,36 @@ import test.de.hdm.photon.AbstractSpringTest;
 import test.de.hdm.photon.TestNameSpace;
 
 
+/**
+ * Abstract test class for {@link IHardware} implementations.
+ *
+ * @param <HARDWARE> the type of hardware to be tested, extending {@link IHardware}
+ */
 @Disabled
 public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends AbstractSpringTest {
 
   @Autowired
   private HardwareRepository hardwareRepository;
 
+  /**
+   * Provides the {@link IHardwareAccess} implementation to be tested.
+   *
+   * @return the hardware access instance
+   */
   protected abstract @NotNull IHardwareAccess<HARDWARE> hardwareAccess();
 
+  /**
+   * Creates a hardware instance for testing.
+   *
+   * @return the created hardware instance
+   */
   private @NotNull HARDWARE createHardware() {
     return TestHardwareUtils.createHardware(this.hardwareAccess());
   }
 
+  /**
+   * Cleans up the hardware repository before each test.
+   */
   @BeforeEach
   public void cleanUp() {
     this.hardwareRepository.deleteAll();
@@ -44,7 +62,6 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
     //negative
     Assertions.assertNotEquals(TestNameSpace.HARDWARE_ID_NOT, this.hardwareAccess().getHardware(hardware.id()).id());
   }
-
 
   @Test
   @DisplayName("Test retrieve hardware.")

@@ -171,7 +171,6 @@ public final class RestHandler implements IRequest {
     Assertions.assertInstanceOf(typeClass, response);
 
 
-
     return response;
   }
 }

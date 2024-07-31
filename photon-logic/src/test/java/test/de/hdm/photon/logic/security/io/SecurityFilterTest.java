@@ -7,8 +7,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
+/**
+ * Unit tests for the {@link SecurityFilter} class.
+ */
 public final class SecurityFilterTest {
-
+  /**
+   * Tests that a {@link SecurityFilter} instance can be created without exceptions.
+   */
   @Test
   @DisplayName("Test SecurityFilter Positive")
   public void testSecurityFilterPositive() {
@@ -16,6 +21,10 @@ public final class SecurityFilterTest {
     Assertions.assertDoesNotThrow(() -> new SecurityFilter());
   }
 
+  /**
+   * Tests positive cases for the {@link SecurityFilter} class.
+   * Verifies rule application for valid and invalid inputs.
+   */
   @Test
   @DisplayName("Test SecurityFilter Positive Specific")
   public void testSecurityFilterPositiveSpecific() {
@@ -41,6 +50,10 @@ public final class SecurityFilterTest {
     Assertions.assertTrue(securityFilter.check((Object) ("a".repeat(6))));
   }
 
+  /**
+   * Tests negative cases for the {@link SecurityFilter} class.
+   * Verifies handling of null inputs and invalid rule definitions.
+   */
   @Test
   @DisplayName("Test SecurityFilter Negative")
   public void testSecurityFilterNegative() {

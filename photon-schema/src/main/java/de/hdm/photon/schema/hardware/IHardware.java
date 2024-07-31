@@ -7,6 +7,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 
 
+/**
+ * Represents hardware details, including MAC address, token status, and timestamps for when the hardware and MAC address were added.
+ * This interface extends {@link Identifiable} for a unique identifier and includes {@link IHardwareAddress} and {@link IHardwareToken}
+ * for accessing hardware address and token information.
+ */
 @Schema(implementation=ImmutableHardware.class)
 public interface IHardware extends Identifiable, IHardwareAddress, IHardwareToken {
 

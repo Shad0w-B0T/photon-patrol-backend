@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+/**
+ * Configuration for InfluxDB connection.
+ */
 @Configuration
 @Log4j2
 public class InfluxConfig {

@@ -122,7 +122,6 @@ public final class HardwareController extends AbstractWebController {
    * Creates a new hardware.
    *
    * @return ResponseEntity containing the newly created hardware.
-   * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
    */
   @PostMapping
   @ResponseBody

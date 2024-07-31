@@ -12,9 +12,10 @@ import java.util.Date;
  * @param ipAddress {@link IHardwareSession#ipAddress()}
  * @param timestamp {@link IHardwareSession#timestamp()}
  */
-@Schema(name = "Logging",
-        description = "Object to store the parameters who is connected to the hardware.")
+@Schema(name="Logging",
+    description="Object to store the parameters who is connected to the hardware.")
 public record ImmutableHardwareSession(long id,
                                        @NotNull String ipAddress,
-                                       @NotNull Date timestamp) implements IHardwareSession {
+                                       @NotNull Date timestamp
+) implements IHardwareSession {
 }

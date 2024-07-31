@@ -12,9 +12,16 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 
+/**
+ * Integration test class for {@link IHardwareManager}.
+ * <p>
+ * This test class extends {@link TestAbstractHardware} and provides the {@link IHardwareManager}
+ * as the hardware access implementation.
+ * </p>
+ */
 @SpringBootTest
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 public class TestHardwareManager extends TestAbstractHardware<IHardware> {
 
   @Autowired

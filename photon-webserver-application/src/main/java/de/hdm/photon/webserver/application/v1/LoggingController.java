@@ -9,15 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Log4j2
 @RequestMapping("/api/v1/logging")
-@Tag(name = "Logging Endpoint", description = "Manipulate Logging.")
+@Tag(name="Logging Endpoint", description="Manipulate Logging.")
 public class LoggingController {
 
   //-------------------------------------------------------GET----------------------------------------------------------
 
-
-
   //-------------------------------------------------------POST---------------------------------------------------------
-
 
   //-------------------------------------------------------PUT----------------------------------------------------------
 
