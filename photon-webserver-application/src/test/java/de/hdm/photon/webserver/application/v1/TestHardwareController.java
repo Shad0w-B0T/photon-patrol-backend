@@ -15,12 +15,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.ArrayList;
 
 
 @SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
+@TestPropertySource(properties="application.security.active=false")
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD)
 public final class TestHardwareController extends AbstractSpringRestTest {
 
@@ -81,7 +83,6 @@ public final class TestHardwareController extends AbstractSpringRestTest {
   @Test
   @DisplayName("Test update hardware stats.")
   public void testUpdateHardware() {
-
 
   }
 
