@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import test.de.hdm.photon.AbstractSpringTest;
 
+
 /**
  * Test class for validating the RabbitSubscriber within a Spring application.
  *
@@ -27,8 +28,8 @@ import test.de.hdm.photon.AbstractSpringTest;
  * </ul>
  */
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DirtiesContext(classMode=DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public final class TestRabbitSubscriber extends AbstractSpringTest {
 
   @Autowired
