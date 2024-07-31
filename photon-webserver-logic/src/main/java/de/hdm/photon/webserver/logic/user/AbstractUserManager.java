@@ -13,39 +13,63 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * Abstract class for managing user operations.
+ */
 public abstract class AbstractUserManager implements IUserManager {
 
   private final @NotNull IUserHelper userHelper;
 
+  /**
+   * Constructs an AbstractUserManager with the specified IUserHelper.
+   *
+   * @param userHelper the IUserHelper to be used for user-related operations.
+   * @throws NullPointerException if the userHelper is null.
+   */
   public AbstractUserManager(@Nullable final IUserHelper userHelper) {
-    //Null check
+    // Null check
     Objects.requireNonNull(userHelper);
 
     this.userHelper = userHelper;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public @NotNull List<IUser> getPersistentUsers() {
     return this.userHelper.getPersistentUsers().stream().map(userEntity -> (IUser) userEntity).toList();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public @NotNull IUser lookupPersistentUser(@Nullable String username) throws EntityNotPresentException {
     return this.userHelper.lookupPersistentUser(username);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean lookupPersistentUser(@Nullable String username,
                                       @Nullable String password) throws EntityNotPresentException {
     return this.userHelper.lookupPersistentUser(username, password);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public @NotNull IUser createPersistentUser(@Nullable String username,
                                              @Nullable String password) throws EntityAlreadyPresentException {
     return this.userHelper.createPersistentUser(username, password);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public @NotNull IUser deletePersistentUser(@Nullable String username) throws EntityNotPresentException {
     return this.userHelper.deletePersistentUser(username);
