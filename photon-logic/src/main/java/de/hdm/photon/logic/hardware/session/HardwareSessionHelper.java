@@ -19,6 +19,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class HardwareSessionHelper extends AbstractHardwareSessionHelper {
 
+  /**
+   * Constructs a new instance of {@link HardwareSessionHelper}.
+   *
+   * <p>This constructor is used by Spring to inject dependencies for the {@link HardwareSessionHelper}
+   * class. It is used to initialize the helper with the necessary repositories needed for hardware session
+   * management.</p>
+   *
+   * @param hardwareSessionRepository the repository for managing hardware sessions. This parameter
+   *                                  can be {@code null}, which means that the helper might not be able
+   *                                  to perform certain operations that require this repository.
+   * @param hardwareRepository        the repository for managing hardware entities. This parameter
+   *                                  can be {@code null}, which means that the helper might not be able
+   *                                  to perform certain operations that require this repository.
+   */
   @Autowired
   public HardwareSessionHelper(@Nullable HardwareSessionRepository hardwareSessionRepository,
                                @Nullable HardwareRepository hardwareRepository) {

@@ -27,6 +27,13 @@ public abstract class AbstractHardwareSessionHelper implements IHardwareSessionH
   private final ISecurityFilter addressFilter;
   private final HardwareRepository hardwareRepository;
 
+  /**
+   * Constructs an instance of {@code AbstractHardwareSessionHelper} with the specified repositories and initializes the address filter.
+   *
+   * @param hardwareSessionRepository the repository for hardware session entities. This parameter can be {@code null} if not required.
+   * @param hardwareRepository        the repository for hardware entities. This parameter must not be {@code null}.
+   * @throws IllegalArgumentException if {@code hardwareRepository} is {@code null}.
+   */
   protected AbstractHardwareSessionHelper(@Nullable final HardwareSessionRepository hardwareSessionRepository,
                                           HardwareRepository hardwareRepository) {
     //Null check

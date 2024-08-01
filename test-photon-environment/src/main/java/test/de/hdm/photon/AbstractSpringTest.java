@@ -52,9 +52,27 @@ public abstract class AbstractSpringTest {
   private static PostgreSQLContainer<?> postgreSQLContainer;
   private static RabbitMQContainer rabbitMQContainer;
 
+  /**
+   * The Spring {@link ConfigurableApplicationContext} instance used for interacting with the Spring container.
+   *
+   * <p>This field is automatically injected by Spring and provides access to the application context,
+   * which can be used to retrieve beans, manage the lifecycle of the application, and perform various
+   * context-related operations.</p>
+   *
+   * <p>Note: This field is protected, allowing access within subclasses and the package, which is useful
+   * for integrating with the Spring container or accessing application context features.</p>
+   */
   @Autowired
   protected ConfigurableApplicationContext springContext;
 
+  /**
+   * Initializes test containers for the InfluxDB, PostgreSQL, and RabbitMQ services.
+   * <p>
+   * This method sets up the containers required for integration tests. It configures each container with
+   * necessary environment variables and port bindings. If the environment variable {@code PHOTON_TEST_CONTAINERS}
+   * is set to {@code true}, it will skip starting the containers.
+   * </p>
+   */
   @BeforeAll
   @SuppressWarnings("all")
   public static void init() {
