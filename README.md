@@ -2,7 +2,13 @@
 
 __About the project__
 
-tbd.
+Photon Patrol is a pioneering project that combines the power of renewable energy with innovative technology. The main component of this project is a state-of-the-art solar cell that is connected to an Arduino microcontroller and corresponding attachments. This enables the solar cell to automatically track the sun, ensuring optimal energy production.
+
+The front end of the system is developed using JavaScript with React and Tailwind CSS. These modern technologies enable a user-friendly and engaging web interface that allows users to access important data in real time. The interface will allow users to monitor information such as the energy generated, the current current and the voltage of the solar cell.
+
+The backend of the system is developed in Java with the Spring Framework. This combination provides a robust and scalable infrastructure for processing data and implementing business logic. The backend will be the interface between the frontend and the hardware, enabling seamless communication and control of the Arduino microcontroller.
+
+Overall, Photon Patrol will not only enable efficient use of renewable energy, but also provide an intuitive user experience that makes it easy for users to monitor and optimize their energy production.
 
 __Technologies used__
 
@@ -145,7 +151,63 @@ The queue application is used to log in as a subscriber in order to access the d
 
 ### Configuration Parameters
 
-``tbd``
+#### System
+| Field         | Value |
+|---------------|-------|
+| `server.port` | 8081  |
+
+#### Logger
+| Field                | Value |
+|----------------------|-------|
+| `logging.level.root` | INFO  |
+
+#### SQL
+| Field                        | Value                                     |
+|------------------------------|-------------------------------------------|
+| `spring.datasource.url`      | jdbc:postgresql://localhost:5432/postgres |
+| `spring.datasource.username` | postgres                                  |
+| `spring.datasource.password` | test                                      |
+
+#### Hibernate
+| Field                                         | Value                                   |
+|-----------------------------------------------|-----------------------------------------|
+| `spring.jpa.properties.hibernate.dialect`     | org.hibernate.dialect.PostgreSQLDialect |
+| `spring.jpa.show-sql`                         | false                                   |
+| `spring.jpa.properties.hibernate.format_sql`  | true                                    |
+| `spring.jpa.hibernate.ddl-auto`               | update                                  |
+| `spring.jpa.defer-datasource-initialization`  | true                                    |
+
+#### InfluxDB
+| Field                           | Value                      |
+|---------------------------------|----------------------------|
+| `application.influxdb.url`      | http://localhost:8086      |
+| `application.influxdb.user`     | my-user                    |
+| `application.influxdb.password` | my-super-secret-auth-token |
+| `application.influxdb.database` | my-bucket                  |
+
+#### RabbitMQ (MQTT)
+| Field                                | Value                              |
+|--------------------------------------|------------------------------------|
+| `application.rabbit.uri`             | amqp://admin:instar@localhost:5672 |
+| `application.rabbit.exchange`        | amq.topic                          |
+| `application.rabbit.queue`           | photon_broadcast_channel           |
+| `application.rabbit.key`             | .photon.device                     |
+
+#### Swagger
+| Field                                       | Value             |
+|---------------------------------------------|-------------------|
+| `springdoc.swagger-ui.path`                 | /doc              |
+| `springdoc.swagger-ui.operationsSorter`     | alpha             |
+| `springdoc.swagger-ui.tagsSorter`           | alpha             |
+| `study.web.swagger.title`                   | Photon Patrol API |
+| `study.web.swagger.version`                 | 1.0               |
+
+#### Application
+| Field                                 | Value  |
+|---------------------------------------|--------|
+| `application.heartbeat.delay`         | 50     |
+| `application.security.active`         | true   |
+| `application.security.username`       | photon |
 
 ## Web application
 
@@ -156,3 +218,10 @@ The web application provides the web interface for the frontend.
 ``app.security.hash`` store hash
 
 ``app.security.passwordStorage`` position of password.
+
+
+## Testing
+__Important__
+
+Before testing the Docker Engine must be started.
+The reason for this is that a new Docker container is started before each test to create a clean test environment that works smoothly in exchange with the database.
