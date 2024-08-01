@@ -45,4 +45,7 @@ public interface TestField {
    */
   @NotNull
   Map<Long, Map<String, Object>> TIME_PERIOD_VALUES = new HashMap<>();
+
+  @NotNull String MEASUREMENT_FIELD = "a";
+  @NotNull Map<String, Object> HARDWARE_FIELD = Map.of(MEASUREMENT_FIELD, 5L, "b", 10L);
 }
