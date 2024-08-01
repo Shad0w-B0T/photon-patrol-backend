@@ -42,6 +42,7 @@ stages:
   - update
   - security
   - docs
+  - package
   - deploy
 
 before_script:
@@ -83,6 +84,18 @@ docs:
     - master
     - development
 
+build-applications:
+  stage: package
+  script:
+    - ./gradlew :photon-webserver-application:assemble
+    - ./gradlew :photon-queue-application:assemble
+  artifacts:
+    paths:
+      - photon-webserver-application/build/libs/*.jar
+      - photon-queue-application/build/libs/*.jar
+  only:
+    - master
+
 pages:
   stage: deploy
   script:
@@ -93,6 +106,8 @@ pages:
   only:
     - master
     - development
+
+
 
 # Separater Job zum Aktualisieren der Datenbank
 #update-dependency-check:
