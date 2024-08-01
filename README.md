@@ -2,7 +2,13 @@
 
 __About the project__
 
-tbd.
+Photon Patrol is a pioneering project that combines the power of renewable energy with innovative technology. The main component of this project is a state-of-the-art solar cell that is connected to an Arduino microcontroller and corresponding attachments. This enables the solar cell to automatically track the sun, ensuring optimal energy production.
+
+The front end of the system is developed using JavaScript with React and Tailwind CSS. These modern technologies enable a user-friendly and engaging web interface that allows users to access important data in real time. The interface will allow users to monitor information such as the energy generated, the current current and the voltage of the solar cell.
+
+The backend of the system is developed in Java with the Spring Framework. This combination provides a robust and scalable infrastructure for processing data and implementing business logic. The backend will be the interface between the frontend and the hardware, enabling seamless communication and control of the Arduino microcontroller.
+
+Overall, Photon Patrol will not only enable efficient use of renewable energy, but also provide an intuitive user experience that makes it easy for users to monitor and optimize their energy production.
 
 __Technologies used__
 
