@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'de.hdm'
-version = '1.0.0'
+version = '1.0.2'
 
 /**
  * Configure for all sub projects.*/
