@@ -42,6 +42,7 @@ stages:
   - update
   - security
   - docs
+  - deploy
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
@@ -78,6 +79,17 @@ docs:
   artifacts:
     paths:
       - build/docs/javadoc
+  only:
+    - master
+    - development
+
+pages:
+  stage: deploy
+  script:
+    - mv build/docs/javadoc public
+  artifacts:
+    paths:
+      - public
   only:
     - master
     - development
