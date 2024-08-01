@@ -81,7 +81,6 @@ docs:
       - build/docs/javadoc
   only:
     - master
-    - development
 
 build-applications:
   stage: package
@@ -94,7 +93,6 @@ build-applications:
       - photon-queue-application/build/libs/queue-build.jar
   only:
     - master
-    - development
 
 pages:
   stage: deploy
@@ -105,7 +103,6 @@ pages:
       - public
   only:
     - master
-    - development
 
 docker-release-webserver-latest:
   stage: release
