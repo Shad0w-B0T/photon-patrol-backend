@@ -10,10 +10,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+/**
+ * Configuration class for Swagger/OpenAPI documentation.
+ */
 @Configuration
 public class SwaggerConfig {
+
   /**
-   * Configure openapi.
+   * Configures the OpenAPI documentation with custom title, description, and version.
+   *
+   * @param apiTitle       The title of the API, retrieved from application properties.
+   * @param apiDescription The description of the API, retrieved from application properties.
+   * @param apiVersion     The version of the API, retrieved from application properties.
+   * @return An instance of {@link OpenAPI} configured with the specified title, description, and version.
    */
   @Bean
   public OpenAPI customOpenAPI(
@@ -22,9 +31,9 @@ public class SwaggerConfig {
       @Value("${study.web.swagger.version}") @NotNull final String apiVersion
   ) {
     return new OpenAPI()
-        //Create empty component.
+        // Create empty components.
         .components(new Components())
-        //Set info.
+        // Set info.
         .info(new Info()
             .title(apiTitle)
             .description(apiDescription)

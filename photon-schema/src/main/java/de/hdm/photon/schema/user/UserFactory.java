@@ -47,7 +47,7 @@ public final class UserFactory {
   public static @NotNull IUser convertToRecord(@Nullable final IUser user) {
     // Null check
     Objects.requireNonNull(user);
-    log.debug("The user interface {} was successfully converted to a record.", user);
+    log.debug("The user interface {} was successfully converted to a record.", user.id());
     return UserFactory.createUser(
         user.id(),
         user.username(),

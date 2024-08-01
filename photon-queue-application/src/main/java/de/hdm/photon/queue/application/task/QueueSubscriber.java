@@ -1,7 +1,7 @@
 package de.hdm.photon.queue.application.task;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hdm.photon.logic.heartbeat.IHeartbeatInfo;
+import de.hdm.photon.logic.console.IConsoleHeartbeatInfo;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityRule;
@@ -23,13 +23,20 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+
+/**
+ * Subscriber component for handling messages from a RabbitMQ queue.
+ *
+ * <p>This component subscribes to a RabbitMQ queue, processes incoming messages by deserializing
+ * and sanitizing them, and then publishes events based on the processed messages.</p>
+ */
 @Log4j2
 @Component
 public final class QueueSubscriber {
   @Autowired
   private ApplicationEventPublisher eventPublisher;
   @Autowired
-  private IHeartbeatInfo heartbeatInfo;
+  private IConsoleHeartbeatInfo heartbeatInfo;
   @Autowired
   private IRabbitConnection rabbitConnection;
   @Autowired
@@ -41,11 +48,21 @@ public final class QueueSubscriber {
   private final @NotNull Executor executor;
   private final @NotNull ISecurityFilter securityFilter;
 
+  /**
+   * Constructor initializing the executor and security filter.
+   */
   public QueueSubscriber() {
     this.executor = Executors.newCachedThreadPool();
     this.securityFilter = new SecurityFilter();
   }
 
+  /**
+   * Initializes the subscriber by setting up the security rules and subscribing to the RabbitMQ queue.
+   *
+   * <p>This method is called after the bean's properties have been initialized.</p>
+   *
+   * @throws RabbitConnectionException If there is an error setting up the RabbitMQ connection.
+   */
   @PostConstruct
   public void init() throws RabbitConnectionException {
     this.securityFilter
@@ -85,7 +102,7 @@ public final class QueueSubscriber {
         // Sanitize
         this.securityFilter.checkObject(messagePayload);
 
-        final  MessageReceiveEvent event = new MessageReceiveEvent(this, messagePayload);
+        final MessageReceiveEvent event = new MessageReceiveEvent(this, messagePayload);
 
         // Execute event
         this.eventPublisher.publishEvent(event);

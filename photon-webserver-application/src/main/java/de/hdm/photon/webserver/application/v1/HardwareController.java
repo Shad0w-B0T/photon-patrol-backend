@@ -1,12 +1,12 @@
 package de.hdm.photon.webserver.application.v1;
 
 
-import de.hdm.photon.logic.hardware.HardwareManager;
 import de.hdm.photon.logic.hardware.IHardwareManager;
 import de.hdm.photon.schema.exception.FormatMismatchException;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.hardware.IHardware;
+import de.hdm.photon.schema.hardware.ImmutableHardware;
 import de.hdm.photon.webserver.application.controller.AbstractWebController;
 import de.hdm.photon.webserver.application.controller.IControllerMessage;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,11 +35,15 @@ import java.util.Date;
 import java.util.List;
 
 
+/**
+ * Controller for handling hardware-related operations.
+ */
 @RestController
 @Log4j2
 @RequestMapping("/api/v1/hardware")
 @Tag(name="Hardware Endpoint", description="Manipulate Hardware.")
 public final class HardwareController extends AbstractWebController {
+
   @Autowired
   private IHardwareManager hardwareManager;
 
@@ -64,12 +68,13 @@ public final class HardwareController extends AbstractWebController {
                       mediaType=MediaType.APPLICATION_JSON_VALUE,
                       array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
                   )
-              })
-      })
+              }
+          )
+      }
+  )
   public @NotNull ResponseEntity<List<IHardware>> getHardware() {
     return this.body(200, this.hardwareManager.getHardwareList());
   }
-
 
   /**
    * Retrieves a specific hardware.
@@ -90,23 +95,33 @@ public final class HardwareController extends AbstractWebController {
               content={
                   @Content(
                       mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
+                      schema=@Schema(implementation=IHardware.class)
                   )
-              })
-      })
-  public @NotNull ResponseEntity<IHardware> getSpecificHardware(@PathVariable(name="id") final long hardwareId) throws EntityNotPresentException {
+              }
+          ),
+          @ApiResponse(
+              responseCode="404",
+              description="Hardware not found.",
+              content={
+                  @Content(
+                      mediaType=MediaType.APPLICATION_JSON_VALUE,
+                      schema=@Schema(implementation=IControllerMessage.class)
+                  )
+              }
+          )
+      }
+  )
+  public @NotNull ResponseEntity<IHardware> getSpecificHardware(@PathVariable(name="id") final long hardwareId)
+      throws EntityNotPresentException {
     return this.body(200, this.hardwareManager.getHardware(hardwareId));
   }
-
 
   //-------------------------------------------------------POST---------------------------------------------------------
 
   /**
    * Creates a new hardware.
-   * see {@link HardwareManager#createHardware()}
    *
    * @return ResponseEntity containing the newly created hardware.
-   * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
    */
   @PostMapping
   @ResponseBody
@@ -115,16 +130,18 @@ public final class HardwareController extends AbstractWebController {
       description="Method to create a new hardware.",
       responses={
           @ApiResponse(
-              responseCode="200",
+              responseCode="201",
               description="Hardware was successfully created.",
               content={
                   @Content(
                       mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
+                      schema=@Schema(implementation=IHardware.class)
                   )
-              })
-      })
-  public @NotNull ResponseEntity<IHardware> createHardware() throws EntityNotPresentException, EntityAlreadyPresentException, FormatMismatchException {
+              }
+          )
+      }
+  )
+  public @NotNull ResponseEntity<IHardware> createHardware() {
     return this.body(201, this.hardwareManager.createHardware());
   }
 
@@ -133,67 +150,79 @@ public final class HardwareController extends AbstractWebController {
   /**
    * Update the settings of a specified hardware.
    *
-   * @param hardwareId    The ID of the hardware to retrieve.
-   * @param macAddress    change the macAddress.
-   * @param hardwareAdded change the date of when the hardware was added.
-   * @param macAdded      change the macAdded.
-   * @param tokenIsActive change the state of the token.
-   * @return ResponseEntity containing the updated state of a token.
-   * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
+   * @param hardwareId The ID of the hardware to update.
+   * @param hardware   The hardware parameters to update.
+   * @return ResponseEntity containing the updated hardware.
+   * @throws EntityNotPresentException     If the hardware specified by hardwareId does not exist.
+   * @throws FormatMismatchException       If the format of the input is incorrect.
+   * @throws EntityAlreadyPresentException If the hardware already exists.
    */
   @PutMapping("/{id}")
   @ResponseBody
   @Operation(
-      summary="update hardware stats.",
-      description="Method to change the stats of a specific hardware.",
+      summary="Update hardware settings.",
+      description="Method to update the settings of a specific hardware.",
       responses={
           @ApiResponse(
               responseCode="200",
-              description="parameters were successfully changed.",
+              description="Parameters were successfully changed.",
               content={
                   @Content(
                       mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IHardware.class))
+                      schema=@Schema(implementation=IHardware.class)
                   )
-              })
-      })
-  public @NotNull ResponseEntity<IHardware> updateHardware(@PathVariable(name="id") final long hardwareId,
-                                                           @RequestBody @Nullable String macAddress,
-                                                           @RequestBody @Nullable Date hardwareAdded,
-                                                           @RequestBody @Nullable Date macAdded,
-                                                           @RequestBody final boolean tokenIsActive)
+              }
+          )
+      }
+  )
+  public @NotNull ResponseEntity<IHardware> updateHardware(
+      @PathVariable(name="id") final long hardwareId,
+      @RequestBody @NotNull ImmutableHardware hardware)
       throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException {
-    return this.body(200,
-        this.hardwareManager.updateHardware(hardwareId, macAddress, hardwareAdded, macAdded, tokenIsActive));
+    return this.body(200, this.hardwareManager.updateHardware(
+        hardwareId,
+        hardware.macAddress(),
+        hardware.hardwareAdded(),
+        hardware.macAdded(),
+        hardware.tokenIsActive()));
   }
 
-//Todo:Docs
+  /**
+   * Toggles the active state of a specified hardware.
+   *
+   * @param hardwareId The ID of the hardware to toggle.
+   * @return ResponseEntity containing the updated hardware.
+   * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
+   */
   @PutMapping("/{id}/toggle")
   @ResponseBody
   @Operation(
-      summary="update a whole hardwareobject",
-      description="Method to update a whole hardwareobject with the given parameters",
+      summary="Toggle hardware active state.",
+      description="Method to toggle the active state of a specific hardware.",
       responses={
           @ApiResponse(
               responseCode="200",
-              description="parameters were successfully changed.",
+              description="Active state was successfully toggled.",
               content={
                   @Content(
                       mediaType=MediaType.APPLICATION_JSON_VALUE,
-                     schema=@Schema(implementation=IHardware.class)
+                      schema=@Schema(implementation=IHardware.class)
                   )
-              })
-      })
+              }
+          )
+      }
+  )
   public @NotNull ResponseEntity<IHardware> toggleHardware(@PathVariable(name="id") final long hardwareId)
       throws EntityNotPresentException {
     return this.body(200, this.hardwareManager.toggleHardwareActive(hardwareId));
   }
+
   //-------------------------------------------------------DELETE-------------------------------------------------------
 
   /**
    * Delete a specified hardware.
    *
-   * @param hardwareId The ID of the hardware to retrieve.
+   * @param hardwareId The ID of the hardware to delete.
    * @return ResponseEntity containing a response message indicating the result of the operation.
    * @throws EntityNotPresentException If the hardware specified by hardwareId does not exist.
    */
@@ -209,11 +238,23 @@ public final class HardwareController extends AbstractWebController {
               content={
                   @Content(
                       mediaType=MediaType.APPLICATION_JSON_VALUE,
-                      array=@ArraySchema(schema=@Schema(implementation=IControllerMessage.class))
+                      schema=@Schema(implementation=IControllerMessage.class)
                   )
-              })
-      })
-  public @NotNull ResponseEntity<IControllerMessage> deleteSpecificHardware(@PathVariable(name="id") final long hardwareId)
+              }
+          ),
+          @ApiResponse(
+              responseCode="500",
+              description="Error while deleting hardware.",
+              content={
+                  @Content(
+                      mediaType=MediaType.APPLICATION_JSON_VALUE,
+                      schema=@Schema(implementation=IControllerMessage.class)
+                  )
+              }
+          )
+      }
+  )
+  public @NotNull ResponseEntity<IControllerMessage> deleteHardware(@PathVariable(name="id") final long hardwareId)
       throws EntityNotPresentException {
     if (this.hardwareManager.deleteHardware(hardwareId)) {
       return this.successMessage(200, String.format("Successfully deleted hardware %s.", hardwareId));
@@ -221,5 +262,4 @@ public final class HardwareController extends AbstractWebController {
 
     return this.errorMessage(500, String.format("Error while deleting hardware %s.", hardwareId));
   }
-
 }

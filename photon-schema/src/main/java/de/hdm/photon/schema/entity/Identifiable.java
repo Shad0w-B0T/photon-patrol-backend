@@ -6,11 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * The {@code Identifiable} interface should be implemented by any class whose instances are intended
  * to be identifiable by a unique identifier. This identifier is represented by a long value.
- *
- * <p> The primary purpose of this interface is to provide a common method to retrieve the identifier
- * of an object, ensuring consistency across different types of identifiable objects.</p>
- *
- * <p> Example usage:
+ * <p>
+ * The primary purpose of this interface is to provide a common method to retrieve the identifier
+ * of an object, ensuring consistency across different types of identifiable objects.
+ * <p>
+ * Example usage:
  * <pre>
  * {@code
  * public class User implements Identifiable {
@@ -27,8 +27,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * }
  * }
  * </pre>
- * </p>
- *
  */
 public interface Identifiable {
   /**

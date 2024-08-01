@@ -5,7 +5,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.context.ApplicationEvent;
 
-
+/**
+ * {@code MessageReceiveEvent} represents an event that is triggered when a message is received.
+ * This event encapsulates the payload of the received message and the source of the event.
+ * <p>
+ * It extends {@link AbstractMessageReceiveEvent} and is used to handle message receipt within
+ * the application. This class is primarily used in event-driven architectures where messages are
+ * processed as events.
+ * </p>
+ */
 public final class MessageReceiveEvent extends AbstractMessageReceiveEvent {
   /**
    * Constructs a new {@code AbstractMessageReceiveEvent}.

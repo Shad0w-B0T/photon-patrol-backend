@@ -23,10 +23,10 @@ import java.util.Optional;
  * The {@code AbstractSpringTest} class provides a base for Spring-based test classes.
  * It contains a utility test method to verify that all {@code @Autowired} components
  * in a derived test class are properly loaded by the Spring context.
- *
- * <p>This class uses Lombok's {@code @Log4j2} annotation for logging purposes.</p>
- *
- * <p>Example usage:
+ * <p>
+ * This class uses Lombok's {@code @Log4j2} annotation for logging purposes.
+ * <p>
+ * Example usage:
  * <pre>
  * {@code
  * @ExtendWith(SpringExtension.class)
@@ -39,7 +39,8 @@ import java.util.Optional;
  * }
  * }
  * </pre>
- * </p>
+ * <p>
+ * *
  *
  * @see org.springframework.beans.factory.annotation.Autowired
  * @see org.junit.jupiter.api.Test
@@ -51,9 +52,27 @@ public abstract class AbstractSpringTest {
   private static PostgreSQLContainer<?> postgreSQLContainer;
   private static RabbitMQContainer rabbitMQContainer;
 
+  /**
+   * The Spring {@link ConfigurableApplicationContext} instance used for interacting with the Spring container.
+   *
+   * <p>This field is automatically injected by Spring and provides access to the application context,
+   * which can be used to retrieve beans, manage the lifecycle of the application, and perform various
+   * context-related operations.</p>
+   *
+   * <p>Note: This field is protected, allowing access within subclasses and the package, which is useful
+   * for integrating with the Spring container or accessing application context features.</p>
+   */
   @Autowired
   protected ConfigurableApplicationContext springContext;
 
+  /**
+   * Initializes test containers for the InfluxDB, PostgreSQL, and RabbitMQ services.
+   * <p>
+   * This method sets up the containers required for integration tests. It configures each container with
+   * necessary environment variables and port bindings. If the environment variable {@code PHOTON_TEST_CONTAINERS}
+   * is set to {@code true}, it will skip starting the containers.
+   * </p>
+   */
   @BeforeAll
   @SuppressWarnings("all")
   public static void init() {
@@ -92,6 +111,11 @@ public abstract class AbstractSpringTest {
     }
   }
 
+  /**
+   * Shuts down the test containers for InfluxDB, PostgreSQL, and RabbitMQ if they are present.
+   * This method is annotated with {@link AfterAll} to ensure it runs after all tests have completed.
+   * It safely closes each container using {@link Startable#close()} if they are not null.
+   */
   @AfterAll
   public static void shutdown() {
     Optional.ofNullable(influxDBContainer).ifPresent(Startable::close);
@@ -99,6 +123,15 @@ public abstract class AbstractSpringTest {
     Optional.ofNullable(rabbitMQContainer).ifPresent(Startable::close);
   }
 
+  /**
+   * Determines whether to ignore starting test containers based on an environment variable.
+   *
+   * <p>This method checks the value of the environment variable "PHOTON_TEST_CONTAINERS". If the variable is
+   * present and can be parsed as a boolean, its value is used to determine whether to ignore the containers.
+   * If the environment variable is not present or cannot be parsed, the method defaults to ignoring containers.</p>
+   *
+   * @return {@code true} if containers should be ignored (based on the environment variable), {@code false} otherwise.
+   */
   private static boolean ignoreContainers() {
     System.out.println(System.getenv("PHOTON_TEST_CONTAINERS"));
     return Optional
@@ -110,19 +143,18 @@ public abstract class AbstractSpringTest {
   /**
    * Test method to verify that all {@code @Autowired} components in the derived class
    * are properly loaded by the Spring context.
-   *
-   * <p>This method iterates through all declared fields in the derived test class,
+   * <p>
+   * This method iterates through all declared fields in the derived test class,
    * checks if they are annotated with {@code @Autowired}, and asserts that they are
-   * not {@code null}, indicating successful dependency injection by Spring.</p>
-   *
-   * <p>Example log output:
+   * not {@code null}, indicating successful dependency injection by Spring.
+   * <p>
+   * Example log output:
    * <pre>
    * {@code
    * Checking autowired components for=MyTest.
    * Checking bean=MyRepository.
    * }
    * </pre>
-   * </p>
    */
   @Test
   @DisplayName("Test JPA-Repository load.")

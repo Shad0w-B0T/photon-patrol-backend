@@ -3,13 +3,19 @@ package de.hdm.photon.logic.hardware.session;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
 import de.hdm.photon.schema.exception.EntityNotPresentException;
 import de.hdm.photon.schema.exception.FormatMismatchException;
-import de.hdm.photon.schema.hardware.IHardwareSession;
+import de.hdm.photon.schema.hardware.session.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 
+/**
+ * {@code IHardwareSessionAccess} defines the operations for accessing and managing hardware session objects.
+ * It provides methods for creating, reading, and deleting hardware session entities.
+ *
+ * @param <HARDWARE_SESSION> the type of hardware session entity that extends {@link IHardwareSession}.
+ */
 public interface IHardwareSessionAccess<HARDWARE_SESSION extends IHardwareSession> {
 
 
@@ -18,7 +24,8 @@ public interface IHardwareSessionAccess<HARDWARE_SESSION extends IHardwareSessio
   /**
    * Create a hardware session object
    *
-   * @param ipAddress value of the ip.
+   * @param ipAddress  value of the ip.
+   * @param hardwareId id of the hardware.
    * @return a new hardware session object (hardware session interface or hardware session entity).
    * @throws EntityNotPresentException     see {@link EntityNotPresentException}.
    * @throws EntityAlreadyPresentException see {@link EntityAlreadyPresentException}.

@@ -60,7 +60,7 @@ springBoot {
   mainClass = "${driverClass}"
 
   bootJar {
-    archiveFileName.set("queue-build.jar")
+    archiveFileName.set("webserver-build.jar")
   }
   buildInfo()
 }

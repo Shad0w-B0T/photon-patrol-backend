@@ -12,7 +12,20 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.util.Objects;
 
-
+/**
+ * Abstract base class for managing RabbitMQ connections and channels.
+ *
+ * <p>This abstract class provides methods to establish a connection to RabbitMQ, create and manage
+ * channels, and interact with RabbitMQ contexts. It implements {@link IRabbitConnection} and uses
+ * a {@link ConnectionFactory} to manage the RabbitMQ connection.</p>
+ *
+ * <p>The class is equipped with logging for various connection and channel operations, and handles
+ * exceptions related to RabbitMQ operations by throwing a {@link RabbitConnectionException}.</p>
+ *
+ * @see IRabbitConnection
+ * @see RabbitConnectionException
+ * @see ConnectionFactory
+ */
 @Log4j2
 public abstract class AbstractRabbitConnection implements IRabbitConnection {
 
@@ -21,6 +34,20 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
   private @Nullable Channel channel;
   private @Nullable IRabbitContext rabbitContext;
 
+  /**
+   * Constructs a new {@code AbstractRabbitConnection} using individual connection parameters.
+   *
+   * <p>This constructor sets up the connection factory with the provided parameters and initializes
+   * the RabbitMQ context.</p>
+   *
+   * @param user            The username for RabbitMQ authentication. Cannot be null.
+   * @param password        The password for RabbitMQ authentication. Cannot be null.
+   * @param virtualHost     The virtual host for RabbitMQ. Cannot be null.
+   * @param host            The host address of the RabbitMQ server. Cannot be null.
+   * @param port            The port number of the RabbitMQ server.
+   * @param rabbitContext   The RabbitMQ context to use. Can be null.
+   * @throws RabbitConnectionException If an error occurs while setting up the connection.
+   */
   public AbstractRabbitConnection(@Nullable final String user,
                                   @Nullable final String password,
                                   @Nullable final String virtualHost,
@@ -47,7 +74,14 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
   }
 
   /**
-   * Create with uri
+   * Constructs a new {@code AbstractRabbitConnection} using a URI.
+   *
+   * <p>This constructor sets up the connection factory using the provided URI and initializes
+   * the RabbitMQ context.</p>
+   *
+   * @param uri             The URI for RabbitMQ connection. Cannot be null.
+   * @param rabbitContext   The RabbitMQ context to use. Can be null.
+   * @throws Exception If an error occurs while setting up the connection.
    */
   public AbstractRabbitConnection(@Nullable final String uri,
                                   @Nullable final IRabbitContext rabbitContext) throws Exception {
@@ -61,7 +95,9 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
     this.connectionFactory.setUri(uri);
     this.context(rabbitContext);
   }
-
+  /**
+   * Default constructor that initializes the connection factory.
+   */
   private AbstractRabbitConnection() {
     //Create base factory
     this.connectionFactory = new ConnectionFactory();
@@ -71,6 +107,7 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
   public @NotNull Connection connection() throws RabbitConnectionException {
     //create new if absent
     if (this.connection == null || !this.connection.isOpen()) {
+      log.info("The connection is initialized because it does not yet exist or is closed.");
       //Create
       try {
         this.connection = this.connectionFactory.newConnection();
@@ -93,11 +130,12 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
   }
 
   /**
-   * Establishes a context for a RabbitMQ connection using the provided Rabbit context.
+   * Establishes the RabbitMQ context, including channel creation, exchange declaration,
+   * queue declaration, and binding.
    *
-   * @param rabbitContext The RabbitMQ context to establish the connection with. Can be null.
-   * @return True if the context is successfully established, false otherwise.
-   * @throws RabbitConnectionException If there is an error establishing the RabbitMQ connection.
+   * @param rabbitContext The RabbitMQ context to establish. Can be null.
+   * @return {@code true} if the context was successfully established; {@code false} otherwise.
+   * @throws RabbitConnectionException If an error occurs while establishing the context.
    */
   private boolean context(@Nullable IRabbitContext rabbitContext) throws RabbitConnectionException {
     //Null check
@@ -119,7 +157,7 @@ public abstract class AbstractRabbitConnection implements IRabbitConnection {
 
     try {
       //Blacklist own runners of rabbit.
-      if(!rabbitContext.exchangeName().startsWith("amq")) {
+      if (!rabbitContext.exchangeName().startsWith("amq")) {
         this.channel.exchangeDeclare(rabbitContext.exchangeName(), "fanout");
       }
       log.info("Found exchange={}.", rabbitContext.exchangeName());

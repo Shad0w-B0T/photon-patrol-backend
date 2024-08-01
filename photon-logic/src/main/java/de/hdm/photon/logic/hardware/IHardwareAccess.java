@@ -10,7 +10,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * Interface for accessing and managing hardware entities.
+ *
+ * @param <HARDWARE> the type of hardware entity that implements the {@link IHardware} interface.
+ */
 public interface IHardwareAccess<HARDWARE extends IHardware> {
 
   //------------------------------------------------CREATE--------------------------------------------------------------
@@ -36,6 +40,13 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   @NotNull
   HARDWARE getHardware(final long hardwareId) throws EntityNotPresentException;
 
+  /**
+   * Retrieves the hardware associated with the given token.
+   *
+   * @param token the token associated with the hardware; can be null
+   * @return the hardware associated with the given token
+   * @throws EntityNotPresentException if no hardware is found for the given token
+   */
   @NotNull
   HARDWARE getHardware(@Nullable final String token) throws EntityNotPresentException;
 
@@ -55,7 +66,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    */
   @NotNull
-  HARDWARE getMacAddress(@Nullable final  String macAddress) throws EntityNotPresentException;
+  HARDWARE getMacAddress(@Nullable final String macAddress) throws EntityNotPresentException;
 
   /**
    * Get a list of all hardware objects which were added at the given date.
@@ -64,7 +75,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @return a list of hardware objects.
    */
   @NotNull
-  List<HARDWARE> getHardwareAddedList(@Nullable final  Date hardwareAdded);
+  List<HARDWARE> getHardwareAddedList(@Nullable final Date hardwareAdded);
 
   /**
    * Get a list of all hardware objects when the mac was added.
@@ -73,7 +84,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @return a list of hardware objects.
    */
   @NotNull
-  List<HARDWARE> getMacAddedList(@Nullable final  Date macAdded);
+  List<HARDWARE> getMacAddedList(@Nullable final Date macAdded);
 
   /**
    * Get a list of all hardware objects which have an active/inactive token.
@@ -86,7 +97,13 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
 
   //------------------------------------------------UPDATE--------------------------------------------------------------
 
-  //Todo: Docs
+  /**
+   * Toggles the active status of the hardware with the given ID.
+   *
+   * @param hardwareId the ID of the hardware to be toggled
+   * @return the hardware with the updated active status
+   * @throws EntityNotPresentException if no hardware is found with the given ID
+   */
   @NotNull
   HARDWARE toggleHardwareActive(final long hardwareId) throws EntityNotPresentException;
 
@@ -101,13 +118,15 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @return updated hardware object (hardware interface or hardware entity).
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    * @throws FormatMismatchException   see {@link FormatMismatchException}
+   * @throws EntityNotPresentException see {@link EntityAlreadyPresentException}
    */
   @NotNull
   HARDWARE updateHardware(final long hardwareId,
                           @Nullable final String macAddress,
                           @Nullable final Date hardwareAdded,
                           @Nullable final Date macAdded,
-                          final boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException;
+                          @Nullable final Boolean tokenIsActive)
+      throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException;
 
   /**
    * This method updates the MAC address with the given parameter.
@@ -129,7 +148,6 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param tokenIsActive value whether the token is active or not.
    * @return hardware object with updated token.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
-   * @throws FormatMismatchException   see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE updateTokenActive(final long hardwareId,

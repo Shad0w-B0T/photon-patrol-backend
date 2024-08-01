@@ -34,25 +34,6 @@ public final class MessageReceiveListener {
   @Autowired
   private IMeasurementManager measurementManager;
 
-  @PostConstruct
-  public void init() {
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-    System.out.println("a");
-  }
-
   /**
    * Handles the MessageReceiveEvent and processes the message payload.
    *

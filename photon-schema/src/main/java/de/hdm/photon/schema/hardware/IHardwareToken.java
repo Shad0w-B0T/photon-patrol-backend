@@ -3,7 +3,9 @@ package de.hdm.photon.schema.hardware;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.jetbrains.annotations.NotNull;
 
-
+/**
+ * Represents a hardware token used for permissions verification.
+ */
 public interface IHardwareToken {
 
   /**

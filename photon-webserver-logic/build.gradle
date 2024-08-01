@@ -20,11 +20,27 @@ dependencies {
   implementation libs.spring.boot.autoconfigure
   implementation libs.spring.boot.starter.data.jpa
   implementation libs.spring.boot.starter.security
-  implementation libs.h2
 
   testImplementation project(":photon-schema")
   testImplementation project(":photon-database")
   testImplementation project(":photon-logic")
+
+  //#-------- Tests
+  testImplementation project(":photon-schema")
+  testImplementation project(":photon-database")
+  testImplementation project(":photon-logic")
+  testImplementation project(":test-photon-environment")
+
+  //Spring
+  testImplementation libs.spring.boot.autoconfigure
+  testImplementation libs.spring.boot.starter.data.jpa
+  testImplementation libs.spring.boot.starter.test
+  testImplementation libs.spring.boot.starter.security
+
+  //Data
+  testImplementation libs.hikari
+  testImplementation libs.postgresql
+  testImplementation libs.database.influxdb
 }
 
 test {

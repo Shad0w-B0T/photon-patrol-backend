@@ -74,24 +74,83 @@ flowchart TD
   queue-application("queue-application")
   web-logic("web-logic")
   web-application("web-application")
-
   web-application == utilised ==> web-logic
   queue-application == utilised ==> queue-logic
-
   web-logic == utilised ==> logic
   queue-logic == utilised ==> logic
-
   logic == utilised ==> database
-
-  database == utilised ==> schema
+  schema
 ```
 
+---
+
+## Testing
+
+Due to the complexity of the application and the use of Postgres, InfluxDB and RabbitMQ, individual software components
+are difficult to mock. The functional properties of InfluxDB and RabbitMQ are therefore difficult to replicate. So the
+decision was made to build the applications as a tangible container. Since GitLab does not support Docker in Docker, the
+containers were integrated as an additional service and thus managed by the CI/CD runner. Local containers are started
+for each test, as the environment is rebuilt for each test class, this process takes a lot of time.
+
+### Local
+
+Due to the inertia of rabbitmq, runtime errors can occur when the individual test instances are shut down, but the tests
+still run, the overall construct is then marked as faulty due to the implementation of intellij.
+
+Dependencies:
+
+- https://mvnrepository.com/artifact/org.testcontainers/testcontainers
+- https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter
+- https://mvnrepository.com/artifact/org.testcontainers/postgresql
+- https://mvnrepository.com/artifact/org.testcontainers/influxdb
+- https://mvnrepository.com/artifact/org.testcontainers/rabbitmq
+
+### Remote (GitLab CI/CD)
+
+The environment is started once and runs quickly.
+
+---
+
+## Start Spring Java Application
+
+### Version
+
+Java Version: ``Java 17 (Temurin)`` was used for the development. I chose this version because of the lts support. It is
+strongly recommended to use this version when setting up the project.
+
+Check the java version, whether it is greater than or equal to Java 17. The Version can be checked with the
+command `java -version`.
+
+### Execute
+
+By setting the parameter `--spring.config.location`, the location of the configuration can be defined, i.e. where the
+file is stored. In this way, a config can be used outside the jar file.
+
+```
+java -jar <application-jar-name>.jar [--spring.config.location=<path_to_configuration>.properties]
+```
+
+**Example for startup:**
+
+File structure
+
+```
+.
+├── application.jar             # Spring application.
+└── config                      # File with multiple configs.
+    └── application.properties  # Unit tests
+```
+
+Command will look like:
+
+> java -jar application.jar --spring.config.location=./config/application.properties
 
 ## Queue Application
 
 The queue application is used to log in as a subscriber in order to access the data of the hardware participants.
 
 ### Configuration Parameters
+
 #### System
 | Field         | Value |
 |---------------|-------|
@@ -149,7 +208,6 @@ The queue application is used to log in as a subscriber in order to access the d
 | `application.heartbeat.delay`         | 50     |
 | `application.security.active`         | true   |
 | `application.security.username`       | photon |
-
 
 ## Web application
 

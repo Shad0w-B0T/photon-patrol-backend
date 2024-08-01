@@ -1,7 +1,6 @@
 package de.hdm.photon.webserver.application.connection;
 
 
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +19,7 @@ import test.de.hdm.photon.AbstractSpringTest;
  * with a random port assigned for the web environment.
  * </p>
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class AbstractSpringRestTest extends AbstractSpringTest implements IRequest {
 
   private final RestHandler restHandler;
@@ -60,7 +59,7 @@ public abstract class AbstractSpringRestTest extends AbstractSpringTest implemen
   @Override
   public <RESPONSE> @NotNull RESPONSE put(@Nullable String apiEndpoint,
                                           @Nullable Class<RESPONSE> responseClass) {
-    return this.restHandler.get(apiEndpoint, responseClass);
+    return this.restHandler.put(apiEndpoint, responseClass);
   }
 
   /**

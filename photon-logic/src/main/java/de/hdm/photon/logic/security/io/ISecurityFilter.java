@@ -53,8 +53,23 @@ public interface ISecurityFilter {
    */
   <OBJECT> boolean checkObject(@Nullable final OBJECT object);
 
+  /**
+   * Checks if a given collection of objects passes the security rules defined for their type.
+   *
+   * @param <OBJECT>   the type of the objects to check
+   * @param collection the collection of objects to check; can be null
+   * @return true if all objects in the collection pass the security rules, false otherwise
+   */
   <OBJECT> boolean checkCollection(@Nullable Collection<OBJECT> collection);
 
+  /**
+   * Checks if a given map of objects passes the security rules defined for their type.
+   *
+   * @param <KEY>   the type of the keys in the map
+   * @param <VALUE> the type of the values in the map
+   * @param map     the map of objects to check; can be null
+   * @return true if all entries in the map pass the security rules, false otherwise
+   */
   <KEY, VALUE> boolean checkMap(@Nullable Map<KEY, VALUE> map);
 
   /**

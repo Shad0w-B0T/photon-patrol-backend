@@ -7,11 +7,11 @@ import org.jetbrains.annotations.Nullable;
  * The {@code AbstractEntityException} class serves as a base class for exceptions
  * that are specific to entities within an application. It extends the {@code Exception}
  * class, providing constructors for creating exceptions with or without an error message.
- *
- * <p> This abstract class is intended to be extended by other custom exception classes
- * that represent specific entity-related error conditions.</p>
- *
- * <p> Example usage:
+ * <p>
+ * This abstract class is intended to be extended by other custom exception classes
+ * that represent specific entity-related error conditions.
+ * <p>
+ * Example usage:
  * <pre>
  * {@code
  * public class ProductNotFoundException extends AbstractEntityException {
@@ -25,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
  * }
  * }
  * </pre>
- * </p>
  */
 public abstract class AbstractEntityException extends Exception {
 

@@ -10,7 +10,9 @@ import java.util.Objects;
  * A factory class for creating instances of {@code IPasswordRequirement}.
  */
 public final class PasswordRequirementFactory {
-  /** The maximum allowed length for password requirements. */
+  /**
+   * The maximum allowed length for password requirements.
+   */
   private final static int MAX_LENGTH = 256;
 
   /**
@@ -20,7 +22,7 @@ public final class PasswordRequirementFactory {
    * @param min     the minimum length requirement.
    * @param pattern the pattern requirement.
    * @return a new {@code IPasswordRequirement} instance.
-   * @throws NullPointerException     if {@code pattern} is {@code null}.
+   * @throws NullPointerException      if {@code pattern} is {@code null}.
    * @throws IndexOutOfBoundsException if {@code max} or {@code min} is out of bounds.
    */
   public static @NotNull IPasswordRequirement create(final int max,

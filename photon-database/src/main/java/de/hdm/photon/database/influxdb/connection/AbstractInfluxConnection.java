@@ -6,10 +6,12 @@ import de.hdm.photon.schema.measurement.ITimeMap;
 import de.hdm.photon.schema.measurement.ITimePeriod;
 import de.hdm.photon.schema.measurement.ImmutableTimePeriod;
 import de.hdm.photon.schema.measurement.TimePeriodFactory;
+import lombok.extern.log4j.Log4j2;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
+import org.influxdb.dto.QueryResult.Series;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
  * Abstract class representing a connection to an InfluxDB database.
  * Implements the {@link IInfluxConnection} interface.
  */
+@Log4j2
 public abstract class AbstractInfluxConnection implements IInfluxConnection {
 
   private final @NotNull InfluxDB influxDB;
@@ -35,7 +38,6 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
    *                     Must not be null.
    * @param database     The name of the database. Must not be null.
    * @param influxMapper The {@link IInfluxMapper} for mapping data to/from InfluxDB. Must not be null.
-   *
    * @throws NullPointerException if any of the parameters are null.
    */
   protected AbstractInfluxConnection(@Nullable final InfluxDB influxDB,
@@ -49,6 +51,8 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
     this.influxDB = influxDB;
     this.database = database;
     this.influxMapper = influxMapper;
+
+    log.info("Initialize influxdb connection.");
   }
 
   /**
@@ -172,14 +176,13 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
     Objects.requireNonNull(hardware);
 
     final String afterString = after>0 ? " WHERE time > "+after+"ms " : "";
-
     final QueryResult queryResult = this.query("SELECT * FROM \""+this.escape(hardware)+"\""+afterString+" LIMIT 1");
 
     if (queryResult.hasError()) {
       throw new EntityNotPresentException("Hardware="+hardware+" does not exists or has no fields.");
     }
 
-    return queryResult.getResults().stream()
+    final List<String> fieldNames = queryResult.getResults().stream()
         // Filter out results that have no series
         .filter(result -> result.getSeries() != null)
         // Flatten the list of series from each result
@@ -199,7 +202,7 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
                 // Find the first series
                 .findFirst()
                 // Get the list of columns from the first series
-                .map(QueryResult.Series::getColumns)
+                .map(Series::getColumns)
                 // If no series is found, return an empty list
                 .orElseGet(List::of)
         )
@@ -210,6 +213,13 @@ public abstract class AbstractInfluxConnection implements IInfluxConnection {
         .filter(name -> !name.equals("time"))
         // Collect the results into a list
         .toList();
+
+    if (fieldNames.isEmpty()) {
+      throw new EntityNotPresentException("There are no fields for the specified measurement="+hardware+" and time or" +
+          " the measurement does not exist.");
+    }
+
+    return fieldNames;
   }
 
   /**

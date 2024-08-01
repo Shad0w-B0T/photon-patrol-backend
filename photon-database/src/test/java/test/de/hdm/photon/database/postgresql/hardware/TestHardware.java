@@ -16,6 +16,7 @@ import test.de.hdm.photon.AbstractSpringTest;
 
 import java.util.Date;
 
+
 @DataJpaTest // Only scans for @Entity and @Repository and store it to the context
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD) //Build new context before each test
 @AutoConfigureTestDatabase(replace=Replace.NONE)
@@ -43,11 +44,9 @@ public final class TestHardware extends AbstractSpringTest {
     this.tokenIsActive = true;
   }
 
-
   @Test
   @DisplayName("Test if DB is empty.")
   public void testDBEmpty() {
-
     //Start -> empty DB
     Assertions.assertEquals(this.hardwareRepository.count(), 0);
 
@@ -119,7 +118,7 @@ public final class TestHardware extends AbstractSpringTest {
     // token
     Assertions.assertNotEquals("ksdgjwze322kjjwe2kaadsmwe", hardwareEntity.token());
     Assertions.assertNotEquals(0, this.hardwareRepository.findByToken(
-        hardwareEntity.token())
+            hardwareEntity.token())
         .stream()
         .count()
     );
@@ -135,7 +134,7 @@ public final class TestHardware extends AbstractSpringTest {
     Assertions.assertNotNull(this.hardwareRepository.findByToken(hardwareEntity.token()));
     Assertions.assertTrue(this.hardwareRepository.existsByToken(hardwareEntity.token()));
     Assertions.assertEquals(1, this.hardwareRepository.findByToken(
-        hardwareEntity.token())
+            hardwareEntity.token())
         .stream()
         .count()
     );
@@ -144,7 +143,7 @@ public final class TestHardware extends AbstractSpringTest {
     // active token
     Assertions.assertNotNull(this.hardwareRepository.findByTokenIsActive(hardwareEntity.tokenIsActive()));
     Assertions.assertEquals(1, this.hardwareRepository.findByTokenIsActive(
-        hardwareEntity.tokenIsActive())
+            hardwareEntity.tokenIsActive())
         .stream()
         .count()
     );
@@ -152,7 +151,7 @@ public final class TestHardware extends AbstractSpringTest {
 
     this.hardwareRepository.deleteByToken(hardwareEntity.token());
     Assertions.assertEquals(0, this.hardwareRepository.findByToken(
-        hardwareEntity.token())
+            hardwareEntity.token())
         .stream()
         .count()
     );
@@ -189,7 +188,7 @@ public final class TestHardware extends AbstractSpringTest {
     Assertions.assertNotNull(this.hardwareRepository.findByMacAddress(hardwareEntity.macAddress()));
     Assertions.assertTrue(this.hardwareRepository.existsByMacAddress(hardwareEntity.macAddress()));
     Assertions.assertEquals(1, this.hardwareRepository.findByMacAddress(
-        hardwareEntity.macAddress())
+            hardwareEntity.macAddress())
         .stream()
         .count()
     );
@@ -198,7 +197,7 @@ public final class TestHardware extends AbstractSpringTest {
     Assertions.assertNotNull(this.hardwareRepository.findByMacAdded(hardwareEntity.macAdded()));
     Assertions.assertTrue(this.hardwareRepository.existsByHardwareAdded(hardwareEntity.macAdded()));
     Assertions.assertEquals(1, this.hardwareRepository.findByMacAdded(
-        hardwareEntity.macAdded())
+            hardwareEntity.macAdded())
         .stream()
         .count()
     );
@@ -206,12 +205,12 @@ public final class TestHardware extends AbstractSpringTest {
 
     this.hardwareRepository.deleteByMacAddress(hardwareEntity.macAddress());
     Assertions.assertEquals(0, this.hardwareRepository.findByMacAddress(
-        hardwareEntity.macAddress())
+            hardwareEntity.macAddress())
         .stream()
         .count()
     );
     Assertions.assertEquals(0, this.hardwareRepository.findByHardwareAdded(
-        hardwareEntity.macAdded())
+            hardwareEntity.macAdded())
         .stream()
         .count()
     );
@@ -236,7 +235,7 @@ public final class TestHardware extends AbstractSpringTest {
     Assertions.assertNotNull(hardwareEntity.hardwareAdded());
     Assertions.assertNotEquals(new Date(), hardwareEntity.hardwareAdded());
     Assertions.assertNotEquals(0, this.hardwareRepository.findByHardwareAdded(
-        hardwareEntity.hardwareAdded())
+            hardwareEntity.hardwareAdded())
         .stream()
         .count()
     );
@@ -245,7 +244,7 @@ public final class TestHardware extends AbstractSpringTest {
     Assertions.assertNotNull(this.hardwareRepository.findByHardwareAdded(hardwareEntity.hardwareAdded()));
     Assertions.assertTrue(this.hardwareRepository.existsByHardwareAdded(hardwareEntity.hardwareAdded()));
     Assertions.assertEquals(1, this.hardwareRepository.findByHardwareAdded
-        (hardwareEntity.hardwareAdded())
+            (hardwareEntity.hardwareAdded())
         .stream()
         .count()
     );
@@ -253,7 +252,7 @@ public final class TestHardware extends AbstractSpringTest {
 
     this.hardwareRepository.deleteAllByHardwareAdded(hardwareEntity.hardwareAdded());
     Assertions.assertEquals(0, this.hardwareRepository.findByHardwareAdded(
-        hardwareEntity.hardwareAdded())
+            hardwareEntity.hardwareAdded())
         .stream()
         .count()
     );

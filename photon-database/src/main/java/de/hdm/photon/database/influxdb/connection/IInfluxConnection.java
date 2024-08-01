@@ -34,7 +34,7 @@ public interface IInfluxConnection {
    * Retrieves a list of measurement names for a specific hardware taken after a specific time.
    *
    * @param hardware the hardware identifier, can be null.
-   * @param after the timestamp after which measurements should be retrieved.
+   * @param after    the timestamp after which measurements should be retrieved.
    * @return a list of measurement names.
    * @throws EntityNotPresentException if the entity is not present.
    */
@@ -46,9 +46,9 @@ public interface IInfluxConnection {
    * Retrieves a time period of measurements for a specific hardware and key, grouped by interval and taken after a specific time.
    *
    * @param hardware the hardware identifier, can be null.
-   * @param key the key for the measurements, can be null.
-   * @param groupBy the interval to group the measurements by.
-   * @param after the timestamp after which measurements should be retrieved.
+   * @param key      the key for the measurements, can be null.
+   * @param groupBy  the interval to group the measurements by.
+   * @param after    the timestamp after which measurements should be retrieved.
    * @return a time period of measurements.
    * @throws EntityNotPresentException if the entity is not present.
    */
@@ -70,7 +70,7 @@ public interface IInfluxConnection {
    * Deletes measurements for a specific hardware and key.
    *
    * @param hardware the hardware identifier, can be null.
-   * @param key the key for the measurements, can be null.
+   * @param key      the key for the measurements, can be null.
    * @return true if the measurements were successfully deleted, false otherwise.
    */
   boolean deleteMeasurements(@Nullable final String hardware,
@@ -80,7 +80,7 @@ public interface IInfluxConnection {
    * Adds measurements for a specific hardware.
    *
    * @param hardware the hardware identifier, can be null.
-   * @param fields the fields containing the measurements.
+   * @param fields   the fields containing the measurements.
    * @return true if the measurements were successfully added, false otherwise.
    */
   boolean addMeasurements(@Nullable final String hardware,

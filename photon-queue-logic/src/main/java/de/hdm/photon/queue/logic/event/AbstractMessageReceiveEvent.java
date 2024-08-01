@@ -17,7 +17,7 @@ import java.util.Objects;
  * </p>
  */
 @Getter
-@Accessors(fluent = true)
+@Accessors(fluent=true)
 public abstract class AbstractMessageReceiveEvent extends ApplicationEvent {
   /**
    * The payload of the received message.
@@ -27,7 +27,7 @@ public abstract class AbstractMessageReceiveEvent extends ApplicationEvent {
   /**
    * Constructs a new {@code AbstractMessageReceiveEvent}.
    *
-   * @param source the object on which the event initially occurred (never {@code null}).
+   * @param source         the object on which the event initially occurred (never {@code null}).
    * @param messagePayload the payload of the received message. Must not be {@code null}.
    * @throws NullPointerException if {@code messagePayload} is {@code null}.
    * @see ApplicationEvent#ApplicationEvent(Object)

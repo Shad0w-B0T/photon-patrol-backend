@@ -39,8 +39,8 @@ public final class RabbitConnectionException extends AbstractConnectionException
    *
    * @param message            the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
    * @param cause              the cause (which is saved for later retrieval by the {@link #getCause()} method).
-   * @param enableSuppression  whether or not suppression is enabled or disabled.
-   * @param writableStackTrace whether or not the stack trace should be writable.
+   * @param enableSuppression  whether suppression is enabled or disabled.
+   * @param writableStackTrace whether the stack trace should be writable.
    */
   public RabbitConnectionException(@Nullable String message,
                                    @Nullable Throwable cause,

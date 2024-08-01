@@ -7,7 +7,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+/**
+ * Utility class for generating random strings.
+ * This class cannot be instantiated.
+ */
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
 public final class TokenGenerator {
   //Store alphabet chars

@@ -2,8 +2,8 @@ package de.hdm.photon.logic.hardware.session;
 
 import de.hdm.photon.database.postgresql.hardware.HardwareEntity;
 import de.hdm.photon.database.postgresql.hardware.HardwareRepository;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionEntity;
-import de.hdm.photon.database.postgresql.hardware.HardwareSessionRepository;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionEntity;
+import de.hdm.photon.database.postgresql.hardware.session.HardwareSessionRepository;
 import de.hdm.photon.logic.security.io.ISecurityFilter;
 import de.hdm.photon.logic.security.io.SecurityFilters;
 import de.hdm.photon.schema.exception.EntityAlreadyPresentException;
@@ -17,13 +17,23 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * Abstract helper class for managing hardware sessions.
+ * Provides methods to create, retrieve, and delete hardware session entities.
+ */
 @Log4j2
 public abstract class AbstractHardwareSessionHelper implements IHardwareSessionHelper {
   private final HardwareSessionRepository hardwareSessionRepository;
   private final ISecurityFilter addressFilter;
   private final HardwareRepository hardwareRepository;
 
+  /**
+   * Constructs an instance of {@code AbstractHardwareSessionHelper} with the specified repositories and initializes the address filter.
+   *
+   * @param hardwareSessionRepository the repository for hardware session entities. This parameter can be {@code null} if not required.
+   * @param hardwareRepository        the repository for hardware entities. This parameter must not be {@code null}.
+   * @throws IllegalArgumentException if {@code hardwareRepository} is {@code null}.
+   */
   protected AbstractHardwareSessionHelper(@Nullable final HardwareSessionRepository hardwareSessionRepository,
                                           HardwareRepository hardwareRepository) {
     //Null check
@@ -108,7 +118,9 @@ public abstract class AbstractHardwareSessionHelper implements IHardwareSessionH
   /**
    * Checks if a hardware with the specified parameter already exists in the database.
    *
-   * @param ipAddress The ip address of the hardware. Not null.
+   * @param ipAddress      The ip address of the hardware. Not null.
+   * @param hardwareEntity the hardware entity.
+   * @param timestampOfIp  the timestamp of the hardware.
    * @throws EntityAlreadyPresentException If the hardware already exists.
    */
   @Transactional

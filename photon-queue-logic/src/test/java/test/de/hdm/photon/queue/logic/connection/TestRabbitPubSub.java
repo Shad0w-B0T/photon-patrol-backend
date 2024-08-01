@@ -17,6 +17,7 @@ import test.de.hdm.photon.AbstractSpringTest;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
 /**
  * Test class for validating the RabbitMQ Publisher-Subscriber (Pub-Sub) within a Spring application.
  *
@@ -31,8 +32,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * </ul>
  */
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DirtiesContext(classMode=DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public final class TestRabbitPubSub extends AbstractSpringTest {
 
   @Autowired

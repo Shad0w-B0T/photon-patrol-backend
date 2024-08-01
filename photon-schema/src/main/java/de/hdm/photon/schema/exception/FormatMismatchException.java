@@ -1,15 +1,19 @@
 package de.hdm.photon.schema.exception;
 
 
-public final class FormatMismatchException extends Exception{
+import org.jetbrains.annotations.Nullable;
 
+
+/**
+ * Exception thrown when the format does not match the expected format.
+ */
+public final class FormatMismatchException extends Exception {
   /**
-   * Is thrown when the format does not match.
+   * Constructs a new FormatMismatchException with the specified detail message.
    *
-   * @param message detailed message of the error.
+   * @param message The detailed message of the error.
    */
-  public FormatMismatchException(String message){
-    super();
+  public FormatMismatchException(@Nullable final String message) {
+    super(message);
   }
-
 }

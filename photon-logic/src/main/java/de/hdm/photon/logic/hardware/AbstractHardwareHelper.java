@@ -18,12 +18,21 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * Abstract base class for hardware helper operations.
+ * Provides common functionality for interacting with hardware entities through a {@link HardwareRepository}.
+ */
 @Log4j2
 public abstract class AbstractHardwareHelper implements IHardwareHelper {
 
   private final @NotNull HardwareRepository hardwareRepository;
   private final @NotNull ISecurityFilter macFilter;
 
+  /**
+   * Constructs an {@link AbstractHardwareHelper} with the specified {@link HardwareRepository}.
+   *
+   * @param hardwareRepository the hardware repository for database operations; must not be null
+   */
   protected AbstractHardwareHelper(@Nullable final HardwareRepository hardwareRepository) {
     //Null check
     Objects.requireNonNull(hardwareRepository);
@@ -161,15 +170,8 @@ public abstract class AbstractHardwareHelper implements IHardwareHelper {
                                                 @Nullable String macAddress,
                                                 @Nullable Date hardwareAdded,
                                                 @Nullable Date macAdded,
-                                                boolean tokenIsActive) throws EntityNotPresentException, FormatMismatchException, EntityAlreadyPresentException {
-    //Null check
-    Objects.requireNonNull(macAddress);
-    Objects.requireNonNull(hardwareAdded);
-    Objects.requireNonNull(macAdded);
-
-    if (!this.macFilter.check(macAdded)) {
-      throw new FormatMismatchException("Can't update hardware, given mac address is illegal.");
-    }
+                                                @Nullable Boolean tokenIsActive) throws EntityNotPresentException,
+      FormatMismatchException, EntityAlreadyPresentException {
 
     log.info("Attempting to update hardware with id: '{}'. New mac address: '{}'. New date when the "+
             "hardware was added: '{}'. New date when the mac was added: '{}'",
@@ -178,16 +180,31 @@ public abstract class AbstractHardwareHelper implements IHardwareHelper {
         hardwareAdded,
         macAdded);
 
-    if (this.hardwareRepository.existsByMacAddress(macAddress)) {
-      throw new EntityAlreadyPresentException("Hardware with this mac already exists.");
-    }
 
     final HardwareEntity hardwareEntity = this.hardwareRepository.hardwareElseThrow(hardwareId);
 
-    hardwareEntity.macAddress(macAddress);
-    hardwareEntity.hardwareAdded(hardwareAdded);
-    hardwareEntity.macAdded(macAdded);
-    hardwareEntity.tokenIsActive(tokenIsActive);
+    if (macAddress != null) {
+      if (!this.macFilter.check(macAdded)) {
+        throw new FormatMismatchException("Can't update hardware, given mac address is illegal.");
+      }
+
+      if (this.hardwareRepository.existsByMacAddress(macAddress)) {
+        throw new EntityAlreadyPresentException("Hardware with this mac already exists.");
+      }
+      hardwareEntity.macAddress(macAddress);
+    }
+
+    if (hardwareAdded != null) {
+      hardwareEntity.hardwareAdded(hardwareAdded);
+    }
+
+    if (macAddress != null) {
+      hardwareEntity.macAdded(macAdded);
+    }
+
+    if (tokenIsActive != null) {
+      hardwareEntity.tokenIsActive(tokenIsActive);
+    }
 
     final HardwareEntity updatedHardware = this.hardwareRepository.save(hardwareEntity);
     log.info("Hardware with id: {} updated successfully.", hardwareId);
