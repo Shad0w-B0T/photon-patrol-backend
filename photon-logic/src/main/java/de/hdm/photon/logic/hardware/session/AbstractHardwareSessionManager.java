@@ -13,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * Abstract manager class for handling hardware sessions.
+ * Provides methods to create, retrieve, list, and delete hardware sessions.
+ */
 @Log4j2
 public abstract class AbstractHardwareSessionManager implements IHardwareSessionManager {
   private final @NotNull IHardwareSessionHelper loggingHelper;

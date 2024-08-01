@@ -93,6 +93,11 @@ public abstract class AbstractSpringTest {
     }
   }
 
+  /**
+   * Shuts down the test containers for InfluxDB, PostgreSQL, and RabbitMQ if they are present.
+   * This method is annotated with {@link AfterAll} to ensure it runs after all tests have completed.
+   * It safely closes each container using {@link Startable#close()} if they are not null.
+   */
   @AfterAll
   public static void shutdown() {
     Optional.ofNullable(influxDBContainer).ifPresent(Startable::close);
@@ -100,6 +105,15 @@ public abstract class AbstractSpringTest {
     Optional.ofNullable(rabbitMQContainer).ifPresent(Startable::close);
   }
 
+  /**
+   * Determines whether to ignore starting test containers based on an environment variable.
+   *
+   * <p>This method checks the value of the environment variable "PHOTON_TEST_CONTAINERS". If the variable is
+   * present and can be parsed as a boolean, its value is used to determine whether to ignore the containers.
+   * If the environment variable is not present or cannot be parsed, the method defaults to ignoring containers.</p>
+   *
+   * @return {@code true} if containers should be ignored (based on the environment variable), {@code false} otherwise.
+   */
   private static boolean ignoreContainers() {
     System.out.println(System.getenv("PHOTON_TEST_CONTAINERS"));
     return Optional

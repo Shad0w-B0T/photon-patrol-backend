@@ -10,7 +10,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * Interface for accessing and managing hardware entities.
+ *
+ * @param <HARDWARE> the type of hardware entity that implements the {@link IHardware} interface.
+ */
 public interface IHardwareAccess<HARDWARE extends IHardware> {
 
   //------------------------------------------------CREATE--------------------------------------------------------------

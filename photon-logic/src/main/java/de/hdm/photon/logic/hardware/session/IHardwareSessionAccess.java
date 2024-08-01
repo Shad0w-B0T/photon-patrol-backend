@@ -10,6 +10,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 
+/**
+ * {@code IHardwareSessionAccess} defines the operations for accessing and managing hardware session objects.
+ * It provides methods for creating, reading, and deleting hardware session entities.
+ *
+ * @param <HARDWARE_SESSION> the type of hardware session entity that extends {@link IHardwareSession}.
+ */
 public interface IHardwareSessionAccess<HARDWARE_SESSION extends IHardwareSession> {
 
 
