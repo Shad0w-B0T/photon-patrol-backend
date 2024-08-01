@@ -44,11 +44,9 @@ public final class TestHardware extends AbstractSpringTest {
     this.tokenIsActive = true;
   }
 
-
   @Test
   @DisplayName("Test if DB is empty.")
   public void testDBEmpty() {
-
     //Start -> empty DB
     Assertions.assertEquals(this.hardwareRepository.count(), 0);
 
