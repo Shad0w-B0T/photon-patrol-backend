@@ -19,6 +19,7 @@ import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -49,6 +50,9 @@ public final class LoginController extends AbstractWebController {
 
   @Autowired
   private AuthenticationManager authenticationManager;
+
+  @Value("${application.security.ssl}")
+  private boolean ssl;
 
   /**
    * Endpoint to check the state of the current session and user registration.
@@ -196,6 +200,7 @@ public final class LoginController extends AbstractWebController {
       Cookie cookie = new Cookie("JSESSIONID", null);
       cookie.setPath("/");
       cookie.setHttpOnly(true);
+      cookie.setSecure(this.ssl);
       cookie.setMaxAge(0);
       response.addCookie(cookie);
 
@@ -251,10 +256,11 @@ public final class LoginController extends AbstractWebController {
         );
 
         final String sessionId = request.getSession().getId();
-        final Cookie sessionCookie = new Cookie("JSESSIONID", sessionId);
-        sessionCookie.setHttpOnly(true);
-        sessionCookie.setPath("/");
-        response.addCookie(sessionCookie);
+        final Cookie cookie = new Cookie("JSESSIONID", sessionId);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(this.ssl);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return this.successMessage(200, "Login successful");
       }
     } catch (Exception e) {

@@ -42,6 +42,8 @@ stages:
   - update
   - security
   - docs
+  - package
+  - deploy
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
@@ -81,6 +83,32 @@ docs:
   only:
     - master
     - development
+
+build-applications:
+  stage: package
+  script:
+    - ./gradlew :photon-webserver-application:assemble
+    - ./gradlew :photon-queue-application:assemble
+  artifacts:
+    paths:
+      - photon-webserver-application/build/libs/*.jar
+      - photon-queue-application/build/libs/*.jar
+  only:
+    - master
+    - development
+
+pages:
+  stage: deploy
+  script:
+    - mv build/docs/javadoc public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+    - development
+
+
 
 # Separater Job zum Aktualisieren der Datenbank
 #update-dependency-check:

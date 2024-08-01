@@ -1,6 +1,7 @@
 package test.de.hdm.photon.queue.application;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hdm.photon.database.influxdb.connection.IInfluxConnection;
 import de.hdm.photon.logic.hardware.IHardwareManager;
 import de.hdm.photon.logic.measurement.IMeasurementManager;
 import de.hdm.photon.queue.logic.connection.IRabbitConnection;
@@ -11,6 +12,7 @@ import de.hdm.photon.schema.payload.IMessagePayload;
 import de.hdm.photon.schema.payload.ImmutableMessagePayload;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -39,6 +41,13 @@ public class TestQueueIntegration extends AbstractSpringTest {
   private IRabbitConnection rabbitConnection;
   @Autowired
   private ObjectMapper objectMapper;
+  @Autowired
+  private IInfluxConnection influxConnection;
+
+  @BeforeEach
+  public void cleanUp() {
+    this.influxConnection.getMeasurements().forEach(this.influxConnection::deleteMeasurements);
+  }
 
   /**
    * Prepares a new hardware instance and verifies its creation.
