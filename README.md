@@ -86,7 +86,12 @@ flowchart TD
 The queue application is used to log in as a subscriber in order to access the data of the hardware participants.
 
 ### Configuration Parameters
-``tbd``
+#### Server
+|   |   |   |   |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 
 ## Web application
 
