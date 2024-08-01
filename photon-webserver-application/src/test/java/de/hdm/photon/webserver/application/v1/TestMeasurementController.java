@@ -1,9 +1,12 @@
 package de.hdm.photon.webserver.application.v1;
 
+import de.hdm.photon.database.influxdb.connection.IInfluxConnection;
 import de.hdm.photon.webserver.application.connection.AbstractSpringRestTest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.DirtiesContext;
@@ -14,7 +17,6 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import java.util.ArrayList;
 
 
-
 @SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
 @TestPropertySource(properties={
     "application.security.active=false",
@@ -23,6 +25,14 @@ import java.util.ArrayList;
 @DirtiesContext(classMode=ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TestMeasurementController extends AbstractSpringRestTest {
 
+
+  @Autowired
+  private IInfluxConnection connection;
+
+  @BeforeEach
+  public void cleanUp() {
+    this.connection.getMeasurements().forEach(this.connection::deleteMeasurements);
+  }
 
   public TestMeasurementController() {
     super("/api/v1/measurement");
