@@ -21,6 +21,12 @@ import java.util.Objects;
 public abstract class AbstractHardwareSessionManager implements IHardwareSessionManager {
   private final @NotNull IHardwareSessionHelper loggingHelper;
 
+  /**
+   * Constructs an instance of {@code AbstractHardwareSessionManager} with the specified hardware session helper.
+   *
+   * @param loggingHelper the helper responsible for managing hardware sessions. Must not be {@code null}.
+   * @throws NullPointerException if {@code loggingHelper} is {@code null}.
+   */
   protected AbstractHardwareSessionManager(@Nullable final IHardwareSessionHelper loggingHelper) {
     //Null check
     Objects.requireNonNull(loggingHelper);
