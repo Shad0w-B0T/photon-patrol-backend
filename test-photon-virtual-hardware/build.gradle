@@ -1,8 +1,15 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
-  id 'java'
+  alias(libs.plugins.spring)
 }
-group = 'de.hdm'
-version = '1.0.0'
+
+apply plugin: libs.plugins.dependencymanagement.get().pluginId
+apply plugin: libs.plugins.spring.get().pluginId
+
+ext {
+  driverClass = "de.hdm.photon.pseudo.Driver"
+}
 
 dependencies {
   implementation project(":photon-schema")
@@ -12,6 +19,37 @@ dependencies {
   implementation libs.spring.boot.autoconfigure
   implementation libs.mqtt
 }
+
+dependencyManagement {
+  imports {
+    mavenBom(SpringBootPlugin.BOM_COORDINATES)
+  }
+}
+
+springBoot {
+  mainClass = "${driverClass}"
+
+  bootJar {
+    archiveFileName.set("build.jar")
+  }
+  buildInfo()
+}
+
+
+jar {
+  dependsOn(":photon-schema:build")
+  manifest {
+    attributes "Main-Class": "${driverClass}"
+  }
+
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+
+  //exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
+
 
 test {
   useJUnitPlatform()
