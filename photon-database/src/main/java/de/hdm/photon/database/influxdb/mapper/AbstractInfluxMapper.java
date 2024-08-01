@@ -34,7 +34,7 @@ public abstract class AbstractInfluxMapper implements IInfluxMapper {
     // Iterate through all results in the query
     for (final Result result : queryResults) {
       if (result.getSeries() == null) {
-        continue; //Todo error
+        continue;
       }
 
       // Iterate through all series in the result
