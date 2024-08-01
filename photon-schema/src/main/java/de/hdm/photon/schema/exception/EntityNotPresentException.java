@@ -5,11 +5,11 @@ package de.hdm.photon.schema.exception;
  * when an attempt is made to access or manipulate an entity that does not exist in the system.
  * It extends the {@link AbstractEntityException} class, providing a constructor to create an
  * instance of this exception with a specific error message.
- *
- * <p>This exception is typically used in scenarios where operations are performed on entities,
- * and the specified entity cannot be found in the system, leading to this exception being thrown.</p>
- *
- * <p>Example usage:
+ * <p>
+ * This exception is typically used in scenarios where operations are performed on entities,
+ * and the specified entity cannot be found in the system, leading to this exception being thrown.
+ * <p>
+ * Example usage:
  * <pre>
  * {@code
  * if (!entityExists(entityId)) {
@@ -17,7 +17,6 @@ package de.hdm.photon.schema.exception;
  * }
  * }
  * </pre>
- * </p>
  */
 public class EntityNotPresentException extends AbstractEntityException {
   /**

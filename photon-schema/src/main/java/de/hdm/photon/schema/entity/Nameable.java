@@ -7,11 +7,11 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The {@code Nameable} interface should be implemented by any class whose instances are intended
  * to have a name. This name is represented by a non-null {@code String} value.
- *
- * <p> The primary purpose of this interface is to provide a common method to retrieve the name
+ * <p>
+ * The primary purpose of this interface is to provide a common method to retrieve the name
  * of an object, ensuring consistency across different types of nameable objects.</p>
- *
- * <p> Example usage:
+ * <p>
+ * Example usage:
  * <pre>
  * {@code
  * public class Product implements Nameable {
@@ -28,7 +28,6 @@ import org.jetbrains.annotations.NotNull;
  * }
  * }
  * </pre>
- * </p>
  */
 public interface Nameable {
   /**

@@ -5,12 +5,12 @@ package de.hdm.photon.schema.exception;
  * when an attempt is made to add an entity that already exists in the system. It extends
  * the {@link AbstractEntityException} class, providing a constructor to create an instance
  * of this exception with a specific error message.
- *
- * <p>This exception is typically used in scenarios where unique constraints are enforced
+ * <p>
+ * This exception is typically used in scenarios where unique constraints are enforced
  * on entities, and an attempt to violate these constraints results in this exception being
- * thrown.</p>
- *
- * <p>Example usage:
+ * thrown.
+ * <p>
+ * Example usage:
  * <pre>
  * {@code
  * if (entityAlreadyExists(entity)) {
@@ -18,7 +18,6 @@ package de.hdm.photon.schema.exception;
  * }
  * }
  * </pre>
- * </p>
  */
 public class EntityAlreadyPresentException extends AbstractEntityException {
   /**

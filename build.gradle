@@ -51,3 +51,26 @@ dependencyCheck {
   format = "ALL"
   outputDirectory = "build/reports/"
 }
+
+task aggregateJavadocs(type: Javadoc) {
+  description = 'Generates aggregated Javadocs for all modules.'
+  destinationDir = file("${buildDir}/docs/javadoc")
+
+  // Include source files from all subprojects
+  source = files(subprojects.collect { it.sourceSets.main.allJava })
+
+  // Include classpath from all subprojects
+  classpath = files(subprojects.collect { it.sourceSets.main.compileClasspath })
+
+  // Additional Javadoc options
+  options {
+    title = 'Aggregated Javadoc'
+    windowTitle = 'Aggregated Javadoc'
+  }
+}
+
+subprojects {
+  tasks.withType(Javadoc) {
+    enabled = false // Disable individual Javadocs generation
+  }
+}

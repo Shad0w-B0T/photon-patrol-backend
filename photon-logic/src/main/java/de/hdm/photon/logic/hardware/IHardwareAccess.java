@@ -36,6 +36,13 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
   @NotNull
   HARDWARE getHardware(final long hardwareId) throws EntityNotPresentException;
 
+  /**
+   * Retrieves the hardware associated with the given token.
+   *
+   * @param token the token associated with the hardware; can be null
+   * @return the hardware associated with the given token
+   * @throws EntityNotPresentException if no hardware is found for the given token
+   */
   @NotNull
   HARDWARE getHardware(@Nullable final String token) throws EntityNotPresentException;
 
@@ -86,7 +93,13 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
 
   //------------------------------------------------UPDATE--------------------------------------------------------------
 
-  //Todo: Docs
+  /**
+   * Toggles the active status of the hardware with the given ID.
+   *
+   * @param hardwareId the ID of the hardware to be toggled
+   * @return the hardware with the updated active status
+   * @throws EntityNotPresentException if no hardware is found with the given ID
+   */
   @NotNull
   HARDWARE toggleHardwareActive(final long hardwareId) throws EntityNotPresentException;
 
@@ -101,6 +114,7 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @return updated hardware object (hardware interface or hardware entity).
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
    * @throws FormatMismatchException   see {@link FormatMismatchException}
+   * @throws EntityNotPresentException see {@link EntityAlreadyPresentException}
    */
   @NotNull
   HARDWARE updateHardware(final long hardwareId,
@@ -130,7 +144,6 @@ public interface IHardwareAccess<HARDWARE extends IHardware> {
    * @param tokenIsActive value whether the token is active or not.
    * @return hardware object with updated token.
    * @throws EntityNotPresentException see {@link EntityNotPresentException}
-   * @throws FormatMismatchException   see {@link FormatMismatchException}
    */
   @NotNull
   HARDWARE updateTokenActive(final long hardwareId,

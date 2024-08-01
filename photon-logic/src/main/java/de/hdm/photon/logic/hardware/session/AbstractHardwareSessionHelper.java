@@ -108,7 +108,9 @@ public abstract class AbstractHardwareSessionHelper implements IHardwareSessionH
   /**
    * Checks if a hardware with the specified parameter already exists in the database.
    *
-   * @param ipAddress The ip address of the hardware. Not null.
+   * @param ipAddress      The ip address of the hardware. Not null.
+   * @param hardwareEntity the hardware entity.
+   * @param timestampOfIp  the timestamp of the hardware.
    * @throws EntityAlreadyPresentException If the hardware already exists.
    */
   @Transactional

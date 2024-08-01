@@ -23,10 +23,10 @@ import java.util.Optional;
  * The {@code AbstractSpringTest} class provides a base for Spring-based test classes.
  * It contains a utility test method to verify that all {@code @Autowired} components
  * in a derived test class are properly loaded by the Spring context.
- *
- * <p>This class uses Lombok's {@code @Log4j2} annotation for logging purposes.</p>
- *
- * <p>Example usage:
+ * <p>
+ * This class uses Lombok's {@code @Log4j2} annotation for logging purposes.
+ * <p>
+ * Example usage:
  * <pre>
  * {@code
  * @ExtendWith(SpringExtension.class)
@@ -39,7 +39,8 @@ import java.util.Optional;
  * }
  * }
  * </pre>
- * </p>
+ * <p>
+ * *
  *
  * @see org.springframework.beans.factory.annotation.Autowired
  * @see org.junit.jupiter.api.Test
@@ -110,19 +111,18 @@ public abstract class AbstractSpringTest {
   /**
    * Test method to verify that all {@code @Autowired} components in the derived class
    * are properly loaded by the Spring context.
-   *
-   * <p>This method iterates through all declared fields in the derived test class,
+   * <p>
+   * This method iterates through all declared fields in the derived test class,
    * checks if they are annotated with {@code @Autowired}, and asserts that they are
-   * not {@code null}, indicating successful dependency injection by Spring.</p>
-   *
-   * <p>Example log output:
+   * not {@code null}, indicating successful dependency injection by Spring.
+   * <p>
+   * Example log output:
    * <pre>
    * {@code
    * Checking autowired components for=MyTest.
    * Checking bean=MyRepository.
    * }
    * </pre>
-   * </p>
    */
   @Test
   @DisplayName("Test JPA-Repository load.")

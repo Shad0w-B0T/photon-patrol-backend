@@ -18,7 +18,8 @@ public interface IHardwareSessionAccess<HARDWARE_SESSION extends IHardwareSessio
   /**
    * Create a hardware session object
    *
-   * @param ipAddress value of the ip.
+   * @param ipAddress  value of the ip.
+   * @param hardwareId id of the hardware.
    * @return a new hardware session object (hardware session interface or hardware session entity).
    * @throws EntityNotPresentException     see {@link EntityNotPresentException}.
    * @throws EntityAlreadyPresentException see {@link EntityAlreadyPresentException}.
