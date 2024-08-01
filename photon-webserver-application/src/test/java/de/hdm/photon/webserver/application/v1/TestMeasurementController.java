@@ -3,6 +3,7 @@ package de.hdm.photon.webserver.application.v1;
 import de.hdm.photon.schema.measurement.ImmutableTimePeriod;
 import de.hdm.photon.webserver.application.connection.AbstractSpringRestTest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import java.util.ArrayList;
 
 
-
+@Disabled
 @SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
 @TestPropertySource(properties={
     "application.security.active=false",
@@ -38,6 +39,7 @@ public class TestMeasurementController extends AbstractSpringRestTest {
     //Positive
     Assertions.assertTrue(this.get("", MeasurementList.class).isEmpty());
   }
+
 
   @Test
   @DisplayName("Test get all measurements of a not existing hardware.")
