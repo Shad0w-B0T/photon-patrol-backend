@@ -87,54 +87,54 @@ The queue application is used to log in as a subscriber in order to access the d
 
 ### Configuration Parameters
 #### System
-| Field       | Value |
-|-------------|-------|
-| Server Port | 8081  |
+| Field         | Value |
+|---------------|-------|
+| `Server Port` | 8081  |
 
 #### Application
 
 
 
 #### SQL
-| Field    | Value                                     |
-|----------|-------------------------------------------|
-| url      | jdbc:postgresql://localhost:5432/postgres |
-| username | postgres                                  |
-| password | test                                      |
+| Field      | Value                                     |
+|------------|-------------------------------------------|
+| `url`      | jdbc:postgresql://localhost:5432/postgres |
+| `username` | postgres                                  |
+| `password` | test                                      |
 
 #### Hibernate
-| Field                           | Value                                   |
-|---------------------------------|-----------------------------------------|
-| dialect                         | org.hibernate.dialect.PostgreSQLDialect |
-| show-sql                        | false                                   |
-| format_sql                      | true                                    |
-| ddl-auto                        | update                                  |
-| defer-datasource-initialization | true                                    |
+| Field                             | Value                                   |
+|-----------------------------------|-----------------------------------------|
+| `dialect`                         | org.hibernate.dialect.PostgreSQLDialect |
+| `show-sql`                        | false                                   |
+| `format_sql`                      | true                                    |
+| `ddl-auto`                        | update                                  |
+| `defer-datasource-initialization` | true                                    |
 
 #### InfluxDB
-| Field    | Value                      |
-|----------|----------------------------|
-| url      | http://localhost:8086      |
-| user     | my-user                    |
-| password | my-super-secret-auth-token |
-| database | my-bucket                  |
+| Field      | Value                      |
+|------------|----------------------------|
+| `url`      | http://localhost:8086      |
+| `user`     | my-user                    |
+| `password` | my-super-secret-auth-token |
+| `database` | my-bucket                  |
 
 #### RabbitMQ (MQTT)
-| Field           | Value                              |
-|-----------------|------------------------------------|
-| uri             | amqp://admin:instar@localhost:5672 |
-| username        | photon                             |
-| exchange        | amq.topic                          |
-| queue           | photon_broadcast_channel           |
-| key             | .photon.device                     |
-| heartbeat delay | 50 ms                              |
+| Field             | Value                              |
+|-------------------|------------------------------------|
+| `uri`             | amqp://admin:instar@localhost:5672 |
+| `username`        | photon                             |
+| `exchange`        | amq.topic                          |
+| `queue`           | photon_broadcast_channel           |
+| `key`             | .photon.device                     |
+| `heartbeat delay` | 50 ms                              |
 
 #### Swagger
-| Field   | Value             |
-|---------|-------------------|
-| title   | Photon Patrol API |
-| version | 1.0               |
-| path    | /doc              |
+| Field     | Value             |
+|-----------|-------------------|
+| `title`   | Photon Patrol API |
+| `version` | 1.0               |
+| `path`    | /doc              |
 
 ## Web application
 
