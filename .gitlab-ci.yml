@@ -39,10 +39,9 @@ variables:
 stages:
   - build
   - test
-  - update
-  - security
   - docs
   - package
+  - release
   - deploy
 
 before_script:
@@ -87,12 +86,12 @@ docs:
 build-applications:
   stage: package
   script:
-    - ./gradlew :photon-webserver-application:assemble
-    - ./gradlew :photon-queue-application:assemble
+    - ./gradlew :photon-webserver-application:bootJar --build-cache -x test
+    - ./gradlew :photon-queue-application:bootJar --build-cache -x test
   artifacts:
     paths:
-      - photon-webserver-application/build/libs/*.jar
-      - photon-queue-application/build/libs/*.jar
+      - photon-webserver-application/build/libs/webserver-build.jar
+      - photon-queue-application/build/libs/queue-build.jar
   only:
     - master
     - development
@@ -108,7 +107,71 @@ pages:
     - master
     - development
 
+docker-release-webserver-latest:
+  stage: release
+  allow_failure: true
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [ "" ]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "Dockerfile"
+      --target "webserver-application"
+      --destination "${CI_REGISTRY}/${CI_REGISTRY_IMAGE}:latest"
+  only:
+    refs:
+      - master
 
+docker-release-webserver-tag:
+  stage: release
+  allow_failure: true
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [ "" ]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "Dockerfile"
+      --target "webserver-application"
+      --destination "${CI_REGISTRY}/${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+  only:
+    refs:
+      - master
+      - development
+
+docker-release-queue-latest:
+  stage: release
+  allow_failure: true
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [ "" ]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "Dockerfile"
+      --target "queue-application"
+      --destination "${CI_REGISTRY}/${CI_REGISTRY_IMAGE}:latest"
+  only:
+    refs:
+      - master
+
+docker-release-queue-tag:
+  stage: release
+  allow_failure: true
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [ "" ]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "Dockerfile"
+      --target "queue-application"
+      --destination "${CI_REGISTRY}/${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+  only:
+    refs:
+      - master
+      - development
 
 # Separater Job zum Aktualisieren der Datenbank
 #update-dependency-check:
