@@ -95,6 +95,7 @@ build-applications:
       - photon-queue-application/build/libs/*.jar
   only:
     - master
+    - development
 
 pages:
   stage: deploy
