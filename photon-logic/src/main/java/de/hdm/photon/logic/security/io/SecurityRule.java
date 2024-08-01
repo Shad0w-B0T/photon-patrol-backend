@@ -11,15 +11,15 @@ import java.util.function.Predicate;
  * used for validating input data to ensure that values meet specific security criteria, such as being positive or
  * zero.
  * </p>
- * <p>
+ *
  * The predicates included are:
- * <ul>
+ *  <ul>
  *   <li>{@link #LONG_POSITIVE} - Validates that a {@code long} value is non-negative.</li>
  *   <li>{@link #INT_POSITIVE} - Validates that an {@code int} value is non-negative.</li>
  *   <li>{@link #FLOAT_POSITIVE} - Validates that a {@code float} value is non-negative.</li>
  *   <li>{@link #DOUBLE_POSITIVE} - Validates that a {@code double} value is non-negative.</li>
- * </ul>
- * </p>
+ *  </ul>
+ *
  */
 public interface SecurityRule {
 
