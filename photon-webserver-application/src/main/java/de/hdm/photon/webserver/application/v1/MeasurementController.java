@@ -26,7 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
+/**
+ * {@code MeasurementController} is a Spring REST controller that handles HTTP requests related to measurements.
+ * It provides endpoints for retrieving and deleting measurement data from InfluxDB.
+ * <p>
+ * This controller interacts with the {@link IMeasurementManager} to perform operations on measurement data.
+ * </p>
+ */
 @RestController
 @Log4j2
 @RequestMapping("/api/v1/measurement")

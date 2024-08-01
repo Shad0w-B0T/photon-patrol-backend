@@ -17,7 +17,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * Abstract helper class for managing hardware sessions.
+ * Provides methods to create, retrieve, and delete hardware session entities.
+ */
 @Log4j2
 public abstract class AbstractHardwareSessionHelper implements IHardwareSessionHelper {
   private final HardwareSessionRepository hardwareSessionRepository;

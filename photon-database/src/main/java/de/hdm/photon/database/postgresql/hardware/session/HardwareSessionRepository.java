@@ -10,7 +10,14 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.Optional;
 
-
+/**
+ * {@code HardwareSessionRepository} is a Spring Data JPA repository for managing {@link HardwareSessionEntity} instances.
+ * It provides methods for querying and manipulating hardware session data in the PostgreSQL database.
+ * <p>
+ * This repository extends {@link JpaRepository} to provide standard CRUD operations and custom query methods for
+ * hardware session entities based on various attributes such as IP address, timestamp, and hardware entity.
+ * </p>
+ */
 @Repository
 public interface HardwareSessionRepository extends JpaRepository<HardwareSessionEntity, Long> {
 

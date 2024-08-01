@@ -8,7 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.Optional;
 
-
+/**
+ * Repository interface for accessing and managing {@link HardwareEntity} instances in the database.
+ * Extends {@link JpaRepository} to provide standard CRUD operations and additional custom queries.
+ */
 @Repository
 public interface HardwareRepository extends JpaRepository<HardwareEntity, Long> {
 
