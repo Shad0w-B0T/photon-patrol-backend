@@ -14,7 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import test.de.hdm.photon.AbstractSpringTest;
-import test.de.hdm.photon.TestNameSpace;
+import test.de.hdm.photon.TestField;
 
 
 /**
@@ -56,11 +56,8 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
   @DisplayName("Test create hardware.")
   public void testCreateHardware() throws EntityNotPresentException {
     final HARDWARE hardware = this.createHardware();
-
     //positive
     Assertions.assertEquals(hardware.id(), this.hardwareAccess().getHardware(hardware.id()).id());
-    //negative
-    Assertions.assertNotEquals(TestNameSpace.HARDWARE_ID_NOT, this.hardwareAccess().getHardware(hardware.id()).id());
   }
 
   @Test
@@ -75,7 +72,7 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
     Assertions.assertThrowsExactly(NullPointerException.class,
         () -> this.hardwareAccess().getHardware(null));
     Assertions.assertThrowsExactly(EntityNotPresentException.class,
-        () -> this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID_NOT));
+        () -> this.hardwareAccess().getHardware(TestField.HARDWARE_ID_NOT));
   }
 
 
@@ -87,49 +84,49 @@ public abstract class TestAbstractHardware<HARDWARE extends IHardware> extends A
     //positive
     this.hardwareAccess().updateHardware(
         hardware.id(),
-        TestNameSpace.HARDWARE_MAC_ADDRESS_UPDATED,
-        TestNameSpace.HARDWARE_HW_ADDED_UPDATED,
-        TestNameSpace.HARDWARE_MAC_ADDED_UPDATED,
-        TestNameSpace.HARDWARE_TOKEN_ACTIVE);
+        TestField.HARDWARE_MAC_UPDATED,
+        TestField.HARDWARE_ADDED_UPDATED,
+        TestField.HARDWARE_MAC_ADDED_UPDATED,
+        TestField.HARDWARE_TOKEN_ACTIVE);
 
     Assertions.assertEquals(hardware.id(), this.hardwareAccess().getHardware(hardware.id()).id());
 
     Assertions.assertEquals(
-        TestNameSpace.HARDWARE_MAC_ADDRESS_UPDATED,
+        TestField.HARDWARE_MAC_UPDATED,
         this.hardwareAccess().getHardware(hardware.id()).macAddress()
     );
     Assertions.assertEquals(
-        TestNameSpace.HARDWARE_HW_ADDED_UPDATED,
+        TestField.HARDWARE_ADDED_UPDATED,
         this.hardwareAccess().getHardware(hardware.id()).hardwareAdded()
     );
     Assertions.assertEquals(
-        TestNameSpace.HARDWARE_MAC_ADDED_UPDATED,
+        TestField.HARDWARE_MAC_ADDED_UPDATED,
         this.hardwareAccess().getHardware(hardware.id()).macAdded()
     );
     Assertions.assertEquals(
-        TestNameSpace.HARDWARE_TOKEN_ACTIVE,
+        TestField.HARDWARE_TOKEN_ACTIVE,
         this.hardwareAccess().getHardware(hardware.id()).tokenIsActive()
     );
 
     //negative
     Assertions.assertNotEquals(
-        TestNameSpace.HARDWARE_ID_NOT,
+        TestField.HARDWARE_ID_NOT,
         this.hardwareAccess().getHardware(hardware.id()).id()
     );
     Assertions.assertNotEquals(
-        TestNameSpace.HARDWARE_MAC_ADDRESS_NOT,
+        TestField.HARDWARE_MAC_NOT,
         this.hardwareAccess().getHardware(hardware.id()).macAddress()
     );
     Assertions.assertNotEquals(
-        TestNameSpace.HARDWARE_HW_ADDED_EXPIRED,
+        TestField.HARDWARE_ADDED_EXPIRED,
         this.hardwareAccess().getHardware(hardware.id()).hardwareAdded()
     );
     Assertions.assertNotEquals(
-        TestNameSpace.HARDWARE_MAC_ADDED_EXPIRED,
+        TestField.HARDWARE_MAC_ADDED_EXPIRED,
         this.hardwareAccess().getHardware(hardware.id()).macAdded()
     );
     Assertions.assertNotEquals(
-        TestNameSpace.HARDWARE_TOKEN_ACTIVE_NOT,
+        TestField.HARDWARE_TOKEN_ACTIVE_NOT,
         this.hardwareAccess().getHardware(hardware.id()).tokenIsActive()
     );
   }

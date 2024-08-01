@@ -41,6 +41,7 @@ stages:
   - test
   - update
   - security
+  - docs
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
@@ -70,6 +71,16 @@ test:
     reports:
       junit: '**/build/test-results/test/*.xml'
     when: always
+
+docs:
+  stage: docs
+  script: gradle aggregateJavadocs
+  artifacts:
+    paths:
+      - build/docs/javadoc
+  only:
+    - master
+    - development
 
 # Separater Job zum Aktualisieren der Datenbank
 #update-dependency-check:

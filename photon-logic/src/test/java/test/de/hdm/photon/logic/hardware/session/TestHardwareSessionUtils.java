@@ -7,7 +7,7 @@ import de.hdm.photon.schema.hardware.session.IHardwareSession;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.data.util.Pair;
-import test.de.hdm.photon.TestNameSpace;
+import test.de.hdm.photon.TestField;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -27,7 +27,7 @@ public final class TestHardwareSessionUtils {
       Assertions.assertNotNull(hardware);
 
       final HARDWARE_SESSION hardwareSession =
-          hardwareSessionAccess.createHardwareSession(TestNameSpace.LOGGING_IP_ADDRESS, hardware.id());
+          hardwareSessionAccess.createHardwareSession(TestField.HARDWARE_IP, hardware.id());
       Assertions.assertNotNull(hardwareSession);
       reference.set(Pair.of(hardwareSession, hardware));
     });

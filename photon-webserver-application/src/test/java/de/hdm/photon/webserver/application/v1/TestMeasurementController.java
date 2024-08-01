@@ -24,11 +24,9 @@ import java.util.ArrayList;
 public class TestMeasurementController extends AbstractSpringRestTest {
 
 
-
   public TestMeasurementController() {
     super("/api/v1/measurement");
   }
-
 
 
   @Test
@@ -53,8 +51,6 @@ public class TestMeasurementController extends AbstractSpringRestTest {
     Assertions.assertThrows(WebClientResponseException.NotFound.class, () ->
         this.get("/hardwareNotExisting/measurementNotExisting", MeasurementList.class));
   }
-
-
 
 
   private final static class MeasurementList extends ArrayList<String> {

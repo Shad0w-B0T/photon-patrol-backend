@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import test.de.hdm.photon.AbstractSpringTest;
-import test.de.hdm.photon.TestNameSpace;
+import test.de.hdm.photon.TestField;
 
 
 @Disabled
@@ -67,6 +67,6 @@ public abstract class TestAbstractHardwareSession<
     Assertions.assertThrowsExactly(NullPointerException.class,
         () -> this.hardwareAccess().getHardware(null));
     Assertions.assertThrowsExactly(EntityNotPresentException.class,
-        () -> this.hardwareAccess().getHardware(TestNameSpace.HARDWARE_ID_NOT));
+        () -> this.hardwareAccess().getHardware(TestField.HARDWARE_ID_NOT));
   }
 }

@@ -30,12 +30,30 @@ public interface TestField {
    * The ID of the hardware.
    */
   long HARDWARE_ID = 1;
+  long HARDWARE_ID_NOT = Long.MAX_VALUE;
 
   /**
    * The MAC address of the hardware.
    */
   @NotNull
   String HARDWARE_MAC = "A1:B4:C5:C1:DD:3E";
+  @NotNull String HARDWARE_MAC_UPDATED = "AA:BB:CC:DD:EE:FF";
+  @NotNull String HARDWARE_MAC_NOT = "FF:FF:FF:FF:FF:FF";
+
+
+  // Timestamps for hardware
+  @NotNull Date HARDWARE_ADDED_CREATED = new Date(5000);
+  @NotNull Date HARDWARE_ADDED_UPDATED = new Date(15000);
+  @NotNull Date HARDWARE_ADDED_EXPIRED = new Date(25000);
+
+  @NotNull Date HARDWARE_MAC_ADDED_CREATED = new Date(5000);
+  @NotNull Date HARDWARE_MAC_ADDED_UPDATED = new Date(15000);
+  @NotNull Date HARDWARE_MAC_ADDED_EXPIRED = new Date(25000);
+
+  // Token activity status
+  boolean HARDWARE_TOKEN_ACTIVE = true;
+  boolean HARDWARE_TOKEN_ACTIVE_NOT = false;
+
 
   /**
    * The IP address of the hardware.
@@ -99,4 +117,6 @@ public interface TestField {
 
   @NotNull String MEASUREMENT_FIELD = "a";
   @NotNull Map<String, Object> HARDWARE_FIELD = Map.of(MEASUREMENT_FIELD, 5L, "b", 10L);
+
+
 }

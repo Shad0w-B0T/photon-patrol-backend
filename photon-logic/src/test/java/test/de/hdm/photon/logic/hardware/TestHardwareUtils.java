@@ -4,7 +4,7 @@ import de.hdm.photon.logic.hardware.IHardwareAccess;
 import de.hdm.photon.schema.hardware.IHardware;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
-import test.de.hdm.photon.TestNameSpace;
+import test.de.hdm.photon.TestField;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -28,13 +28,14 @@ public final class TestHardwareUtils {
       final HARDWARE hardware = hardwareAccess.createHardware();
       Assertions.assertNotNull(hardware);
 
+
       // Update hardware
       final HARDWARE updated = hardwareAccess.updateHardware(
           hardware.id(),
-          TestNameSpace.HARDWARE_MAC_ADDRESS,
-          TestNameSpace.HARDWARE_HW_ADDED_CREATED,
-          TestNameSpace.HARDWARE_MAC_ADDED_CREATED,
-          TestNameSpace.HARDWARE_TOKEN_ACTIVE
+          TestField.HARDWARE_MAC,
+          TestField.HARDWARE_ADDED_CREATED,
+          TestField.HARDWARE_MAC_ADDED_CREATED,
+          TestField.HARDWARE_TOKEN_ACTIVE
       );
 
       reference.set(updated);
